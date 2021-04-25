@@ -1,7 +1,10 @@
 package aplication.upn.BodyHealthy.Model;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -20,6 +23,12 @@ public class Usuario {
 	private float peso;
 	private String correo;
 	private String contra;
+
+	@OneToMany(mappedBy = "usuario")
+	private Set<Publicacion> publicaciones = new HashSet<>();
+
+	@OneToMany(mappedBy = "usuario")
+	private Set<Comentario> comentarios = new HashSet<>();
 
 	public Usuario(int idUsuario, Rol rol, String imagen, String nombres, String apellidos, Date fechaNacimiento, float altura, float peso, String correo, String contra) {
 		this.idUsuario = idUsuario;
