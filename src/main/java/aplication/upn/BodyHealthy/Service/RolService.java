@@ -18,6 +18,8 @@ public class RolService {
 //        return rolRepository.findByCargo("Administrador");
     }
     public Rol getRol(int id){
+//        rolRepository.save(new Rol("PRUEBA",true));
+//        System.out.println("ROL AGREGADO");
         return rolRepository.findById(id);
     }
 }

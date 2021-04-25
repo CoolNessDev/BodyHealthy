@@ -35,6 +35,14 @@ public class Publicacion {
         this.comentarios = comentarios;
     }
 
+    public Publicacion(Usuario usuario, String mensaje, String imagen, Date fecha, Set<Comentario> comentarios) {
+        this.usuario = usuario;
+        this.mensaje = mensaje;
+        this.imagen = imagen;
+        this.fecha = fecha;
+        this.comentarios = comentarios;
+    }
+
     public int getIdPublicacion() {
         return idPublicacion;
     }

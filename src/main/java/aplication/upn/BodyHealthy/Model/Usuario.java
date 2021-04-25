@@ -29,8 +29,14 @@ public class Usuario {
 
 	@OneToMany(mappedBy = "usuario")
 	private Set<Comentario> comentarios = new HashSet<>();
+	@ManyToMany
+	@JoinTable(
+			name = "rutina_usuario",
+			joinColumns = @JoinColumn(name = "id_usuario"),
+			inverseJoinColumns = @JoinColumn(name = "id_rutina"))
+	private Set<Rutina> rutinas = new HashSet<>();
 
-	public Usuario(int idUsuario, Rol rol, String imagen, String nombres, String apellidos, Date fechaNacimiento, float altura, float peso, String correo, String contra) {
+	public Usuario(int idUsuario, Rol rol, String imagen, String nombres, String apellidos, Date fechaNacimiento, float altura, float peso, String correo, String contra, Set<Publicacion> publicaciones, Set<Comentario> comentarios, Set<Rutina> rutinas) {
 		this.idUsuario = idUsuario;
 		this.rol = rol;
 		this.imagen = imagen;
@@ -41,6 +47,24 @@ public class Usuario {
 		this.peso = peso;
 		this.correo = correo;
 		this.contra = contra;
+		this.publicaciones = publicaciones;
+		this.comentarios = comentarios;
+		this.rutinas = rutinas;
+	}
+
+	public Usuario(Rol rol, String imagen, String nombres, String apellidos, Date fechaNacimiento, float altura, float peso, String correo, String contra, Set<Publicacion> publicaciones, Set<Comentario> comentarios, Set<Rutina> rutinas) {
+		this.rol = rol;
+		this.imagen = imagen;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.fechaNacimiento = fechaNacimiento;
+		this.altura = altura;
+		this.peso = peso;
+		this.correo = correo;
+		this.contra = contra;
+		this.publicaciones = publicaciones;
+		this.comentarios = comentarios;
+		this.rutinas = rutinas;
 	}
 
 	public Usuario() {

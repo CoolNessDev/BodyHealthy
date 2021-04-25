@@ -20,10 +20,22 @@ public class Rol {
     public Rol() {
     }
 
+    public Rol(String cargo, boolean estado) {
+        this.cargo = cargo;
+        this.estado = estado;
+    }
+
     public Rol(int idRol, String cargo, boolean estado) {
         this.idRol = idRol;
         this.cargo = cargo;
         this.estado = estado;
+    }
+
+    public Rol(int idRol, String cargo, boolean estado, Set<Usuario> usuarios) {
+        this.idRol = idRol;
+        this.cargo = cargo;
+        this.estado = estado;
+        this.usuarios = usuarios;
     }
 
     public int getIdRol() {

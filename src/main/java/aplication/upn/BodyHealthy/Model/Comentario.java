@@ -26,6 +26,13 @@ public class Comentario {
         this.fecha = fecha;
     }
 
+    public Comentario(Usuario usuario, Publicacion publicacion, String mensaje, Date fecha) {
+        this.usuario = usuario;
+        this.publicacion = publicacion;
+        this.mensaje = mensaje;
+        this.fecha = fecha;
+    }
+
     public Comentario() {
     }
 
