@@ -1,6 +1,7 @@
 package aplication.upn.BodyHealthy.Service;
 
 import aplication.upn.BodyHealthy.Model.Rol;
+import aplication.upn.BodyHealthy.Model.Usuario;
 import aplication.upn.BodyHealthy.Repository.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,6 @@ public class RolService {
     public Rol getRol(int id){
 //        rolRepository.save(new Rol("PRUEBA",true));
 //        System.out.println("ROL AGREGADO");
-        return rolRepository.findById(id);
+        return rolRepository.getRol(id);
     }
 }

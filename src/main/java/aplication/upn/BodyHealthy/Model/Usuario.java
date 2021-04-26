@@ -15,6 +15,7 @@ public class Usuario {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_rol")
 	private Rol rol;
+
 	private String imagen;
 	private String nombres;
 	private String apellidos;
