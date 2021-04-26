@@ -17,4 +17,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query(value="{call getUsuarioByRol(:in_idRol)}", nativeQuery = true)
     List<Usuario> getByRol(@Param("in_idRol") Integer in_idRol);
 
+    Usuario findByCorreo(String corre);
+
 }
