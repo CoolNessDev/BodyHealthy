@@ -1,4 +1,5 @@
 package aplication.upn.BodyHealthy.Model;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,9 @@ public class Usuario {
 	@Getter @Setter
 	private int idUsuario;
 
-	@ManyToOne(optional = false)
+
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "id_rol")
 	@Getter @Setter
 	private Rol rol;
@@ -37,6 +40,7 @@ public class Usuario {
 	private float peso;
 	@Getter @Setter
 	private String correo;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Getter @Setter
 	private String contra;
 

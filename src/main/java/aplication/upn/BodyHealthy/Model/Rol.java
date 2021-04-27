@@ -1,5 +1,9 @@
 package aplication.upn.BodyHealthy.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +27,10 @@ public class Rol {
     @Getter @Setter
     private boolean estado;
 
-    @OneToMany(cascade = CascadeType.ALL
-            , fetch = FetchType.EAGER, mappedBy = "rol")
-    @Getter @Setter
-    private Set<Usuario> usuarios = new HashSet<>();
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUsuario")
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonProperty("id_usuario")
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rol")
+//    @Getter @Setter
+//    private Set<Usuario> usuarios = new HashSet<>();
 }
