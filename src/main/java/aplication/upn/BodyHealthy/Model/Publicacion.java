@@ -1,7 +1,9 @@
 package aplication.upn.BodyHealthy.Model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +13,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "publicacion")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Publicacion {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -30,25 +34,4 @@ public class Publicacion {
     @OneToMany(mappedBy = "publicacion")
     @Getter @Setter
     private Set<Comentario> comentarios = new HashSet<>();
-
-    public Publicacion() {
-    }
-
-    public Publicacion(int idPublicacion, Usuario usuario, String mensaje, String imagen, Date fecha, Set<Comentario> comentarios) {
-        this.idPublicacion = idPublicacion;
-        this.usuario = usuario;
-        this.mensaje = mensaje;
-        this.imagen = imagen;
-        this.fecha = fecha;
-        this.comentarios = comentarios;
-    }
-
-    public Publicacion(Usuario usuario, String mensaje, String imagen, Date fecha, Set<Comentario> comentarios) {
-        this.usuario = usuario;
-        this.mensaje = mensaje;
-        this.imagen = imagen;
-        this.fecha = fecha;
-        this.comentarios = comentarios;
-    }
-
 }

@@ -1,6 +1,8 @@
 package aplication.upn.BodyHealthy.Model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "rutina")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Rutina {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -31,24 +35,4 @@ public class Rutina {
     @ManyToMany(mappedBy = "rutinas")
     @Getter @Setter
     private Set<Usuario> usuarios = new HashSet<>();
-
-    public Rutina() {
-    }
-
-    public Rutina(int idRutina, String nombre, String nivel, float estado, Set<Ejercicio> ejercicios, Set<Usuario> usuarios) {
-        this.idRutina = idRutina;
-        this.nombre = nombre;
-        this.nivel = nivel;
-        this.estado = estado;
-        this.ejercicios = ejercicios;
-        this.usuarios = usuarios;
-    }
-
-    public Rutina(String nombre, String nivel, float estado, Set<Ejercicio> ejercicios, Set<Usuario> usuarios) {
-        this.nombre = nombre;
-        this.nivel = nivel;
-        this.estado = estado;
-        this.ejercicios = ejercicios;
-        this.usuarios = usuarios;
-    }
 }

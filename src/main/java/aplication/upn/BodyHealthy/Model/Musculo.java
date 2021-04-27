@@ -1,6 +1,8 @@
 package aplication.upn.BodyHealthy.Model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "musculo")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Musculo {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -20,18 +24,4 @@ public class Musculo {
 	@ManyToMany(mappedBy = "musculos")
 	@Getter @Setter
 	private Set<Ejercicio> ejercicios = new HashSet<>();
-
-	public Musculo(int idMusculo, String nombre, Set<Ejercicio> ejercicios) {
-		this.idMusculo = idMusculo;
-		this.nombre = nombre;
-		this.ejercicios = ejercicios;
-	}
-
-	public Musculo(String nombre ) {
-		this.nombre = nombre;
-	}
-	public Musculo() {
-
-	}
-
 }

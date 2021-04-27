@@ -1,15 +1,18 @@
 package aplication.upn.BodyHealthy.Model;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -38,48 +41,17 @@ public class Usuario {
 	private String contra;
 
 	@OneToMany(mappedBy = "usuario")
+	@Getter @Setter
 	private Set<Publicacion> publicaciones = new HashSet<>();
 
 	@OneToMany(mappedBy = "usuario")
+	@Getter @Setter
 	private Set<Comentario> comentarios = new HashSet<>();
 	@ManyToMany
 	@JoinTable(
 			name = "rutina_usuario",
 			joinColumns = @JoinColumn(name = "id_usuario"),
 			inverseJoinColumns = @JoinColumn(name = "id_rutina"))
+	@Getter @Setter
 	private Set<Rutina> rutinas = new HashSet<>();
-
-	public Usuario(int idUsuario, Rol rol, String imagen, String nombres, String apellidos, Date fechaNacimiento, float altura, float peso, String correo, String contra, Set<Publicacion> publicaciones, Set<Comentario> comentarios, Set<Rutina> rutinas) {
-		this.idUsuario = idUsuario;
-		this.rol = rol;
-		this.imagen = imagen;
-		this.nombres = nombres;
-		this.apellidos = apellidos;
-		this.fechaNacimiento = fechaNacimiento;
-		this.altura = altura;
-		this.peso = peso;
-		this.correo = correo;
-		this.contra = contra;
-		this.publicaciones = publicaciones;
-		this.comentarios = comentarios;
-		this.rutinas = rutinas;
-	}
-
-	public Usuario(Rol rol, String imagen, String nombres, String apellidos, Date fechaNacimiento, float altura, float peso, String correo, String contra, Set<Publicacion> publicaciones, Set<Comentario> comentarios, Set<Rutina> rutinas) {
-		this.rol = rol;
-		this.imagen = imagen;
-		this.nombres = nombres;
-		this.apellidos = apellidos;
-		this.fechaNacimiento = fechaNacimiento;
-		this.altura = altura;
-		this.peso = peso;
-		this.correo = correo;
-		this.contra = contra;
-		this.publicaciones = publicaciones;
-		this.comentarios = comentarios;
-		this.rutinas = rutinas;
-	}
-
-	public Usuario() {
-	}
 }

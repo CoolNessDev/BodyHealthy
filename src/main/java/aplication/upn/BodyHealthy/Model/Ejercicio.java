@@ -1,6 +1,8 @@
 package aplication.upn.BodyHealthy.Model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ejercicio")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Ejercicio {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -40,33 +44,4 @@ public class Ejercicio {
 	@ManyToMany(mappedBy = "ejercicios")
 	@Getter @Setter
 	private Set<Rutina> rutinas = new HashSet<>();
-
-
-	public Ejercicio(String nombre, int duracion, int series, int repeticiones, String imagen, String descripcion, int descanso, Set<Musculo> musculos, Set<Rutina> rutinas) {
-		this.nombre = nombre;
-		this.duracion = duracion;
-		this.series = series;
-		this.repeticiones = repeticiones;
-		this.imagen = imagen;
-		this.descripcion = descripcion;
-		this.descanso = descanso;
-		this.musculos = musculos;
-		this.rutinas = rutinas;
-	}
-
-	public Ejercicio() {
-	}
-
-	public Ejercicio(int idEjercicio, String nombre, int duracion, int series, int repeticiones, String imagen, String descripcion, int descanso, Set<Musculo> musculos, Set<Rutina> rutinas) {
-		this.idEjercicio = idEjercicio;
-		this.nombre = nombre;
-		this.duracion = duracion;
-		this.series = series;
-		this.repeticiones = repeticiones;
-		this.imagen = imagen;
-		this.descripcion = descripcion;
-		this.descanso = descanso;
-		this.musculos = musculos;
-		this.rutinas = rutinas;
-	}
 }

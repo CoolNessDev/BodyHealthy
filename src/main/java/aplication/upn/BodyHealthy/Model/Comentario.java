@@ -1,6 +1,8 @@
 package aplication.upn.BodyHealthy.Model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "comentario")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comentario {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -25,23 +29,4 @@ public class Comentario {
     private String mensaje;
     @Getter @Setter
     private Date fecha;
-
-    public Comentario(int idComentario, Usuario usuario, Publicacion publicacion, String mensaje, Date fecha) {
-        this.idComentario = idComentario;
-        this.usuario = usuario;
-        this.publicacion = publicacion;
-        this.mensaje = mensaje;
-        this.fecha = fecha;
-    }
-
-    public Comentario(Usuario usuario, Publicacion publicacion, String mensaje, Date fecha) {
-        this.usuario = usuario;
-        this.publicacion = publicacion;
-        this.mensaje = mensaje;
-        this.fecha = fecha;
-    }
-
-    public Comentario() {
-    }
-    
 }
