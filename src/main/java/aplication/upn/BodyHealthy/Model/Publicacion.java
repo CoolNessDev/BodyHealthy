@@ -1,6 +1,9 @@
 package aplication.upn.BodyHealthy.Model;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -11,16 +14,21 @@ import java.util.Set;
 public class Publicacion {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Getter @Setter
     private int idPublicacion;
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_usuario")
+    @Getter @Setter
     private Usuario usuario;
-
+    @Getter @Setter
     private String mensaje;
+    @Getter @Setter
     private String imagen;
+    @Getter @Setter
     private Date fecha;
 
     @OneToMany(mappedBy = "publicacion")
+    @Getter @Setter
     private Set<Comentario> comentarios = new HashSet<>();
 
     public Publicacion() {
@@ -43,51 +51,4 @@ public class Publicacion {
         this.comentarios = comentarios;
     }
 
-    public int getIdPublicacion() {
-        return idPublicacion;
-    }
-
-    public void setIdPublicacion(int idPublicacion) {
-        this.idPublicacion = idPublicacion;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public Set<Comentario> getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(Set<Comentario> comentarios) {
-        this.comentarios = comentarios;
-    }
 }

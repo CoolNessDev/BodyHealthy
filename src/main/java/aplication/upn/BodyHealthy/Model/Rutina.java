@@ -1,5 +1,8 @@
 package aplication.upn.BodyHealthy.Model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,18 +12,24 @@ import java.util.Set;
 public class Rutina {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Getter @Setter
     private int idRutina;
+    @Getter @Setter
     private String nombre;
+    @Getter @Setter
     private String nivel;
+    @Getter @Setter
     private float estado;//nivel de progreso de la rutina
     @ManyToMany
     @JoinTable(
             name = "rutina_ejercicio",
             joinColumns = @JoinColumn(name = "id_rutina"),
             inverseJoinColumns = @JoinColumn(name = "id_ejercicio"))
+    @Getter @Setter
     private Set<Ejercicio> ejercicios = new HashSet<>();
 
     @ManyToMany(mappedBy = "rutinas")
+    @Getter @Setter
     private Set<Usuario> usuarios = new HashSet<>();
 
     public Rutina() {
@@ -40,54 +49,6 @@ public class Rutina {
         this.nivel = nivel;
         this.estado = estado;
         this.ejercicios = ejercicios;
-        this.usuarios = usuarios;
-    }
-
-    public int getIdRutina() {
-        return idRutina;
-    }
-
-    public void setIdRutina(int idRutina) {
-        this.idRutina = idRutina;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(String nivel) {
-        this.nivel = nivel;
-    }
-
-    public float getEstado() {
-        return estado;
-    }
-
-    public void setEstado(float estado) {
-        this.estado = estado;
-    }
-
-    public Set<Ejercicio> getEjercicios() {
-        return ejercicios;
-    }
-
-    public void setEjercicios(Set<Ejercicio> ejercicios) {
-        this.ejercicios = ejercicios;
-    }
-
-    public Set<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(Set<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
 }

@@ -1,5 +1,8 @@
 package aplication.upn.BodyHealthy.Model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,10 +12,13 @@ import java.util.Set;
 public class Musculo {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Getter @Setter
 	private int idMusculo;
+	@Getter @Setter
 	private String nombre;
 
 	@ManyToMany(mappedBy = "musculos")
+	@Getter @Setter
 	private Set<Ejercicio> ejercicios = new HashSet<>();
 
 	public Musculo(int idMusculo, String nombre, Set<Ejercicio> ejercicios) {
@@ -27,18 +33,5 @@ public class Musculo {
 	public Musculo() {
 
 	}
-	public int getIdMusculo() {
-		return idMusculo;
-	}
-	
-	public void setIdMusculo(int idMusculo) {
-		this.idMusculo = idMusculo;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+
 }

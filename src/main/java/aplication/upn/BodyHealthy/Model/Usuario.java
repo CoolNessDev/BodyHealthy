@@ -1,4 +1,7 @@
 package aplication.upn.BodyHealthy.Model;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -10,19 +13,28 @@ import java.util.Set;
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Getter @Setter
 	private int idUsuario;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_rol")
+	@Getter @Setter
 	private Rol rol;
-
+	@Getter @Setter
 	private String imagen;
+	@Getter @Setter
 	private String nombres;
+	@Getter @Setter
 	private String apellidos;
+	@Getter @Setter
 	private Date fechaNacimiento;
+	@Getter @Setter
 	private float altura;
+	@Getter @Setter
 	private float peso;
+	@Getter @Setter
 	private String correo;
+	@Getter @Setter
 	private String contra;
 
 	@OneToMany(mappedBy = "usuario")
@@ -69,85 +81,5 @@ public class Usuario {
 	}
 
 	public Usuario() {
-	}
-
-	public int getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	public Rol getRol() {
-		return rol;
-	}
-
-	public void setRol(Rol rol) {
-		this.rol = rol;
-	}
-
-	public String getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
-
-	public String getNombres() {
-		return nombres;
-	}
-
-	public void setNombres(String nombres) {
-		this.nombres = nombres;
-	}
-
-	public String getApellidos() {
-		return apellidos;
-	}
-
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
-
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
-
-	public float getAltura() {
-		return altura;
-	}
-
-	public void setAltura(float altura) {
-		this.altura = altura;
-	}
-
-	public float getPeso() {
-		return peso;
-	}
-
-	public void setPeso(float peso) {
-		this.peso = peso;
-	}
-
-	public String getCorreo() {
-		return correo;
-	}
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-	public String getContra() {
-		return contra;
-	}
-
-	public void setContra(String contra) {
-		this.contra = contra;
 	}
 }

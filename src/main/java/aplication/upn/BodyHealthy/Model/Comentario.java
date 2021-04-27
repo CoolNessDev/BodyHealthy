@@ -1,5 +1,8 @@
 package aplication.upn.BodyHealthy.Model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,14 +11,19 @@ import java.util.Date;
 public class Comentario {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Getter @Setter
     private int idComentario;
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_usuario")
+    @Getter @Setter
     private Usuario usuario;
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_publicacion")
+    @Getter @Setter
     private Publicacion publicacion;
+    @Getter @Setter
     private String mensaje;
+    @Getter @Setter
     private Date fecha;
 
     public Comentario(int idComentario, Usuario usuario, Publicacion publicacion, String mensaje, Date fecha) {
@@ -35,44 +43,5 @@ public class Comentario {
 
     public Comentario() {
     }
-
-    public int getIdComentario() {
-        return idComentario;
-    }
-
-    public void setIdComentario(int idComentario) {
-        this.idComentario = idComentario;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Publicacion getPublicacion() {
-        return publicacion;
-    }
-
-    public void setPublicacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
+    
 }
