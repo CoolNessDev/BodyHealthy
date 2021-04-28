@@ -18,4 +18,10 @@ public class RutinaService {
     public Rutina getRutina(int id){
         return rutinaRepository.getRutina(id);
     }
+    public Rutina insert(Rutina rutina) {
+        return rutinaRepository.save(rutina);
+    }
+    public void delete(Rutina rutina) {
+        rutinaRepository.delete(rutina);
+    }
 }

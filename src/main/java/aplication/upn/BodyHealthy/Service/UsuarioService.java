@@ -1,6 +1,7 @@
 package aplication.upn.BodyHealthy.Service;
 
 
+import aplication.upn.BodyHealthy.Model.Rutina;
 import aplication.upn.BodyHealthy.Model.Usuario;
 import aplication.upn.BodyHealthy.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class UsuarioService implements UserDetailsService {
     }
     public Usuario getUsuario(int id){
         return usuarioRepository.getUsuario(id);
+    }
+    public Usuario insert(Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
     public List<Usuario> getByRol(int idRol){
         return usuarioRepository.getByRol(idRol);

@@ -24,12 +24,12 @@ public class RolController {
 
     @GetMapping("/lista")
     public ResponseEntity<List<Rol>> listar() {
-        List<Rol> lista = rolService.lista();
+        List<Rol> lista = rolService.getAll();
         return new ResponseEntity(lista, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Rol> getById(@PathVariable("id") int id) {
-        Rol rol = rolService.getRol(id);
+        Rol rol = rolService.get(id);
         return new ResponseEntity(rol, HttpStatus.OK);
     }
 
