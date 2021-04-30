@@ -30,11 +30,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
 //                .antMatchers("/test/**")
 //                .hasAuthority("USER")
+                .antMatchers("/resources/**")
+                .permitAll()
                 .antMatchers("/rol/**")
                 .hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
+
                 .httpBasic();
 
     }
