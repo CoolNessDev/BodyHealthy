@@ -9,7 +9,8 @@ import java.util.Arrays;
 
 @Controller
 public class PersonController {
-    @GetMapping
+
+/*    @GetMapping
     String getPeople(Model model){
         model.addAttribute("something", "this is coming from the controller");
         model.addAttribute("people", Arrays.asList(
@@ -19,5 +20,14 @@ public class PersonController {
                 new Person("Sara",27)
         ));
         return "people";
+    }*/
+
+    @GetMapping("/")
+    public String index (Model model){
+        return "index";
     }
+
+
 }
+
+
