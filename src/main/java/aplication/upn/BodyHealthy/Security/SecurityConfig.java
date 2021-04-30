@@ -26,16 +26,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/")
-                .permitAll()
-//                . antMatchers("/test/**")
-//                .hasAuthority("USER")
-                .antMatchers("/rol/**")
-                .hasAuthority("ADMIN")
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/img/**").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/test/**").hasAuthority("USER")
+                .antMatchers("/rol/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()
                 .and()
-
-                .httpBasic();
+                .formLogin().loginPage("/login")
+                .failureUrl("/login-error")
+                .permitAll()
+                .and()
+                .logout().permitAll();
+//                .and()
+//                .httpBasic();
     }
 }

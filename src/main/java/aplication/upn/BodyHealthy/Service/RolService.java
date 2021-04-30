@@ -17,7 +17,7 @@ public class RolService {
     }
 
     public Rol get(int id) {
-        return rolRepository.getOne(id);
+        return rolRepository.getRol(id);
     }
 
     public Rol insert(Rol rol) {

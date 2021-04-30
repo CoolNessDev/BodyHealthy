@@ -19,9 +19,12 @@ public class UsuarioService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByCorreo(s);
+        System.out.println("UNOOOOOOOOOOOOOOOOOO");
         if(usuario == null){
+        System.out.println("DOSSSSSSSSSSSSSSSS");
             throw new UsernameNotFoundException("User Not Found");
         }
+        System.out.println(usuario.getCorreo());
         return new aplication.upn.BodyHealthy.Security.CustomUserDetails(usuario);
     }
     public List<Usuario> getAll(){
