@@ -2,7 +2,9 @@ package aplication.upn.BodyHealthy.Controller;
 
 import aplication.upn.BodyHealthy.Model.Person;
 import aplication.upn.BodyHealthy.Model.Rol;
+import aplication.upn.BodyHealthy.Model.Usuario;
 import aplication.upn.BodyHealthy.Service.RolService;
+import aplication.upn.BodyHealthy.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +24,13 @@ public class RolController {
 
     @GetMapping("/lista")
     public ResponseEntity<List<Rol>> listar() {
-        List<Rol> lista = rolService.lista();
+        List<Rol> lista = rolService.getAll();
         return new ResponseEntity(lista, HttpStatus.OK);
     }
-//    @GetMapping("")
-//    public ResponseEntity<Rol> getById(@RequestParam(required = true, defaultValue = "1") Integer id) {
-//        Rol rol = rolService.getRol(id);
-//        return new ResponseEntity(rol, HttpStatus.OK);
-//    }
     @GetMapping("/{id}")
     public ResponseEntity<Rol> getById(@PathVariable("id") int id) {
-        Rol rol = rolService.getRol(id);
+        Rol rol = rolService.get(id);
         return new ResponseEntity(rol, HttpStatus.OK);
     }
+
 }

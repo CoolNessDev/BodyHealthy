@@ -12,12 +12,18 @@ public class RolService {
     @Autowired
     RolRepository rolRepository;
 
-    public List<Rol> lista(){
-
+    public List<Rol> getAll() {
         return rolRepository.findAll();
-//        return rolRepository.findByCargo("Administrador");
     }
-    public Rol getRol(int id){
-        return rolRepository.findById(id);
+
+    public Rol get(int id) {
+        return rolRepository.getOne(id);
+    }
+
+    public Rol insert(Rol rol) {
+        return rolRepository.save(rol);
+    }
+    public void delete(Rol rol) {
+        rolRepository.delete(rol);
     }
 }

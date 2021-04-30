@@ -1,31 +1,27 @@
 package aplication.upn.BodyHealthy.Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "musculo")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Musculo {
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Getter @Setter
 	private int idMusculo;
+	@Getter @Setter
 	private String nombre;
 
-	public Musculo(int idMusculo, String nombre ) {
-		this.idMusculo = idMusculo;
-		this.nombre = nombre;
-	}
-	public Musculo(String nombre ) {
-		this.nombre = nombre;
-	}
-	public Musculo() {
-
-	}
-	public int getIdMusculo() {
-		return idMusculo;
-	}
-	
-	public void setIdMusculo(int idMusculo) {
-		this.idMusculo = idMusculo;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+	@ManyToMany(mappedBy = "musculos")
+	@Getter @Setter
+	private Set<Ejercicio> ejercicios = new HashSet<>();
 }

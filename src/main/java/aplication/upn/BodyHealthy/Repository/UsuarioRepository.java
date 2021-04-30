@@ -10,8 +10,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RolRepository extends JpaRepository<Rol, Integer> {
-//  List<Rol> findByCargo(String cargo);
-    @Query(value="{call getRol(:in_idRol)}", nativeQuery = true)
-    Rol getRol(@Param("in_idRol") Integer in_idRol);
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+    @Query(value="{call getUsuario(:in_idUsuario)}", nativeQuery = true)
+    Usuario getUsuario(@Param("in_idUsuario") Integer in_idUsuario);
+
+    @Query(value="{call getUsuarioByRol(:in_idRol)}", nativeQuery = true)
+    List<Usuario> getByRol(@Param("in_idRol") Integer in_idRol);
+
+    Usuario findByCorreo(String corre);
+
 }
