@@ -27,6 +27,7 @@ public class RolController {
         List<Rol> lista = rolService.getAll();
         return new ResponseEntity(lista, HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Rol> getById(@PathVariable("id") int id) {
         Rol rol = rolService.get(id);

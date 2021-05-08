@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ExerciseUpdateComponent } from './components/pages/exercise-update/exercise-update.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     ExercisesComponent,
     CardComponent,
-    ExerciseFormComponent
+    ExerciseFormComponent,
+    ExerciseUpdateComponent
   ],
   imports: [
     BrowserModule,

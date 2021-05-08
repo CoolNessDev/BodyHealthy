@@ -26,4 +26,11 @@ export class ExercisesService {
   public save(exercise: any): Observable<any> {
     return this.httpClient.post<any>('http://localhost:8080/ejercicio/create', exercise);
   }
+  public update(id: number, exercise: any): Observable<any> {
+    return this.httpClient.put<any>(`http://localhost:8080/ejercicio/${id}`, exercise);
+  }
+  public delete(id: number): Observable<any> {
+    console.log("e2");
+    return this.httpClient.delete<any>(`http://localhost:8080/ejercicio/delete/${id}`);
+  }
 }
