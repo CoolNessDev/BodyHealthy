@@ -1,0 +1,51 @@
+<div class="container">
+    <h1>Nuevo ejercicio</h1>
+    <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="name" required [ngModelOptions]="{standalone: true}">
+            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Duracion</label>
+            <select class="form-select" aria-label="Default select example" [(ngModel)]="duration" [ngModelOptions]="{standalone: true}">
+                <option value="1" selected>1 minuto</option>
+                <option value="2">2 minuto</option>
+                <option value="3">3 minuto</option>
+                <option value="4">4 minuto</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Series</label>
+            <select class="form-select" aria-label="Default select example" [(ngModel)]="series" [ngModelOptions]="{standalone: true}">
+                <option value="1" selected>Unica</option>
+                <option value="2">2 series</option>
+                <option value="3">3 series</option>
+                <option value="4">4 series</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="customRange2" class="form-label">Repeticiones</label>
+            <input #rangoR [(ngModel)]="textoRangoR" [ngModelOptions]="{standalone: true}" type="range"
+                class="form-range" min="1" max="30" id="customRange2" [(ngModel)]="repetitions" required [ngModelOptions]="{standalone: true}">
+            <span>{{textoRangoR}} Repeticiones</span>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="description" required [ngModelOptions]="{standalone: true}"></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Descanso</label>
+            <select class="form-select" aria-label="Default select example" [(ngModel)]="break1" [ngModelOptions]="{standalone: true}">
+                <option value="15" selected>15 segundos</option>
+                <option value="30">30 segundos</option>
+                <option value="60">60 segundos</option>
+                <option value="90">90 segundos</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<!-- 
+        rutina
+        musculo -->

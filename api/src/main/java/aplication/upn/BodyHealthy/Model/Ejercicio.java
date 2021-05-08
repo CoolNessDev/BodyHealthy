@@ -1,5 +1,9 @@
 package aplication.upn.BodyHealthy.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +37,10 @@ public class Ejercicio {
 	@Getter @Setter
 	private int descanso;
 
-	@ManyToMany
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idMusculo")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("id_musculo")
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "ejercicio_musculo",
 			joinColumns = @JoinColumn(name = "id_ejercicio"),
@@ -44,4 +51,14 @@ public class Ejercicio {
 	@ManyToMany(mappedBy = "ejercicios")
 	@Getter @Setter
 	private Set<Rutina> rutinas = new HashSet<>();
+
+	public Ejercicio(String nombre, int duracion, int series, int repeticiones, String imagen, String descripcion, int descanso) {
+		this.nombre = nombre;
+		this.duracion = duracion;
+		this.series = series;
+		this.repeticiones = repeticiones;
+		this.imagen = imagen;
+		this.descripcion = descripcion;
+		this.descanso = descanso;
+	}
 }

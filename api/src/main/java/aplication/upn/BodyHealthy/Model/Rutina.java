@@ -1,5 +1,9 @@
 package aplication.upn.BodyHealthy.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +28,11 @@ public class Rutina {
     private String nivel;
     @Getter @Setter
     private float estado;//nivel de progreso de la rutina
-    @ManyToMany
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEjercicio")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("id_ejercicio")
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "rutina_ejercicio",
             joinColumns = @JoinColumn(name = "id_rutina"),
