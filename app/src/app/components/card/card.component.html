@@ -1,0 +1,19 @@
+<div class="col">
+    <div class="card" style="width: 18rem;">
+        <img [src]="exercise.imagen" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{exercise.nombre}}</h5>
+            <p class="card-text">{{exercise.descripcion}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Series: {{exercise.series}}</li>
+            <li class="list-group-item">Repeticiones: {{exercise.repeticiones}}</li>
+            <li class="list-group-item">Duracion: {{exercise.duracion}} minutos</li>
+        </ul>
+        <div class="card-body">
+            <!-- <a href="#" class="btn btn-primary" routerLink="/ejercicios/editar/{{exercise.id}}">Editar</a> -->
+            <button class="btn btn-primary" routerLink="/ejercicios/editar">Editar</button >
+            <button class="btn btn-primary" routerLink="/ejercicios" (click)="borrar(exercise.idEjercicio)">Eliminar</button >
+        </div>
+    </div>
+</div>
