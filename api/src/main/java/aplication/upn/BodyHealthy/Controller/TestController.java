@@ -1,9 +1,8 @@
 package aplication.upn.BodyHealthy.Controller;
 
-import aplication.upn.BodyHealthy.Model.Rol;
-import aplication.upn.BodyHealthy.Model.Usuario;
-import aplication.upn.BodyHealthy.Service.RolService;
-import aplication.upn.BodyHealthy.Service.UsuarioService;
+import aplication.upn.BodyHealthy.Security.Model.Usuario;
+import aplication.upn.BodyHealthy.Security.Service.RolService;
+import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

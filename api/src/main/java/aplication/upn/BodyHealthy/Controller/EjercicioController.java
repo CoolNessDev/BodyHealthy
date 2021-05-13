@@ -3,15 +3,12 @@ package aplication.upn.BodyHealthy.Controller;
 import aplication.upn.BodyHealthy.Model.Ejercicio;
 import aplication.upn.BodyHealthy.Repository.EjercicioRepository;
 import aplication.upn.BodyHealthy.Service.EjercicioService;
-import aplication.upn.BodyHealthy.dto.EjercicioDto;
+import aplication.upn.BodyHealthy.Dto.EjercicioDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,7 +23,7 @@ public class EjercicioController {
 
     @GetMapping("/lista")
     public ResponseEntity<List<Ejercicio>> listar() {
-        System.out.println("HOLAAAAAAAAAAAAAAAAAAA");
+//        System.out.println("HOLAAAAAAAAAAAAAAAAAAA");
         List<Ejercicio> lista = ejercicioService.getAll();
         return new ResponseEntity(lista, HttpStatus.OK);
     }

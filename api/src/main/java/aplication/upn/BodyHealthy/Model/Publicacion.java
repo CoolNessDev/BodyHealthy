@@ -1,6 +1,7 @@
 package aplication.upn.BodyHealthy.Model;
 
 
+import aplication.upn.BodyHealthy.Security.Model.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

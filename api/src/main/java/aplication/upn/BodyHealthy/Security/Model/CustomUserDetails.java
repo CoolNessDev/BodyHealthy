@@ -1,6 +1,6 @@
-package aplication.upn.BodyHealthy.Security;
+package aplication.upn.BodyHealthy.Security.Model;
 
-import aplication.upn.BodyHealthy.Model.Usuario;
+import aplication.upn.BodyHealthy.Security.Model.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

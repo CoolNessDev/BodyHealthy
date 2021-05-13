@@ -1,5 +1,6 @@
 package aplication.upn.BodyHealthy.Model;
 
+import aplication.upn.BodyHealthy.Security.Model.Usuario;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;

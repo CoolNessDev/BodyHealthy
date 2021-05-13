@@ -1,4 +1,4 @@
-package aplication.upn.BodyHealthy.dto;
+package aplication.upn.BodyHealthy.Dto;
 
 import lombok.Getter;
 import lombok.Setter;

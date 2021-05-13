@@ -1,4 +1,7 @@
-package aplication.upn.BodyHealthy.Model;
+package aplication.upn.BodyHealthy.Security.Model;
+import aplication.upn.BodyHealthy.Model.Comentario;
+import aplication.upn.BodyHealthy.Model.Publicacion;
+import aplication.upn.BodyHealthy.Model.Rutina;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -58,4 +61,15 @@ public class Usuario {
 			inverseJoinColumns = @JoinColumn(name = "id_rutina"))
 	@Getter @Setter
 	private Set<Rutina> rutinas = new HashSet<>();
+
+	public Usuario(String imagen, String nombres, String apellidos, Date fechaNacimiento, float altura, float peso, String correo, String contra) {
+		this.imagen = imagen;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.fechaNacimiento = fechaNacimiento;
+		this.altura = altura;
+		this.peso = peso;
+		this.correo = correo;
+		this.contra = contra;
+	}
 }

@@ -1,7 +1,6 @@
-package aplication.upn.BodyHealthy.Repository;
+package aplication.upn.BodyHealthy.Security.Repository;
 
-import aplication.upn.BodyHealthy.Model.Rol;
-import aplication.upn.BodyHealthy.Model.Usuario;
+import aplication.upn.BodyHealthy.Security.Model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +15,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query(value="{call getUsuarioByRol(:in_idRol)}", nativeQuery = true)
     List<Usuario> getByRol(@Param("in_idRol") Integer in_idRol);
-
-    Usuario findByCorreo(String corre);
+    boolean existsByCorreo(String Correo);
+    Usuario findByCorreo(String correo);
 
 }

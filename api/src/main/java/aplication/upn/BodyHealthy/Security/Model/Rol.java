@@ -1,4 +1,4 @@
-package aplication.upn.BodyHealthy.Model;
+package aplication.upn.BodyHealthy.Security.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

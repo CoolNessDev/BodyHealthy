@@ -1,7 +1,7 @@
-package aplication.upn.BodyHealthy.Service;
+package aplication.upn.BodyHealthy.Security.Service;
 
-import aplication.upn.BodyHealthy.Model.Rol;
-import aplication.upn.BodyHealthy.Repository.RolRepository;
+import aplication.upn.BodyHealthy.Security.Model.Rol;
+import aplication.upn.BodyHealthy.Security.Repository.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
