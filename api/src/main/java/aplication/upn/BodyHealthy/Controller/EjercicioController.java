@@ -7,6 +7,7 @@ import aplication.upn.BodyHealthy.Dto.EjercicioDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class EjercicioController {
         ejercicioService.save(ejercicio);
         return new ResponseEntity(HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         ejercicioService.delete(id);
