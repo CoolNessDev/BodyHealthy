@@ -36,7 +36,7 @@ public class EjercicioController {
         Ejercicio ejercicio = ejercicioService.getOne(id).get();
         return new ResponseEntity(ejercicio, HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody EjercicioDto ejercicioDto) {
         if (ejercicioDto.getNombre().equals(""))
@@ -49,7 +49,7 @@ public class EjercicioController {
         ejercicioService.insert(ejercicio);
         return new ResponseEntity(HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody EjercicioDto ejercicioDto) {
         if (!ejercicioService.existsById(id))

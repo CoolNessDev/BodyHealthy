@@ -1,41 +1,39 @@
-<!-- ======= Header ======= -->
 <header id="header" class="fixed-top ">
   <div class="container d-flex align-items-center justify-content-lg-between">
-
-    <h1 class="logo me-auto me-lg-0"><a href="#">BodyHealthy<span>.</span></a></h1>
-    <!-- Uncomment below if you prefer to use an image logo -->
-    <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
+    <h1 class="logo me-auto me-lg-0"><a href="#hero">BodyHealthy<span>.</span></a></h1>
 
     <nav id="navbar" class="navbar order-last order-lg-0" [ngClass]="butguerStatus ? 'navbar-mobile' : ''">
       <ul>
-        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-        <li><a class="nav-link scrollto" href="#about">About</a></li>
-        <li><a class="nav-link scrollto" routerLink="/ejercicios">Ejercicios</a></li>
-        <li><a class="nav-link scrollto " routerLink="/ejercicios/insertar">Insertar</a></li>
-        <li><a class="nav-link scrollto" href="#team">Team</a></li>
-        <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+        <li><a class="nav-link scrollto active" href="#hero">Inicio</a></li>
+        <li><a class="nav-link scrollto" href="#about">Noticias</a></li>
+        <li class="dropdown"><a href="#about"><span>Rutinas</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">Drop Down 1</a></li>
-            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+            <li class="dropdown"><a href="#"><span>Nivel</span> <i class="bi bi-chevron-right"></i></a>
               <ul>
-                <li><a href="#">Deep Drop Down 1</a></li>
-                <li><a href="#">Deep Drop Down 2</a></li>
-                <li><a href="#">Deep Drop Down 3</a></li>
-                <li><a href="#">Deep Drop Down 4</a></li>
-                <li><a href="#">Deep Drop Down 5</a></li>
+                <li><a href="#">Basico</a></li>
+                <li><a href="#">Intermedio</a></li>
+                <li><a href="#">Avanzado</a></li>
               </ul>
             </li>
-            <li><a href="#">Drop Down 2</a></li>
-            <li><a href="#">Drop Down 3</a></li>
-            <li><a href="#">Drop Down 4</a></li>
           </ul>
         </li>
-        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        <li class="dropdown"><a routerLink="/ejercicios"><span>Ejercicios</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a routerLink="/ejercicios/insertar">Insertar</a></li>
+            <li class="dropdown"><a href="#"><span>Musculos</span> <i class="bi bi-chevron-right"></i></a>
+              <ul>
+                <li><a href="#">Listar musculos</a></li>
+              </ul>
+            </li>
+            <li><a routerLink="/ejercicios">Ver ejercicios</a></li>
+          </ul>
+        </li>
+        <li><a class="nav-link scrollto" href="#contact">Contacto</a></li>
       </ul>
       <i class="bi  mobile-nav-toggle" [ngClass]="butguerStatus ? 'bi-x' : 'bi-list'" (click)="onBurguerClick()">burguer</i>
-    </nav><!-- .navbar -->
+    </nav>
     <a *ngIf="!isLogged" class="get-started-btn scrollto" routerLink="/login">Get Started</a>
     <a *ngIf="isLogged" class="get-started-btn scrollto" (click)="onLogOut()">Log Out</a>
 
   </div>
-</header><!-- End Header -->
+</header>

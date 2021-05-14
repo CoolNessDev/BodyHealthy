@@ -43,7 +43,7 @@ public class AuthController {
     RolService rolService;
     @Autowired
     JwtProvider jwtProvider;
-    @PreAuthorize("hasAuthority('ADMIN')")
+
     @PostMapping("/create")
     public ResponseEntity<?> nuevo(@RequestBody UserDto userDto, BindingResult bindingResult){
         if(bindingResult.hasErrors())
