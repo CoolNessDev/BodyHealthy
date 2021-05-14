@@ -1,29 +1,30 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Exercise } from 'src/app/models/exercise';
 import { ExercisesService } from 'src/app/services/exercises.service';
 
 @Component({
   selector: 'bh-exercise-update',
   templateUrl: './exercise-update.component.html',
-  styleUrls: ['./exercise-update.component.css']
+  styleUrls: ['./exercise-update.component.css'],
 })
 export class ExerciseUpdateComponent implements OnInit {
- 
-  name: string = '';
-  duration: number = null;
-  series: number = null;
-  repetitions: number = null;
+  exercise: Exercise;
+
+  exerciseUpdateForm: FormGroup;
   img: string = 'https://i.ibb.co/1dKwX7p/plancha.jpg';
-  description: string = 'asd';
-  break1: number = null;
 
   @ViewChild('rangoR', { static: false })
   rangoR!: ElementRef;
   private _textoRangoR: string = '2';
-  constructor(private exercisesService: ExercisesService,
+  constructor(
+    private exercisesService: ExercisesService,
     private toastr: ToastrService,
-    private router: Router ) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   set textoRangoR(t: any) {
     this._textoRangoR = t;
@@ -32,22 +33,90 @@ export class ExerciseUpdateComponent implements OnInit {
     return this._textoRangoR;
   }
   ngOnInit(): void {
+    // ### Bloquear formulario hasta resolver promesa
+    this.initForm();
+    const id = this.activatedRoute.snapshot.params.id;
+    this.exercisesService.detail(id).subscribe(
+      (data) => {
+        this.exercise = data;
+        this.loadData(data);
+        console.log(data);
+        console.log(this.name.value);
+
+      },
+      (err) => {
+        this.toastr.error(err.error.mensaje, 'Fail', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center',
+        });
+        this.router.navigate(['/']);
+      }
+    );
   }
   onUpdate(): void {
-    // const id = this.activatedRoute.snapshot.params.id;
-    // this.productoService.update(id, this.producto).subscribe(
-    //   data => {
-    //     this.toastr.success('Producto Actualizado', 'OK', {
-    //       timeOut: 3000, positionClass: 'toast-top-center'
-    //     });
-    //     this.router.navigate(['/ejercicios']);
-    //   },
-    //   err => {
-    //     this.toastr.error(err.error.mensaje, 'Fail', {
-    //       timeOut: 3000,  positionClass: 'toast-top-center',
-    //     });
-    //   }
-    // );
+    this.setValues();
+    const id = this.activatedRoute.snapshot.params.id;
+    this.exercisesService.update(id, this.exercise).subscribe(
+      data => {
+        this.toastr.success('Producto Actualizado', 'OK', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        });
+        this.router.navigate(['/ejercicios']);
+      },
+      err => {
+        this.toastr.error(err.error.mensaje, 'Fail', {
+          timeOut: 3000,  positionClass: 'toast-top-center',
+        });
+      }
+    );
+  }
+  initForm = (): void => {
+    this.exerciseUpdateForm = new FormGroup({
+      name: new FormControl(null, Validators.required),
+      duracion: new FormControl(null, Validators.required),
+      series: new FormControl(null, Validators.required),
+      repeticiones: new FormControl(null, Validators.required),
+      descripcion: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(10),
+      ]),
+      descanso: new FormControl(null),
+    });
+  };
+  loadData = (data): void => {
+    this.exerciseUpdateForm.get('name').setValue(data.nombre);
+    this.exerciseUpdateForm.get('duracion').setValue(data.duracion);
+    this.exerciseUpdateForm.get('series').setValue(data.series);
+    this.exerciseUpdateForm.get('repeticiones').setValue(data.repeticiones);
+    this.exerciseUpdateForm.get('descripcion').setValue(data.descripcion);
+    this.exerciseUpdateForm.get('descanso').setValue(data.descanso);
+  };
+  setValues(){
+    this.exercise.nombre=this.name.value;
+    this.exercise.duracion=this.duracion.value;
+    this.exercise.series=this.series.value;
+    this.exercise.repeticiones=this.repeticiones.value;
+    this.exercise.descripcion=this.descripcion.value;
+    this.exercise.descanso=this.series.value;
+  }
+
+  private get name(){
+    return this.exerciseUpdateForm.get('name');
+  }
+  private get duracion(){
+    return this.exerciseUpdateForm.get('duracion');
+  }
+  private get series(){
+    return this.exerciseUpdateForm.get('series');
+  }
+  private get repeticiones(){
+    return this.exerciseUpdateForm.get('repeticiones');
+  }
+  private get descripcion(){
+    return this.exerciseUpdateForm.get('descripcion');
+  }
+  private get descanso(){
+    return this.exerciseUpdateForm.get('descanso');
   }
 
 }

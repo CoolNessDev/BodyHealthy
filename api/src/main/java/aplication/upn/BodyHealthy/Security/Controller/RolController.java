@@ -5,6 +5,7 @@ import aplication.upn.BodyHealthy.Security.Service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class RolController {
 
     @Autowired
     RolService rolService;
-
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     @GetMapping("/lista")
     public ResponseEntity<List<Rol>> listar() {
         List<Rol> lista = rolService.getAll();

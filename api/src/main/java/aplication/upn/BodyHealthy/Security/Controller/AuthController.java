@@ -1,5 +1,6 @@
 package aplication.upn.BodyHealthy.Security.Controller;
 
+import aplication.upn.BodyHealthy.Dto.Message;
 import aplication.upn.BodyHealthy.Model.Person;
 import aplication.upn.BodyHealthy.Security.Dto.JwtDto;
 import aplication.upn.BodyHealthy.Security.Dto.LoginUserDto;
@@ -11,6 +12,7 @@ import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,25 +43,25 @@ public class AuthController {
     RolService rolService;
     @Autowired
     JwtProvider jwtProvider;
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> nuevo(@RequestBody UserDto userDto, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return new ResponseEntity("campos mal puestos o email inválido", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
         if(usuarioService.existsByEmail(userDto.getCorreo()))
-            return new ResponseEntity("ese email ya existe", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("ese email ya existe"), HttpStatus.BAD_REQUEST);
         Usuario usuario =
                 new Usuario(userDto.getImagen(),userDto.getNombres(),userDto.getApellidos(),userDto.getFechaNacimiento(), userDto.getAltura(),
         userDto.getPeso(), userDto.getCorreo(), passwordEncoder.encode(userDto.getContra()));
         usuario.setRol(rolService.get(2));
         usuarioService.save(usuario);
-        return new ResponseEntity("usuario guardado", HttpStatus.CREATED);
+        return new ResponseEntity(new Message("usuario guardado"), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtDto> login(@RequestBody LoginUserDto loginUserDto, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return new ResponseEntity("campos mal puestos", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("campos mal puestos"), HttpStatus.BAD_REQUEST);
         Authentication authentication =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDto.getCorreo(), loginUserDto.getContra()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

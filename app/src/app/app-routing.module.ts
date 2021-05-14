@@ -4,34 +4,16 @@ import { ExerciseFormComponent } from './components/pages/exercise-form/exercise
 import { ExerciseUpdateComponent } from './components/pages/exercise-update/exercise-update.component';
 import { ExercisesComponent } from './components/pages/exercises/exercises.component';
 import { LoginComponent } from './components/pages/login/login.component';
-
+import { GuardService as guard } from './services/guard/guard.service';
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'ejercicios',
-    component: ExercisesComponent
-  },
-  {
-    path: 'ejercicios/insertar',
-    component: ExerciseFormComponent
-  },
-  // { 
-  //   path: 'editar/:id', 
-  //   component: EditarProductoComponent, 
-  //   canActivate: [guard], 
-  //   data: { expectedRol: ['admin'] } 
-  // },
-  {
-    path: 'ejercicios/editar',
-    component: ExerciseUpdateComponent
-  }
+  { path: 'login', component: LoginComponent },
+  { path: 'ejercicios', component: ExercisesComponent },
+  { path: 'ejercicios/insertar', component: ExerciseFormComponent, canActivate: [guard], data: { expectedRol: ['admin'] } },
+  { path: 'ejercicios/editar/:id', component: ExerciseUpdateComponent, canActivate: [guard], data: { expectedRol: ['admin'] } },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

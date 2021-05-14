@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { TokenService } from 'src/app/services/auth/token/token.service';
 import { ExercisesService } from 'src/app/services/exercises.service';
 
 @Component({
@@ -11,16 +12,24 @@ import { ExercisesService } from 'src/app/services/exercises.service';
 export class CardComponent implements OnInit {
   @Input()
   exercise!: any;
+
+  roles: string[];
+  isAdmin = false;
   constructor(private exercisesService: ExercisesService,
-    private toastr: ToastrService,private router: Router ) { }
+    private toastr: ToastrService,private tokenService: TokenService,private router: Router ) { }
 
   ngOnInit(){
-    console.log('ejercicios2: ',this.exercise);
-    
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach(rol => {
+      if (rol === 'ADMIN') {
+        this.isAdmin = true;
+      }
+    });
+
   }
   borrar(id: number) {
     console.log("e1: ", id);
-    
+
     this.exercisesService.delete(id).subscribe(
       data => {
         this.toastr.success('Producto Eliminado', 'OK', {

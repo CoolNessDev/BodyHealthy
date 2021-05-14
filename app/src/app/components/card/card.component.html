@@ -12,8 +12,8 @@
         </ul>
         <div class="card-body">
             <!-- <a href="#" class="btn btn-primary" routerLink="/ejercicios/editar/{{exercise.id}}">Editar</a> -->
-            <button class="btn btn-primary" routerLink="/ejercicios/editar">Editar</button >
-            <button class="btn btn-primary" routerLink="/ejercicios" (click)="borrar(exercise.idEjercicio)">Eliminar</button >
+            <button *ngIf="isAdmin" class="btn btn-primary" routerLink="/ejercicios/editar/{{exercise.idEjercicio}}" >Editar</button >
+            <button *ngIf="isAdmin" class="btn btn-primary" routerLink="/ejercicios" (click)="borrar(exercise.idEjercicio)">Eliminar</button >
         </div>
     </div>
 </div>

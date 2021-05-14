@@ -31,4 +31,7 @@ public class EjercicioService {
     public void delete(int id){
         ejercicioRepository.deleteById(id);
     }
+    public boolean existsById(int id){
+        return ejercicioRepository.existsById(id);
+    }
 }

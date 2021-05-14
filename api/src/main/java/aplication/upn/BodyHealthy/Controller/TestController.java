@@ -24,15 +24,9 @@ public class TestController {
         List<Usuario> lista = usuarioService.getAll();
         return new ResponseEntity(lista, HttpStatus.OK);
     }
-    //    @GetMapping("")
-//    public ResponseEntity<Rol> getById(@RequestParam(required = true, defaultValue = "1") Integer id) {
-//        Rol rol = rolService.getRol(id);
-//        return new ResponseEntity(rol, HttpStatus.OK);
-//    }
     @GetMapping("/usuarios/rol/{id}")
     public ResponseEntity<List<Usuario>> getById(@PathVariable("id") int id) {
         List<Usuario> roles = usuarioService.getByRol(id);
-//        System.out.println(usuarioService.getAll().toString());
         return new ResponseEntity(roles, HttpStatus.OK);
     }
 }
