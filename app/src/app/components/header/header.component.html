@@ -22,7 +22,8 @@
             <li><a routerLink="/ejercicios/insertar">Insertar</a></li>
             <li class="dropdown"><a href="#"><span>Musculos</span> <i class="bi bi-chevron-right"></i></a>
               <ul>
-                <li><a href="#">Listar musculos</a></li>
+
+                <li  *ngFor="let muscle of muscles"><a href="#">{{muscle.nombre}}</a></li>
               </ul>
             </li>
             <li><a routerLink="/ejercicios">Ver ejercicios</a></li>

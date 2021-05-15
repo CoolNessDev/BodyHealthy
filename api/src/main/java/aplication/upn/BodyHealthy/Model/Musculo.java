@@ -24,4 +24,13 @@ public class Musculo {
 	@ManyToMany(mappedBy = "musculos")
 	@Getter @Setter
 	private Set<Ejercicio> ejercicios = new HashSet<>();
+
+	@Override
+	public String toString() {
+		return "Musculo{" +
+				"idMusculo=" + idMusculo +
+				", nombre='" + nombre + '\'' +
+				", ejercicios=" + ejercicios +
+				'}';
+	}
 }

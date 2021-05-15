@@ -1,5 +1,6 @@
 package aplication.upn.BodyHealthy;
 
+import aplication.upn.BodyHealthy.Model.Musculo;
 import aplication.upn.BodyHealthy.Security.Service.RolService;
 import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
 import aplication.upn.BodyHealthy.Service.*;
@@ -33,5 +34,10 @@ public class GetTest {
     @Test
     public void testGetByrol() {
         System.out.println(usuarioService.getByRol(1));
+    }
+
+    @Test
+    public void testGetByMusculo() {
+        System.out.println(musculoService.getAll().get(0).toString());
     }
 }

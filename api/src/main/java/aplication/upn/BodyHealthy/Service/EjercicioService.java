@@ -34,4 +34,8 @@ public class EjercicioService {
     public boolean existsById(int id){
         return ejercicioRepository.existsById(id);
     }
+    public List<Ejercicio> getByMusculo(int id_musculo){
+        return ejercicioRepository.findByMusculos(id_musculo);
+    }
+
 }

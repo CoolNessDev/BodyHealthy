@@ -8,15 +8,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface EjercicioRepository extends JpaRepository<Ejercicio, Integer> {
     @Query(value="{call getEjercicio(:in_idEjercicio)}", nativeQuery = true)
     Ejercicio getEjercicio(@Param("in_idEjercicio") Integer in_idEjercicio);
-    @Transactional
-//    @Procedure(procedureName = "DeleteEjercicio(:id_ejer)")
-//    Ejercicio deleteEjercicio(@Param("id_ejer") Integer id_ejer);
+
     @Procedure(name = "DeleteEjercicio")
     Ejercicio deleteEjercicio(@Param("id_ejer") Integer id_ejer);
-//    @Query(value="{call DeleteEjercicio(:id_ejer)}", nativeQuery = true)
-//    Ejercicio deleteEjercicio(@Param("id_ejer") Integer id_ejer);
+
+    List<Ejercicio> findByMusculos(int id_musculo);
 }
