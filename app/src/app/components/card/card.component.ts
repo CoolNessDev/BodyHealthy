@@ -7,7 +7,7 @@ import { ExercisesService } from 'src/app/services/exercises.service';
 @Component({
   selector: 'bh-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  styleUrls: ['./card.component.css'],
 })
 export class CardComponent implements OnInit {
   @Input()
@@ -15,33 +15,50 @@ export class CardComponent implements OnInit {
 
   roles: string[];
   isAdmin = false;
-  constructor(private exercisesService: ExercisesService,
-    private toastr: ToastrService,private tokenService: TokenService,private router: Router ) { }
+  constructor(
+    private exercisesService: ExercisesService,
+    private toastr: ToastrService,
+    private tokenService: TokenService,
+    private router: Router
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
+    //quitar id de la imagen en la url
+    this.exercise.imagen = this.getUrl(this.exercise.imagen);
+
     this.roles = this.tokenService.getAuthorities();
-    this.roles.forEach(rol => {
+    this.roles.forEach((rol) => {
       if (rol === 'ADMIN') {
         this.isAdmin = true;
       }
     });
-
   }
   borrar(id: number) {
-    console.log("e1: ", id);
+    console.log('e1: ', id);
 
     this.exercisesService.delete(id).subscribe(
-      data => {
+      (data) => {
         this.toastr.success('Producto Eliminado', 'OK', {
-          timeOut: 3000, positionClass: 'toast-top-center'
+          timeOut: 3000,
+          positionClass: 'toast-top-center',
         });
         this.router.navigate(['/']);
       },
-      err => {
+      (err) => {
         this.toastr.error(err.error.mensaje, 'Fail', {
-          timeOut: 3000, positionClass: 'toast-top-center',
+          timeOut: 3000,
+          positionClass: 'toast-top-center',
         });
       }
     );
+  }
+  getUrl(img: String): String {
+    if (img.includes(':-:')) {
+      let len = img.length;
+      let substr = img.substring(img.indexOf(':-:'), len);
+      return img.replace(substr, '');
+    } else {
+      return img;
+    }
   }
 }
