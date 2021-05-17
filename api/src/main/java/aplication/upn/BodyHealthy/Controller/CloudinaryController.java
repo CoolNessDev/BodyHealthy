@@ -42,7 +42,7 @@ public class CloudinaryController {
         System.out.println(imagen.get(1));
        imagen.add((String)result.get("public_id"));
 
-        return new ResponseEntity(new Message("imagen subida"), HttpStatus.OK);
+        return new ResponseEntity(new Message(imagen.get(1)), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

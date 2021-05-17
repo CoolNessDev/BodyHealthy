@@ -39,8 +39,6 @@ export class ExercisesService {
   }
   public uploadImage(imagen: File): Observable<any> {
     this.setHttpOptions()
-    console.log("Subiendo", imagen);
-
     const formData = new FormData();
     formData.append('multipartFile', imagen);
 

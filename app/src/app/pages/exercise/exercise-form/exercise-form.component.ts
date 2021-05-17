@@ -40,15 +40,12 @@ export class ExerciseFormComponent implements OnInit {
 
   }
   onFileChange(event) {
-    console.log("IMAGEEEE",this.imagen);
     this.imagen = event.target.files[0];
     const fr = new FileReader();
     fr.onload = (evento: any) => {
       this.imagenMin = evento.target.result;
     };
     fr.readAsDataURL(this.imagen);
-    console.log("IMAGEEEE",this.imagen);
-
   }
   onCreate(): void {
     console.log("Description: ",this.description);
@@ -76,7 +73,9 @@ export class ExerciseFormComponent implements OnInit {
       data => {
         this.spinner.hide();
         // this.router.navigate(['/']);
-        console.log("Subido: ", data);
+        console.log("Subido: ", data.message);
+        this.img=data.message;
+        this.onCreate()
 
       },
       err => {
@@ -85,8 +84,6 @@ export class ExerciseFormComponent implements OnInit {
         this.reset();
       }
     );
-    console.log("Imagen: ",this.imagen);
-
     // this.reset();
     this.spinner.hide();
   }
