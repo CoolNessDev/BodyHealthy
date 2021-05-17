@@ -15,6 +15,8 @@ export class ExercisesService {
     })
   };
   exerciseURL = "http://localhost:8080/ejercicio";
+  imagenURL = "http://localhost:8080/cloudinary";
+
   constructor(private httpClient: HttpClient,private tokenService: TokenService) {
   }
   async getExercises(){
@@ -26,7 +28,8 @@ export class ExercisesService {
     return this.httpClient.get<any>(`${this.exerciseURL}/${id}`);
   }
   public save(exercise: any): Observable<any> {
-    return this.httpClient.post<any>(`${this.exerciseURL}/create`, exercise);
+    this.setHttpOptions()
+    return this.httpClient.post<any>(`${this.exerciseURL}/create`, exercise, this.httpOptions);
   }
   public update(id: number, exercise: any): Observable<any> {
     return this.httpClient.put<any>(`${this.exerciseURL}/update/${id}`, exercise);
@@ -34,6 +37,15 @@ export class ExercisesService {
   public delete(id: number): Observable<any> {
     this.setHttpOptions()
     return this.httpClient.delete<any>(`${this.exerciseURL}/delete/${id}`,this.httpOptions);
+  }
+  public uploadImage(imagen: File): Observable<any> {
+    // this.setHttpOptions()
+    console.log("Subiendo", imagen);
+
+    const formData = new FormData();
+    formData.append('multipartFile', imagen);
+
+    return this.httpClient.post<any>(`${this.imagenURL}/upload`, formData);
   }
   private setHttpOptions(){
     this.httpOptions.headers =

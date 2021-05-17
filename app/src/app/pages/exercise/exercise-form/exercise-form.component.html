@@ -1,9 +1,18 @@
 <div class="container">
     <h1>Nuevo ejercicio</h1>
+    <button (click)="onUpload()">Test</button>
     <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
         <div class="mb-3">
             <label class="form-label">Nombre</label>
             <input type="text" class="form-control" [(ngModel)]="name" required [ngModelOptions]="{standalone: true}">
+            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Imagen</label>
+            <input type="file" class="form-control" id="imagen" #imagenInputFile
+            (change)="onFileChange($event)" accept="image/png, image/jpeg, image/gif">
+
+            <!-- <label class="custom-file-label" for="imagen">Elige una imagen</label> -->
             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
         </div>
         <div class="mb-3">
@@ -46,6 +55,6 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-<!-- 
+<!--
         rutina
         musculo -->
