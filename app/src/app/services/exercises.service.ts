@@ -37,6 +37,11 @@ export class ExercisesService {
     this.setHttpOptions()
     return this.httpClient.delete<any>(`${this.exerciseURL}/delete/${id}`,this.httpOptions);
   }
+  private setHttpOptions(){
+    this.httpOptions.headers =
+    this.httpOptions.headers.set('Authorization', "Bearer "+this.tokenService.getToken() );
+  }
+  //Mover
   public uploadImage(imagen: File): Observable<any> {
     this.setHttpOptions()
     const formData = new FormData();
@@ -44,8 +49,9 @@ export class ExercisesService {
 
     return this.httpClient.post<any>(`${this.imagenURL}/upload`, formData, this.httpOptions);
   }
-  private setHttpOptions(){
-    this.httpOptions.headers =
-    this.httpOptions.headers.set('Authorization', "Bearer "+this.tokenService.getToken() );
+  public deleteImage(id: String): Observable<any> {
+    console.log("deleting: ",id);
+    this.setHttpOptions()
+    return this.httpClient.delete<any>(`${this.imagenURL}/delete/${id}`,this.httpOptions);
   }
 }

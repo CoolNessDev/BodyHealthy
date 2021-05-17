@@ -24,7 +24,7 @@ export class CardComponent implements OnInit {
 
   ngOnInit() {
     //quitar id de la imagen en la url
-    this.exercise.imagen = this.getUrl(this.exercise.imagen);
+    // this.exercise.imagen = this.getUrl(this.exercise.imagen);
 
     this.roles = this.tokenService.getAuthorities();
     this.roles.forEach((rol) => {
@@ -42,7 +42,23 @@ export class CardComponent implements OnInit {
           timeOut: 3000,
           positionClass: 'toast-top-center',
         });
-        this.router.navigate(['/']);
+        const imgId = this.getImageId(this.exercise.imagen);
+        if (imgId != 'vacio') {
+          this.exercisesService.deleteImage(imgId).subscribe(
+            (data) => {
+              console.log('eliminado');
+            },
+            (err) => {
+              this.toastr.error(err.error.mensaje, 'Fail', {
+                timeOut: 3000,
+                positionClass: 'toast-top-center',
+              });
+
+              console.log('eror al eliminar la imagen');
+            }
+          );
+        }
+        window.location.reload();
       },
       (err) => {
         this.toastr.error(err.error.mensaje, 'Fail', {
@@ -59,6 +75,14 @@ export class CardComponent implements OnInit {
       return img.replace(substr, '');
     } else {
       return img;
+    }
+  }
+  getImageId(img: String): String {
+    if (img.includes(':-:')) {
+      let substr = img.substring(0, img.indexOf(':-:'));
+      return img.replace(substr + ':-:', '');
+    } else {
+      return 'vacio';
     }
   }
 }
