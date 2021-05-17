@@ -35,11 +35,11 @@ public class CloudinaryController {
         if(bi == null){
             return new ResponseEntity(new Message("imagen no válida"), HttpStatus.BAD_REQUEST);
         }
-        System.out.println("111111111");
         Map result = cloudinaryService.upload(multipartFile);
        List<String> imagen = new ArrayList<>();
        imagen.add((String)result.get("original_filename"));
        imagen.add((String)result.get("url"));
+        System.out.println(imagen.get(1));
        imagen.add((String)result.get("public_id"));
 
         return new ResponseEntity(new Message("imagen subida"), HttpStatus.OK);

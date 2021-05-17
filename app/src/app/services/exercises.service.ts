@@ -10,7 +10,6 @@ import { TokenService } from './auth/token/token.service';
 export class ExercisesService {
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json',
       Authorization: 'my-auth-token'
     })
   };
@@ -39,13 +38,13 @@ export class ExercisesService {
     return this.httpClient.delete<any>(`${this.exerciseURL}/delete/${id}`,this.httpOptions);
   }
   public uploadImage(imagen: File): Observable<any> {
-    // this.setHttpOptions()
+    this.setHttpOptions()
     console.log("Subiendo", imagen);
 
     const formData = new FormData();
     formData.append('multipartFile', imagen);
 
-    return this.httpClient.post<any>(`${this.imagenURL}/upload`, formData);
+    return this.httpClient.post<any>(`${this.imagenURL}/upload`, formData, this.httpOptions);
   }
   private setHttpOptions(){
     this.httpOptions.headers =
