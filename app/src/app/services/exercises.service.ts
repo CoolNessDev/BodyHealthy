@@ -18,10 +18,8 @@ export class ExercisesService {
 
   constructor(private httpClient: HttpClient,private tokenService: TokenService) {
   }
-  async getExercises(){
-    const resp = await fetch(`${this.exerciseURL}/lista`);
-    const data = await resp.json();
-    return data;
+  public getExercises():Observable<any[]>{
+    return this.httpClient.get<any[]>(`${this.exerciseURL}/lista`);
   }
   public detail(id: number): Observable<any> {
     return this.httpClient.get<any>(`${this.exerciseURL}/${id}`);

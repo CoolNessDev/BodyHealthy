@@ -17,7 +17,9 @@ export class ExercisesComponent implements OnInit {
   ngOnInit(): void {
     this.fetchExercise();
   }
-  private async fetchExercise() {
-    this.exercises = await this.exercisesService.getExercises();
+  private  fetchExercise() {
+    this.exercisesService.getExercises().subscribe((data)=>{
+      this.exercises=data;
+    });
   }
 }
