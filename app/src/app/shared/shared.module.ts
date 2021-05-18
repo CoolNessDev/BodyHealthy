@@ -6,11 +6,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { AlertComponent } from './alert/alert.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SpinnerComponent,
+    AlertComponent
+  ],
   imports: [
     CommonModule,
     AppRoutingModule,
@@ -20,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ToastrModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
+    NgxSpinnerModule
   ],
   exports:[
     AppRoutingModule,
@@ -29,6 +36,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ToastrModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NgxSpinnerModule,
+    SpinnerComponent,
+    AlertComponent
   ]
 })
 export class SharedModule { }

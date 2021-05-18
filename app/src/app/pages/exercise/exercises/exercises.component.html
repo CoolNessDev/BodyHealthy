@@ -1,12 +1,15 @@
 <div class="album py-5 bg-light">
-    <div class="container">
-        <div *ngIf="exercises && exercises.length > 0; else elseTemplate" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <bh-card *ngFor="let exercise of exercises" [exercise]="exercise"></bh-card>
-        </div>
-        <ng-template #elseTemplate>
-            <div class="alert alert-primary" role="alert">
-                Cargando ejercicios.....
-            </div>
-        </ng-template>
+  <div class="container">
+    <div
+      *ngIf="exercises && exercises.length > 0"
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"
+    >
+      <bh-card
+        *ngFor="let exercise of exercises"
+        [exercise]="exercise"
+      ></bh-card>
     </div>
+    <bh-alert *ngIf="!loaded" [alertClass]="'alert-primary'" [message]="'Cargando ejercicios....'"></bh-alert>
+    <bh-alert *ngIf="error" [alertClass]="'alert-danger'" [message]="'Error al cargar ejercicios'"></bh-alert>
+  </div>
 </div>

@@ -9,6 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ExercisesComponent implements OnInit {
   exercises!: any;
+  loaded: boolean;
+  error: boolean;
   constructor(private exercisesService: ExercisesService,
     private toastr: ToastrService) {
     // this.exercises = exercisesService.getExercises();
@@ -18,8 +20,16 @@ export class ExercisesComponent implements OnInit {
     this.fetchExercise();
   }
   private  fetchExercise() {
+    this.loaded=false;
+    this.error=false;
     this.exercisesService.getExercises().subscribe((data)=>{
+      this.loaded=true;
       this.exercises=data;
+    },
+    (err)=>{
+      this.loaded=true;
+      this.error=true;
+      console.log("Error: ",err.message);
     });
   }
 }
