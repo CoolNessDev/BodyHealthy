@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { TokenService } from 'src/app/services/auth/token/token.service';
 import { ExercisesService } from 'src/app/services/exercises.service';
 
@@ -17,8 +17,8 @@ export class CardComponent implements OnInit {
   isAdmin = false;
   constructor(
     private exercisesService: ExercisesService,
-    private toastr: ToastrService,
     private tokenService: TokenService,
+    private spinner: NgxSpinnerService,
     private router: Router
   ) {}
 
@@ -35,13 +35,9 @@ export class CardComponent implements OnInit {
   }
   borrar(id: number) {
     console.log('e1: ', id);
-
+    this.spinner.show();
     this.exercisesService.delete(id).subscribe(
       (data) => {
-        this.toastr.success('Producto Eliminado', 'OK', {
-          timeOut: 3000,
-          positionClass: 'toast-top-center',
-        });
         const imgId = this.getImageId(this.exercise.imagen);
         if (imgId != 'vacio') {
           this.exercisesService.deleteImage(imgId).subscribe(
@@ -49,22 +45,16 @@ export class CardComponent implements OnInit {
               console.log('eliminado');
             },
             (err) => {
-              this.toastr.error(err.error.mensaje, 'Fail', {
-                timeOut: 3000,
-                positionClass: 'toast-top-center',
-              });
-
-              console.log('eror al eliminar la imagen');
+              console.log('Error: ', err.meesage);
             }
           );
         }
+        this.spinner.hide();
         window.location.reload();
       },
       (err) => {
-        this.toastr.error(err.error.mensaje, 'Fail', {
-          timeOut: 3000,
-          positionClass: 'toast-top-center',
-        });
+        this.spinner.hide();
+        console.log('Error: ', err.meesage);
       }
     );
   }

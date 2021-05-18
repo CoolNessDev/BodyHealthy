@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Exercise } from 'src/app/models/exercise';
 import { ExercisesService } from 'src/app/services/exercises.service';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
@@ -26,9 +25,8 @@ export class ExerciseFormComponent implements OnInit {
   rangoR!: ElementRef;
   private _textoRangoR: string = '2';
   constructor(private exercisesService: ExercisesService,
-    private toastr: ToastrService,
     private router: Router,
-    private spinner: NgxSpinnerService ) { }
+    private spinner: NgxSpinnerService) { }
 
   set textoRangoR(t: any) {
     this._textoRangoR = t;
@@ -54,15 +52,11 @@ export class ExerciseFormComponent implements OnInit {
       this.img,this.description,this.break1);
     this.exercisesService.save(exercise).subscribe(
       data => {
-        this.toastr.success('Producto Creado', 'OK', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        });
-        this.router.navigate(['/ejercicios']);
+
+
       },
       err => {
-        this.toastr.error(err.error.mensaje, 'Fail', {
-          timeOut: 3000, positionClass: 'toast-top-center',
-        });
+
         // this.router.navigate(['/']);
       }
     );
@@ -71,11 +65,11 @@ export class ExerciseFormComponent implements OnInit {
     this.spinner.show();
     this.exercisesService.uploadImage(this.imagen).subscribe(
       data => {
-        this.spinner.hide();
-        // this.router.navigate(['/']);
+        this.router.navigate(['/ejercicios']);
         console.log("Subido: ", data.message);
         this.img=data.message;
         this.onCreate()
+        this.spinner.hide();
 
       },
       err => {
@@ -84,8 +78,8 @@ export class ExerciseFormComponent implements OnInit {
         this.reset();
       }
     );
+
     // this.reset();
-    this.spinner.hide();
   }
 
   reset(): void {

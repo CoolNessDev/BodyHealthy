@@ -7,6 +7,11 @@
             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
         </div>
         <div class="mb-3">
+          <label class="form-label">Imagen</label>
+          <input type="file" class="form-control" id="imagen" #imagenInputFile
+          (change)="onFileChange($event)" accept="image/png, image/jpeg, image/gif">
+      </div>
+        <div class="mb-3">
             <label class="form-label">Duracion</label>
             <select class="form-select" aria-label="Default select example" formControlName="duracion">
                 <option value="1" selected>1 minuto</option>

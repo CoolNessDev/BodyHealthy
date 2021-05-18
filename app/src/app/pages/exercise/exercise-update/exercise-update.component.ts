@@ -12,6 +12,8 @@ import { ExercisesService } from 'src/app/services/exercises.service';
 })
 export class ExerciseUpdateComponent implements OnInit {
   exercise: Exercise;
+  imagen: File;
+  imagenMin: File;
 
   exerciseUpdateForm: FormGroup;
   img: string = 'https://i.ibb.co/1dKwX7p/plancha.jpg';
@@ -69,6 +71,14 @@ export class ExerciseUpdateComponent implements OnInit {
         });
       }
     );
+  }
+  onFileChange(event) {
+    this.imagen = event.target.files[0];
+    const fr = new FileReader();
+    fr.onload = (evento: any) => {
+      this.imagenMin = evento.target.result;
+    };
+    fr.readAsDataURL(this.imagen);
   }
   initForm = (): void => {
     this.exerciseUpdateForm = new FormGroup({
