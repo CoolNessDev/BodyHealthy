@@ -3,6 +3,7 @@ import { Exercise } from 'src/app/models/exercise';
 import { ExercisesService } from 'src/app/services/exercises.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CloudinaryService } from 'src/app/services/cloudinary.service';
 @Component({
   selector: 'bh-exercise-form',
   templateUrl: './exercise-form.component.html',
@@ -25,6 +26,7 @@ export class ExerciseFormComponent implements OnInit {
   rangoR!: ElementRef;
   private _textoRangoR: string = '2';
   constructor(private exercisesService: ExercisesService,
+    private cloudinaryService: CloudinaryService,
     private router: Router,
     private spinner: NgxSpinnerService) { }
 
@@ -63,7 +65,7 @@ export class ExerciseFormComponent implements OnInit {
   }
   onUpload(): void {
     this.spinner.show();
-    this.exercisesService.uploadImage(this.imagen).subscribe(
+    this.cloudinaryService.uploadImage(this.imagen).subscribe(
       data => {
         this.router.navigate(['/ejercicios']);
         console.log("Subido: ", data.message);

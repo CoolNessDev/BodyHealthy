@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TokenService } from 'src/app/services/auth/token/token.service';
+import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { ExercisesService } from 'src/app/services/exercises.service';
 
 @Component({
@@ -17,15 +18,13 @@ export class CardComponent implements OnInit {
   isAdmin = false;
   constructor(
     private exercisesService: ExercisesService,
+    private cloudinaryService: CloudinaryService,
     private tokenService: TokenService,
     private spinner: NgxSpinnerService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    //quitar id de la imagen en la url
-    // this.exercise.imagen = this.getUrl(this.exercise.imagen);
-
     this.roles = this.tokenService.getAuthorities();
     this.roles.forEach((rol) => {
       if (rol === 'ADMIN') {
@@ -40,9 +39,9 @@ export class CardComponent implements OnInit {
       (data) => {
         const imgId = this.getImageId(this.exercise.imagen);
         if (imgId != 'vacio') {
-          this.exercisesService.deleteImage(imgId).subscribe(
+          this.cloudinaryService.deleteImage(imgId).subscribe(
             (data) => {
-              console.log('eliminado');
+              console.log('imagen eliminado');
             },
             (err) => {
               console.log('Error: ', err.meesage);
