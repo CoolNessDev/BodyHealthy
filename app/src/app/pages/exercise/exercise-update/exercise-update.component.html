@@ -1,4 +1,5 @@
 <div class="container">
+  <bh-spinner [message]="'Obteniendo ejercicio'"></bh-spinner>
     <h1>Editar ejercicio</h1>
     <form [formGroup]="exerciseUpdateForm"  (ngSubmit)="onUpdate()" novalidate #f="ngForm">
         <div class="mb-3">

@@ -21,15 +21,15 @@ export class HeaderComponent implements OnInit {
     }
     this.butguerStatus=false
 
-    this.muscleService.getAllMuscles().subscribe(data=>{
-      this.muscles=data;
-      console.log("Musculos:", data);
+    // this.muscleService.getAllMuscles().subscribe(data=>{
+    //   this.muscles=data;
+    //   console.log("Musculos:", data);
 
-    },error=>{
-      console.log("Error: ",error);
+    // },error=>{
+    //   console.log("Error: ",error);
 
-    }
-    )
+    // }
+    // )
   }
   onLogOut():void{
     this.tokenService.logOut();

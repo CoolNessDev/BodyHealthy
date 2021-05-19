@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Exercise } from 'src/app/models/exercise';
 import { ExercisesService } from 'src/app/services/exercises.service';
@@ -25,6 +26,7 @@ export class ExerciseUpdateComponent implements OnInit {
     private exercisesService: ExercisesService,
     private toastr: ToastrService,
     private router: Router,
+    private spinner: NgxSpinnerService,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -35,11 +37,12 @@ export class ExerciseUpdateComponent implements OnInit {
     return this._textoRangoR;
   }
   ngOnInit(): void {
-    // ### Bloquear formulario hasta resolver promesa
+    this.spinner.show();
     this.initForm();
     const id = this.activatedRoute.snapshot.params.id;
     this.exercisesService.detail(id).subscribe(
       (data) => {
+        this.spinner.hide();
         this.exercise = data;
         this.loadData(data);
         console.log(data);
@@ -47,6 +50,7 @@ export class ExerciseUpdateComponent implements OnInit {
 
       },
       (err) => {
+        this.spinner.hide();
         this.toastr.error(err.error.mensaje, 'Fail', {
           timeOut: 3000,
           positionClass: 'toast-top-center',
