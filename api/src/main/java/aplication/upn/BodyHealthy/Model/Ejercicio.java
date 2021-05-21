@@ -48,6 +48,9 @@ public class Ejercicio {
 	@Getter @Setter
 	private Set<Musculo> musculos = new HashSet<>();
 
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idRutina")
+	@JsonIdentityReference(alwaysAsId = true)
+	@JsonProperty("id_rutina")
 	@ManyToMany(mappedBy = "ejercicios")
 	@Getter @Setter
 	private Set<Rutina> rutinas = new HashSet<>();

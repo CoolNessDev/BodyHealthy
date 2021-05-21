@@ -77,7 +77,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/ejercicio/**").permitAll()
                 .antMatchers("/musculo/**").permitAll()
                 .antMatchers("/test/**").permitAll()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers(
+                        "/auth/**",
+                        "/v2/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-resources/**",
+                        "/configuration/**"
+                ).permitAll()
                 .antMatchers(HttpMethod.POST, "/ejercicio/create").permitAll()
                 .anyRequest().authenticated()
                 .and()
