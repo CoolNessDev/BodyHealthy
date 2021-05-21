@@ -36,6 +36,13 @@ export class ExerciseUpdateComponent implements OnInit {
   get textoRangoR() {
     return this._textoRangoR;
   }
+  urlToObject= async(image)=> {
+    const response = await fetch(image);
+    // here image is url/location of image
+    const blob = await response.blob();
+    const file = new File([blob], 'image.jpg', {type: blob.type});
+    console.log("new File",file);
+  }
   ngOnInit(): void {
     this.spinner.show();
     this.initForm();
@@ -45,8 +52,10 @@ export class ExerciseUpdateComponent implements OnInit {
         this.spinner.hide();
         this.exercise = data;
         this.loadData(data);
-        console.log(data);
+        console.log(data.imagen);
+        this.urlToObject(data.imagen);
         console.log(this.name.value);
+
 
       },
       (err) => {

@@ -4,9 +4,15 @@ import aplication.upn.BodyHealthy.Model.Musculo;
 import aplication.upn.BodyHealthy.Security.Service.RolService;
 import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
 import aplication.upn.BodyHealthy.Service.*;
+import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.Assert.assertEquals;
+
+//import static org.junit.Assert.assertEquals;
+
 
 @SpringBootTest
 
@@ -32,12 +38,15 @@ public class GetTest {
     }
 
     @Test
-    public void testGetByrol() {
-        System.out.println(usuarioService.getByRol(1));
+    public void testGetByrol() throws JSONException {
+
+        String actual = usuarioService.getByRol(1).get(0).getNombres();
+
+        assertEquals("admin",actual);
     }
 
     @Test
     public void testGetByMusculo() {
-        System.out.println(musculoService.getAll().get(0).toString());
+        System.out.println(musculoService.getAll().get(0));
     }
 }
