@@ -80,8 +80,6 @@ export class ExerciseFormComponent implements OnInit {
         this.reset();
       }
     );
-
-    // this.reset();
   }
 
   reset(): void {

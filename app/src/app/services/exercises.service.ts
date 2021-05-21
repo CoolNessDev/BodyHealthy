@@ -35,9 +35,11 @@ export class ExercisesService {
     );
   }
   public update(id: number, exercise: any): Observable<any> {
+    this.setHttpOptions();
     return this.httpClient.put<any>(
       `${this.exerciseURL}/update/${id}`,
-      exercise
+      exercise,
+      this.httpOptions
     );
   }
   public delete(id: number): Observable<any> {

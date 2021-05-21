@@ -2,8 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { Exercise } from 'src/app/models/exercise';
+import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { ExercisesService } from 'src/app/services/exercises.service';
 
 @Component({
@@ -15,35 +15,22 @@ export class ExerciseUpdateComponent implements OnInit {
   exercise: Exercise;
   imagen: File;
   imagenMin: File;
-
+  spinnerMessage: string;
   exerciseUpdateForm: FormGroup;
-  img: string = 'https://i.ibb.co/1dKwX7p/plancha.jpg';
+  oldImg: string;
+  img: string;
+  newImg: boolean=false;
 
-  @ViewChild('rangoR', { static: false })
-  rangoR!: ElementRef;
-  private _textoRangoR: string = '2';
   constructor(
     private exercisesService: ExercisesService,
-    private toastr: ToastrService,
+    private cloudinaryService: CloudinaryService,
     private router: Router,
     private spinner: NgxSpinnerService,
     private activatedRoute: ActivatedRoute
   ) {}
 
-  set textoRangoR(t: any) {
-    this._textoRangoR = t;
-  }
-  get textoRangoR() {
-    return this._textoRangoR;
-  }
-  urlToObject= async(image)=> {
-    const response = await fetch(image);
-    // here image is url/location of image
-    const blob = await response.blob();
-    const file = new File([blob], 'image.jpg', {type: blob.type});
-    console.log("new File",file);
-  }
   ngOnInit(): void {
+    this.spinnerMessage="Obteniendo ejercicio";
     this.spinner.show();
     this.initForm();
     const id = this.activatedRoute.snapshot.params.id;
@@ -52,18 +39,11 @@ export class ExerciseUpdateComponent implements OnInit {
         this.spinner.hide();
         this.exercise = data;
         this.loadData(data);
-        console.log(data.imagen);
-        this.urlToObject(data.imagen);
-        console.log(this.name.value);
-
-
+        this.oldImg=data.imagen;
+        this.img=this.getUrl(data.imagen);
       },
       (err) => {
         this.spinner.hide();
-        this.toastr.error(err.error.mensaje, 'Fail', {
-          timeOut: 3000,
-          positionClass: 'toast-top-center',
-        });
         this.router.navigate(['/']);
       }
     );
@@ -73,22 +53,52 @@ export class ExerciseUpdateComponent implements OnInit {
     const id = this.activatedRoute.snapshot.params.id;
     this.exercisesService.update(id, this.exercise).subscribe(
       data => {
-        this.toastr.success('Producto Actualizado', 'OK', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        });
         this.router.navigate(['/ejercicios']);
+        this.spinner.hide();
+        const imgId = this.getImageId(this.oldImg);
+        if (imgId != null) {
+          this.cloudinaryService.deleteImage(imgId).subscribe(
+            (data) => {
+              console.log('imagen eliminado');
+            },
+            (err) => {
+              console.log('Error: ', err.meesage);
+            }
+          );
+        }
       },
       err => {
-        this.toastr.error(err.error.mensaje, 'Fail', {
-          timeOut: 3000,  positionClass: 'toast-top-center',
-        });
+        alert(err.error.mensaje);
+        this.spinner.hide();
       }
     );
+  }
+  onUpload(): void {
+    this.spinnerMessage="Actualizando ejercicio";
+    this.spinner.show();
+    if(this.newImg){
+      this.cloudinaryService.uploadImage(this.imagen).subscribe(
+        data => {
+          console.log("Imagen subida: ", data.message);
+          this.exercise.imagen=data.message;
+          this.onUpdate()
+
+
+        },
+        err => {
+          alert(err.error.mensaje);
+          this.spinner.hide();
+        }
+      );
+    }else{
+      this.onUpdate()
+    }
   }
   onFileChange(event) {
     this.imagen = event.target.files[0];
     const fr = new FileReader();
     fr.onload = (evento: any) => {
+      this.newImg=true;
       this.imagenMin = evento.target.result;
     };
     fr.readAsDataURL(this.imagen);
@@ -120,9 +130,25 @@ export class ExerciseUpdateComponent implements OnInit {
     this.exercise.series=this.series.value;
     this.exercise.repeticiones=this.repeticiones.value;
     this.exercise.descripcion=this.descripcion.value;
-    this.exercise.descanso=this.series.value;
+    this.exercise.descanso=this.descanso.value;
   }
-
+  getUrl(img: string): string {
+    if (img.includes(':-:')) {
+      let len = img.length;
+      let substr = img.substring(img.indexOf(':-:'), len);
+      return img.replace(substr, '');
+    } else {
+      return img;
+    }
+  }
+  getImageId(img: String): String {
+    if (img.includes(':-:')) {
+      let substr = img.substring(0, img.indexOf(':-:'));
+      return img.replace(substr + ':-:', '');
+    } else {
+      return null;
+    }
+  }
   private get name(){
     return this.exerciseUpdateForm.get('name');
   }
@@ -132,7 +158,7 @@ export class ExerciseUpdateComponent implements OnInit {
   private get series(){
     return this.exerciseUpdateForm.get('series');
   }
-  private get repeticiones(){
+  public get repeticiones(){
     return this.exerciseUpdateForm.get('repeticiones');
   }
   private get descripcion(){

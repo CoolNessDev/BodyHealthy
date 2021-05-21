@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   isLogged: boolean;
   butguerStatus=false;
   muscles: Muscle;
+  roles: string[];
+  isAdmin = false;
   constructor(private tokenService: TokenService,private router: Router,private muscleService: MuscleService) { }
 
   ngOnInit(): void {
@@ -21,6 +23,12 @@ export class HeaderComponent implements OnInit {
     }
     this.butguerStatus=false
 
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach((rol) => {
+      if (rol === 'ADMIN') {
+        this.isAdmin = true;
+      }
+    });
     // this.muscleService.getAllMuscles().subscribe(data=>{
     //   this.muscles=data;
     //   console.log("Musculos:", data);
@@ -35,6 +43,7 @@ export class HeaderComponent implements OnInit {
     this.tokenService.logOut();
     this.isLogged=false;
     this.router.navigate(["/"]);
+    window.location.reload()
   }
   onBurguerClick(){
     this.butguerStatus=!this.butguerStatus;

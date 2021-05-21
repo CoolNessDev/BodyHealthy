@@ -19,7 +19,7 @@
         </li>
         <li class="dropdown"><a routerLink="/ejercicios"><span>Ejercicios</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a routerLink="/ejercicios/insertar">Insertar</a></li>
+            <li *ngIf="isAdmin"><a routerLink="/ejercicios/insertar">Insertar</a></li>
             <li class="dropdown"><a href="#"><span>Musculos</span> <i class="bi bi-chevron-right"></i></a>
               <ul>
 

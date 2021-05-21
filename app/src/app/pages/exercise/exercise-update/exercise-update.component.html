@@ -1,14 +1,17 @@
 <div class="container">
-  <bh-spinner [message]="'Obteniendo ejercicio'"></bh-spinner>
+  <bh-spinner [message]="spinnerMessage"></bh-spinner>
     <h1>Editar ejercicio</h1>
-    <form [formGroup]="exerciseUpdateForm"  (ngSubmit)="onUpdate()" novalidate #f="ngForm">
+    <form [formGroup]="exerciseUpdateForm"  (ngSubmit)="onUpload()" novalidate #f="ngForm">
         <div class="mb-3">
             <label class="form-label">Nombre</label>
             <input type="text" class="form-control" formControlName="name">
-            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
         </div>
         <div class="mb-3">
           <label class="form-label">Imagen</label>
+          <div class="card" style="width: 18rem;">
+            <img [src]="newImg?imagenMin:img" class="card-img-top" alt="Imagen actual">
+          </div>
+          <label class="form-label">Nueva Imagen</label>
           <input type="file" class="form-control" id="imagen" #imagenInputFile
           (change)="onFileChange($event)" accept="image/png, image/jpeg, image/gif">
       </div>
@@ -33,9 +36,9 @@
         </div>
         <div class="mb-3">
             <label for="customRange2" class="form-label">Repeticiones</label>
-            <input #rangoR [(ngModel)]="textoRangoR" type="range"
+            <input type="range"
                 class="form-range" min="1" max="30" id="customRange2" formControlName="repeticiones">
-            <span>{{textoRangoR}} Repeticiones</span>
+            <span>{{ repeticiones.value }} Repeticiones</span>
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>

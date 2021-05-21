@@ -38,7 +38,7 @@ export class CardComponent implements OnInit {
     this.exercisesService.delete(id).subscribe(
       (data) => {
         const imgId = this.getImageId(this.exercise.imagen);
-        if (imgId != 'vacio') {
+        if (imgId != null) {
           this.cloudinaryService.deleteImage(imgId).subscribe(
             (data) => {
               console.log('imagen eliminado');
@@ -71,7 +71,7 @@ export class CardComponent implements OnInit {
       let substr = img.substring(0, img.indexOf(':-:'));
       return img.replace(substr + ':-:', '');
     } else {
-      return 'vacio';
+      return null;
     }
   }
 }
