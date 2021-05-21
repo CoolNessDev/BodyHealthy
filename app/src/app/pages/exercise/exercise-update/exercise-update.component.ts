@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Exercise } from 'src/app/models/exercise';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { ExercisesService } from 'src/app/services/exercises.service';
+import {getUrl,getImageId} from '../../../shared/utilities';
 
 @Component({
   selector: 'bh-exercise-update',
@@ -40,7 +41,7 @@ export class ExerciseUpdateComponent implements OnInit {
         this.exercise = data;
         this.loadData(data);
         this.oldImg=data.imagen;
-        this.img=this.getUrl(data.imagen);
+        this.img=getUrl(data.imagen);
       },
       (err) => {
         this.spinner.hide();
@@ -55,7 +56,7 @@ export class ExerciseUpdateComponent implements OnInit {
       data => {
         this.router.navigate(['/ejercicios']);
         this.spinner.hide();
-        const imgId = this.getImageId(this.oldImg);
+        const imgId = getImageId(this.oldImg);
         if (imgId != null) {
           this.cloudinaryService.deleteImage(imgId).subscribe(
             (data) => {
@@ -131,23 +132,6 @@ export class ExerciseUpdateComponent implements OnInit {
     this.exercise.repeticiones=this.repeticiones.value;
     this.exercise.descripcion=this.descripcion.value;
     this.exercise.descanso=this.descanso.value;
-  }
-  getUrl(img: string): string {
-    if (img.includes(':-:')) {
-      let len = img.length;
-      let substr = img.substring(img.indexOf(':-:'), len);
-      return img.replace(substr, '');
-    } else {
-      return img;
-    }
-  }
-  getImageId(img: String): String {
-    if (img.includes(':-:')) {
-      let substr = img.substring(0, img.indexOf(':-:'));
-      return img.replace(substr + ':-:', '');
-    } else {
-      return null;
-    }
   }
   private get name(){
     return this.exerciseUpdateForm.get('name');

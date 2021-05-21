@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { TokenService } from 'src/app/services/auth/token/token.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { ExercisesService } from 'src/app/services/exercises.service';
+import {getUrl,getImageId} from '../../shared/utilities';
 
 @Component({
   selector: 'bh-card',
@@ -13,7 +14,7 @@ import { ExercisesService } from 'src/app/services/exercises.service';
 export class CardComponent implements OnInit {
   @Input()
   exercise!: any;
-
+  exerciseImagen: string;
   roles: string[];
   isAdmin = false;
   constructor(
@@ -25,6 +26,7 @@ export class CardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.exerciseImagen=getUrl(this.exercise.imagen);
     this.roles = this.tokenService.getAuthorities();
     this.roles.forEach((rol) => {
       if (rol === 'ADMIN') {
@@ -37,7 +39,7 @@ export class CardComponent implements OnInit {
     this.spinner.show();
     this.exercisesService.delete(id).subscribe(
       (data) => {
-        const imgId = this.getImageId(this.exercise.imagen);
+        const imgId = getImageId(this.exercise.imagen);
         if (imgId != null) {
           this.cloudinaryService.deleteImage(imgId).subscribe(
             (data) => {
@@ -56,22 +58,5 @@ export class CardComponent implements OnInit {
         console.log('Error: ', err.meesage);
       }
     );
-  }
-  getUrl(img: String): String {
-    if (img.includes(':-:')) {
-      let len = img.length;
-      let substr = img.substring(img.indexOf(':-:'), len);
-      return img.replace(substr, '');
-    } else {
-      return img;
-    }
-  }
-  getImageId(img: String): String {
-    if (img.includes(':-:')) {
-      let substr = img.substring(0, img.indexOf(':-:'));
-      return img.replace(substr + ':-:', '');
-    } else {
-      return null;
-    }
   }
 }
