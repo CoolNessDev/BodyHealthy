@@ -29,7 +29,11 @@ public class EjercicioController {
         List<Ejercicio> lista = ejercicioService.getAll();
         return new ResponseEntity(lista, HttpStatus.OK);
     }
-
+    @GetMapping("/musculo/{id}")
+    public ResponseEntity<List<Ejercicio>> listarByMusculo(@PathVariable("id") int id) {
+        List<Ejercicio> lista = musculoService.getAllEjeciciosByMusculos(id);
+        return new ResponseEntity(lista, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Ejercicio> getById(@PathVariable("id") int id) {
         if (!ejercicioService.existsById(id))

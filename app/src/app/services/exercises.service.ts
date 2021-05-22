@@ -23,6 +23,9 @@ export class ExercisesService {
   public getExercises(): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.exerciseURL}/lista`);
   }
+  public getExercisesByMuscle(id: number): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.exerciseURL}/musculo/${id}`);
+  }
   public detail(id: number): Observable<any> {
     return this.httpClient.get<any>(`${this.exerciseURL}/${id}`);
   }
