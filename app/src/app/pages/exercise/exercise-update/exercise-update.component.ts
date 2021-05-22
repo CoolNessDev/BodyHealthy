@@ -15,13 +15,18 @@ import {getUrl,getImageId} from '../../../shared/utilities';
 })
 export class ExerciseUpdateComponent implements OnInit {
   exercise: Exercise;
+
   imagen: File;
   imagenMin: File;
+
   spinnerMessage: string;
+
   exerciseUpdateForm: FormGroup;
+
   oldImg: string;
   img: string;
   newImg: boolean=false;
+
   muscles: Muscle[];
   mulsclesChecks: boolean[]=[false,false,false,false,false,false];
   public musclesForm: Array<Muscle> = [

@@ -37,14 +37,17 @@ export class ExerciseFormComponent implements OnInit {
     this.initForm();
   }
   onCheckChange(event){
+    console.log(event.target.checked);
+
     if(event.target.checked){
       this.muscles.push(this.musclesForm[event.target.value-1]);
     }else{
       this.muscles=this.muscles.filter(i=>{
-        return i!==this.musclesForm[event.target.value-1];
+        return i.idMusculo!==this.musclesForm[event.target.value-1].idMusculo;
       })
     }
     this.exercise.musculos=this.muscles;
+    console.log(this.exercise.musculos);
   }
   onFileChange(event) {
     this.imagen = event.target.files[0];
