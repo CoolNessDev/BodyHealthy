@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Exercise } from 'src/app/models/exercise';
+import { Muscle } from 'src/app/models/muscle';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { ExercisesService } from 'src/app/services/exercises.service';
 import {getUrl,getImageId} from '../../../shared/utilities';
@@ -14,14 +15,28 @@ import {getUrl,getImageId} from '../../../shared/utilities';
 })
 export class ExerciseUpdateComponent implements OnInit {
   exercise: Exercise;
+
   imagen: File;
   imagenMin: File;
+
   spinnerMessage: string;
+
   exerciseUpdateForm: FormGroup;
+
   oldImg: string;
   img: string;
   newImg: boolean=false;
 
+  muscles: Muscle[];
+  mulsclesChecks: boolean[]=[false,false,false,false,false,false];
+  public musclesForm: Array<Muscle> = [
+    {nombre: 'Abdominales', idMusculo: 1},
+    {nombre: "Espalda", idMusculo: 2},
+    {nombre: "Brazos", idMusculo: 3},
+    {nombre: "Hombros", idMusculo: 4},
+    {nombre: "Gluteos", idMusculo: 5},
+    {nombre: "Piernas", idMusculo: 6}
+  ];
   constructor(
     private exercisesService: ExercisesService,
     private cloudinaryService: CloudinaryService,
@@ -29,7 +44,16 @@ export class ExerciseUpdateComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private activatedRoute: ActivatedRoute
   ) {}
-
+  onCheckChange(event){
+    if(event.target.checked){
+      this.muscles.push(this.musclesForm[event.target.value-1]);
+    }else{
+      this.muscles=this.muscles.filter(i=>{
+        return i.idMusculo!==this.musclesForm[event.target.value-1].idMusculo;
+      })
+    }
+    this.exercise.musculos=this.muscles;
+  }
   ngOnInit(): void {
     this.spinnerMessage="Obteniendo ejercicio";
     this.spinner.show();
@@ -57,7 +81,7 @@ export class ExerciseUpdateComponent implements OnInit {
         this.router.navigate(['/ejercicios']);
         this.spinner.hide();
         const imgId = getImageId(this.oldImg);
-        if (imgId != null) {
+        if (imgId != null&&this.newImg) {
           this.cloudinaryService.deleteImage(imgId).subscribe(
             (data) => {
               console.log('imagen eliminado');
@@ -89,6 +113,7 @@ export class ExerciseUpdateComponent implements OnInit {
         err => {
           alert(err.error.mensaje);
           this.spinner.hide();
+          this.reset();
         }
       );
     }else{
@@ -124,6 +149,10 @@ export class ExerciseUpdateComponent implements OnInit {
     this.exerciseUpdateForm.get('repeticiones').setValue(data.repeticiones);
     this.exerciseUpdateForm.get('descripcion').setValue(data.descripcion);
     this.exerciseUpdateForm.get('descanso').setValue(data.descanso);
+    data.musculos.map(i=>{
+      this.mulsclesChecks[i.idMusculo-1]=true;
+    });
+    this.exercise.musculos,this.muscles=data.musculos;
   };
   setValues(){
     this.exercise.nombre=this.name.value;
@@ -151,5 +180,8 @@ export class ExerciseUpdateComponent implements OnInit {
   private get descanso(){
     return this.exerciseUpdateForm.get('descanso');
   }
-
+  reset(): void {
+    this.imagen = null;
+    this.imagenMin = null;
+  }
 }

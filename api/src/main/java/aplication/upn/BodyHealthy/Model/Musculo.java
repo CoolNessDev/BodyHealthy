@@ -1,5 +1,6 @@
 package aplication.upn.BodyHealthy.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Musculo {
 	@Getter @Setter
 	private String nombre;
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@ManyToMany(mappedBy = "musculos")
 	@Getter @Setter
 	private Set<Ejercicio> ejercicios = new HashSet<>();
@@ -30,7 +32,7 @@ public class Musculo {
 		return "Musculo{" +
 				"idMusculo=" + idMusculo +
 				", nombre='" + nombre + '\'' +
-				", ejercicios=" + ejercicios +
+//				", ejercicios=" + ejercicios +
 				'}';
 	}
 }

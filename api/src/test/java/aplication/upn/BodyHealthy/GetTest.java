@@ -1,10 +1,9 @@
 package aplication.upn.BodyHealthy;
 
-import aplication.upn.BodyHealthy.Model.Musculo;
+
 import aplication.upn.BodyHealthy.Security.Service.RolService;
 import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
 import aplication.upn.BodyHealthy.Service.*;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,7 +37,7 @@ public class GetTest {
     }
 
     @Test
-    public void testGetByrol() throws JSONException {
+    public void testGetByrol(){
 
         String actual = usuarioService.getByRol(1).get(0).getNombres();
 

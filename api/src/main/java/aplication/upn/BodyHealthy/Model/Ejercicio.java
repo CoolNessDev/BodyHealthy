@@ -37,9 +37,10 @@ public class Ejercicio {
 	@Getter @Setter
 	private int descanso;
 
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idMusculo")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("id_musculo")
+//	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idMusculo")
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonProperty("id_musculo")
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "ejercicio_musculo",
@@ -48,9 +49,10 @@ public class Ejercicio {
 	@Getter @Setter
 	private Set<Musculo> musculos = new HashSet<>();
 
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idRutina")
-	@JsonIdentityReference(alwaysAsId = true)
-	@JsonProperty("id_rutina")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idRutina")
+//	@JsonIdentityReference(alwaysAsId = true)
+//	@JsonProperty("id_rutina")
 	@ManyToMany(mappedBy = "ejercicios")
 	@Getter @Setter
 	private Set<Rutina> rutinas = new HashSet<>();
@@ -63,5 +65,15 @@ public class Ejercicio {
 		this.imagen = imagen;
 		this.descripcion = descripcion;
 		this.descanso = descanso;
+	}
+	public Ejercicio(String nombre, int duracion, int series, int repeticiones, String imagen, String descripcion, int descanso,Set<Musculo> musculos) {
+		this.nombre = nombre;
+		this.duracion = duracion;
+		this.series = series;
+		this.repeticiones = repeticiones;
+		this.imagen = imagen;
+		this.descripcion = descripcion;
+		this.descanso = descanso;
+		this.musculos = musculos;
 	}
 }

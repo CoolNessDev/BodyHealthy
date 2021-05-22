@@ -18,5 +18,6 @@ public interface EjercicioRepository extends JpaRepository<Ejercicio, Integer> {
     @Procedure(name = "DeleteEjercicio")
     Ejercicio deleteEjercicio(@Param("id_ejer") Integer id_ejer);
 
-    List<Ejercicio> findByMusculos(int id_musculo);
+    @Query(value="{call GetEjerciciosByMusculo(:in_in_idMusculo)}", nativeQuery = true)
+    List<Ejercicio> findByMusculos(@Param("in_in_idMusculo") Integer in_in_idMusculo);
 }

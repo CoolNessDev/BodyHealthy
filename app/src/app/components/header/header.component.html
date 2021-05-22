@@ -20,10 +20,14 @@
         <li class="dropdown"><a routerLink="/ejercicios"><span>Ejercicios</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
             <li *ngIf="isAdmin"><a routerLink="/ejercicios/insertar">Insertar</a></li>
-            <li class="dropdown"><a href="#"><span>Musculos</span> <i class="bi bi-chevron-right"></i></a>
+            <li class="dropdown"><a routerLink="/ejercicios/musculos"><span>Musculos</span> <i class="bi bi-chevron-right"></i></a>
               <ul>
-
-                <li  *ngFor="let muscle of muscles"><a href="#">{{muscle.nombre}}</a></li>
+                <li><a href="/ejercicios/musculos/1">Abdominales</a></li>
+                <li><a href="/ejercicios/musculos/2" >Espalda</a></li>
+                <li><a href="/ejercicios/musculos/3">Brazos</a></li>
+                <li><a href="/ejercicios/musculos/4">Hombros</a></li>
+                <li><a href="/ejercicios/musculos/5">Gluteos</a></li>
+                <li><a href="/ejercicios/musculos/6">Piernas</a></li>
               </ul>
             </li>
             <li><a routerLink="/ejercicios">Ver ejercicios</a></li>

@@ -1,6 +1,8 @@
 package aplication.upn.BodyHealthy.Service;
 
+import aplication.upn.BodyHealthy.Model.Ejercicio;
 import aplication.upn.BodyHealthy.Model.Musculo;
+import aplication.upn.BodyHealthy.Repository.EjercicioRepository;
 import aplication.upn.BodyHealthy.Repository.MusculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +13,14 @@ import java.util.List;
 public class MusculoService {
     @Autowired
     MusculoRepository musculoRepository;
+    @Autowired
+    EjercicioRepository ejercicioRepository;
 
     public List<Musculo> getAll(){
         return musculoRepository.findAll();
+    }
+    public List<Ejercicio> getAllEjeciciosByMusculos(int id){
+        return ejercicioRepository.findByMusculos(id);
     }
     public Musculo getMusculo(int id){
         return musculoRepository.getMusculo(id);

@@ -17,7 +17,7 @@ public class MusculoController {
     @Autowired
     MusculoService musculoService;
     @GetMapping("/list")
-    public ResponseEntity<Musculo> getUsuarios() {
+    public ResponseEntity<Musculo> getMusculos() {
         List<Musculo> lista = musculoService.getAll();
         return new ResponseEntity(lista, HttpStatus.OK);
     }
