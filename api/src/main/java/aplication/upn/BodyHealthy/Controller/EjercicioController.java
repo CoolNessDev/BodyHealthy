@@ -4,6 +4,7 @@ import aplication.upn.BodyHealthy.Dto.Message;
 import aplication.upn.BodyHealthy.Model.Ejercicio;
 import aplication.upn.BodyHealthy.Service.EjercicioService;
 import aplication.upn.BodyHealthy.Dto.EjercicioDto;
+import aplication.upn.BodyHealthy.Service.MusculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class EjercicioController {
     EjercicioService ejercicioService;
 
     @Autowired
-
+    MusculoService musculoService;
 
     @GetMapping("/lista")
     public ResponseEntity<List<Ejercicio>> listar() {
@@ -45,7 +46,7 @@ public class EjercicioController {
             return new ResponseEntity(new Message("el valor debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
         System.out.println("POST");
         Ejercicio ejercicio = new Ejercicio(ejercicioDto.getNombre(), ejercicioDto.getDuracion(), ejercicioDto.getSeries(), ejercicioDto.getRepeticiones(), ejercicioDto.getImagen(),
-                ejercicioDto.getDescripcion(), ejercicioDto.getDescanso());
+                ejercicioDto.getDescripcion(), ejercicioDto.getDescanso(), ejercicioDto.getMusculos());
         ejercicioService.insert(ejercicio);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -67,6 +68,7 @@ public class EjercicioController {
         ejercicio.setImagen(ejercicioDto.getImagen());
         ejercicio.setDescripcion(ejercicioDto.getDescripcion());
         ejercicio.setDescanso(ejercicioDto.getDescanso());
+        ejercicio.setMusculos(ejercicioDto.getMusculos());
         ejercicioService.save(ejercicio);
         return new ResponseEntity(HttpStatus.OK);
     }

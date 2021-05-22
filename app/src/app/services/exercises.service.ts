@@ -27,6 +27,8 @@ export class ExercisesService {
     return this.httpClient.get<any>(`${this.exerciseURL}/${id}`);
   }
   public save(exercise: any): Observable<any> {
+    console.log("Creando: ",exercise);
+
     this.setHttpOptions();
     return this.httpClient.post<any>(
       `${this.exerciseURL}/create`,
