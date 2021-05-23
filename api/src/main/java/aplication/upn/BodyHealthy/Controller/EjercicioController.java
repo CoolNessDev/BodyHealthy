@@ -46,6 +46,11 @@ public class EjercicioController {
                     PageRequest.of(page, size, Sort.by(order).descending()));
         return new ResponseEntity<Page<Ejercicio>>(paises, HttpStatus.OK);
     }
+    @GetMapping("/find")
+    public ResponseEntity<List<Ejercicio>> findEjercicio(@RequestParam(defaultValue = "")String var){
+        List<Ejercicio> lista = ejercicioService.findEjercicio(var);
+        return new ResponseEntity(lista, HttpStatus.OK);
+    }
     @GetMapping("/musculo/{id}")
     public ResponseEntity<List<Ejercicio>> listarByMusculo(@PathVariable("id") int id) {
         List<Ejercicio> lista = musculoService.getAllEjeciciosByMusculos(id);

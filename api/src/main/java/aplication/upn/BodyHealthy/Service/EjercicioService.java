@@ -42,5 +42,8 @@ public class EjercicioService {
     public List<Ejercicio> getByMusculo(int id_musculo){
         return ejercicioRepository.findByMusculos(id_musculo);
     }
+    public List<Ejercicio> findEjercicio(String in_var){
+        return ejercicioRepository.findEjercicio(in_var);
+    }
 
 }

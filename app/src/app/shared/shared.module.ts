@@ -9,13 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { AlertComponent } from './alert/alert.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 
 @NgModule({
   declarations: [
     SpinnerComponent,
-    AlertComponent
+    AlertComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { AlertComponent } from './alert/alert.component';
     BrowserAnimationsModule,
     NgxSpinnerModule,
     SpinnerComponent,
-    AlertComponent
+    AlertComponent,
+    PaginationComponent
   ]
 })
 export class SharedModule { }
