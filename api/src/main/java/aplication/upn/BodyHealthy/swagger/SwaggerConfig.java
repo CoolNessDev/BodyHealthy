@@ -26,11 +26,11 @@ public class SwaggerConfig implements WebMvcConfigurer {
     }
     private ApiInfo apiInfo(){
         return new ApiInfo(
-                "Tutorial JWT",
+                "API Doc",
                 "Descripción",
                 "2.0",
-                "Términos y Condiciones",
-                new Contact("Diego Sullon", "https://github.com/DiegoSullon", "jdiego.sullon@gmail.com"),
+                "http://localhost:4200/home",
+                new Contact("Pedigree", "https://github.com/PedigreeTeam", "jdiego.sullon@gmail.com"),
                 "Licencia",
                 "www.licencia.com",
                 Collections.emptyList()

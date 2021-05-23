@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Muscle } from 'src/app/models/muscle';
 import { TokenService } from 'src/app/services/auth/token/token.service';
-import { MuscleService } from 'src/app/services/muscle.service';
 
 @Component({
   selector: 'bh-header',
@@ -15,7 +14,8 @@ export class HeaderComponent implements OnInit {
   muscles: Muscle;
   roles: string[];
   isAdmin = false;
-  constructor(private tokenService: TokenService,private router: Router,private muscleService: MuscleService) { }
+  activeSection: boolean[]=[false,false,false,false,false];
+  constructor(private tokenService: TokenService,private router: Router) { }
 
   ngOnInit(): void {
     if(this.tokenService.getToken()){
@@ -29,15 +29,29 @@ export class HeaderComponent implements OnInit {
         this.isAdmin = true;
       }
     });
-    // this.muscleService.getAllMuscles().subscribe(data=>{
-    //   this.muscles=data;
-    //   console.log("Musculos:", data);
+    this.router.events.forEach((event) => {
+      if(event instanceof NavigationEnd) {
+        console.log("cambio");
 
-    // },error=>{
-    //   console.log("Error: ",error);
-
-    // }
-    // )
+        this.onActiveSection(event.urlAfterRedirects);
+      }
+    });
+  }
+  onActiveSection=(url:string)=>{
+    if(url.includes("/home")){
+      this.activeSectionReset();
+      this.activeSection[0]=true;
+    }else if(url.includes("/ejercicio")){
+      this.activeSectionReset();
+      this.activeSection[3]=true;
+    }
+  }
+  activeSectionReset=()=>{
+    this.activeSection[0]=false;
+    this.activeSection[1]=false;
+    this.activeSection[2]=false;
+    this.activeSection[3]=false;
+    this.activeSection[4]=false;
   }
   onLogOut():void{
     this.tokenService.logOut();

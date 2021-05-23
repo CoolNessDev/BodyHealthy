@@ -6,6 +6,9 @@ import aplication.upn.BodyHealthy.Service.EjercicioService;
 import aplication.upn.BodyHealthy.Dto.EjercicioDto;
 import aplication.upn.BodyHealthy.Service.MusculoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +32,20 @@ public class EjercicioController {
         List<Ejercicio> lista = ejercicioService.getAll();
         return new ResponseEntity(lista, HttpStatus.OK);
     }
+    @GetMapping("/list")
+    public ResponseEntity<Page<Ejercicio>> paginas(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "nombre") String order,
+            @RequestParam(defaultValue = "true") boolean asc
+    ){
+        Page<Ejercicio> paises = ejercicioService.pages(
+                PageRequest.of(page, size, Sort.by(order)));
+        if(!asc)
+            paises = ejercicioService.pages(
+                    PageRequest.of(page, size, Sort.by(order).descending()));
+        return new ResponseEntity<Page<Ejercicio>>(paises, HttpStatus.OK);
+    }
     @GetMapping("/musculo/{id}")
     public ResponseEntity<List<Ejercicio>> listarByMusculo(@PathVariable("id") int id) {
         List<Ejercicio> lista = musculoService.getAllEjeciciosByMusculos(id);
@@ -38,7 +55,7 @@ public class EjercicioController {
     public ResponseEntity<Ejercicio> getById(@PathVariable("id") int id) {
         if (!ejercicioService.existsById(id))
             return new ResponseEntity(new Message("Exercise not found"), HttpStatus.NOT_FOUND);
-        Ejercicio ejercicio = ejercicioService.getOne(id).get();
+        Ejercicio ejercicio = ejercicioService.getEjercicio(id);
         return new ResponseEntity(ejercicio, HttpStatus.OK);
     }
     @PreAuthorize("hasAuthority('ADMIN')")
