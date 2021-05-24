@@ -20,4 +20,7 @@ public interface EjercicioRepository extends JpaRepository<Ejercicio, Integer> {
 
     @Query(value="{call GetEjerciciosByMusculo(:in_in_idMusculo)}", nativeQuery = true)
     List<Ejercicio> findByMusculos(@Param("in_in_idMusculo") Integer in_in_idMusculo);
+
+    @Query(value="{call FindEjercicio(:in_var)}", nativeQuery = true)
+    List<Ejercicio> findEjercicio(@Param("in_var") String in_var);
 }

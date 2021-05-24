@@ -3,6 +3,8 @@ package aplication.upn.BodyHealthy.Service;
 import aplication.upn.BodyHealthy.Model.Ejercicio;
 import aplication.upn.BodyHealthy.Repository.EjercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,9 @@ public class EjercicioService {
 
     public List<Ejercicio> getAll(){
         return ejercicioRepository.findAll();
+    }
+    public Page<Ejercicio> pages(Pageable pageable){
+        return ejercicioRepository.findAll(pageable);
     }
     public Optional<Ejercicio> getOne(int id){
         return ejercicioRepository.findById(id);
@@ -36,6 +41,9 @@ public class EjercicioService {
     }
     public List<Ejercicio> getByMusculo(int id_musculo){
         return ejercicioRepository.findByMusculos(id_musculo);
+    }
+    public List<Ejercicio> findEjercicio(String in_var){
+        return ejercicioRepository.findEjercicio(in_var);
     }
 
 }
