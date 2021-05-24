@@ -27,15 +27,14 @@ export class ExerciseMuscleComponent implements OnInit {
 
   onFetch(muscleId:number) {
     this.router.navigate([`/ejercicios/musculos/${muscleId}`]);
-    this.fetchExercise();
+    this.exercises=[];
+    this.fetchExercise(muscleId);
 
   }
-  private fetchExercise() {
-    const id = this.activatedRoute.snapshot.params.id;
-    console.log(id);
+  private fetchExercise(muscleId:number) {
     this.loaded = false;
     this.error = false;
-    this.exercisesService.getExercisesByMuscle(id).subscribe(
+    this.exercisesService.getExercisesByMuscle(muscleId).subscribe(
       (data) => {
         this.loaded = true;
         this.exercises = data;

@@ -47,7 +47,6 @@ export class ExercisesComponent implements OnInit {
           this.childPagination.forEach((PaginationComponent) => {
             PaginationComponent.setPages(this.totalPages);
           });
-          // this.childPagination.setPages(this.totalPages);
           this.loaded = true;
           this.exercises = data.content;
         },
