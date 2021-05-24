@@ -31,8 +31,6 @@ export class HeaderComponent implements OnInit {
     });
     this.router.events.forEach((event) => {
       if(event instanceof NavigationEnd) {
-        console.log("cambio");
-
         this.onActiveSection(event.urlAfterRedirects);
       }
     });

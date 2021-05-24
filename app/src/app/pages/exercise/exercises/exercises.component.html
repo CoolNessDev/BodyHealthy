@@ -2,7 +2,7 @@
 
   <div class="row justify-content-between mb-3 mt-10">
     <div class="col-4">
-      <bh-pagination (pageEvent)="receivePage($event)" [numberPages]="3" [currentPage]="currentPageExercise"></bh-pagination>
+      <bh-pagination #pagination (pageEvent)="receivePage($event)" [numberPages]="totalPages" [currentPage]="currentPageExercise"></bh-pagination>
     </div>
     <div class="col-4">
       <div class="input-group">
@@ -25,6 +25,6 @@
     [alertClass]="'alert-danger'"
     [message]="'Error al cargar ejercicios'"
   ></bh-alert>
-  <bh-pagination (pageEvent)="receivePage($event)" [numberPages]="3" [currentPage]="currentPageExercise"></bh-pagination>
+  <bh-pagination #pagination (pageEvent)="receivePage($event)" [numberPages]="totalPages" [currentPage]="currentPageExercise"></bh-pagination>
 </div>
 

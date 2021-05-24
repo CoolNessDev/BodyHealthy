@@ -18,7 +18,11 @@ export class PaginationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    for (let index = 1; index <= this.numberPages; index++) {
+    this.setPages(this.numberPages);
+  }
+  public setPages=(totalPages: number)=>{
+    this.pages=[];
+    for (let index = 1; index <= totalPages; index++) {
       this.pages.push(index);
     }
   }
