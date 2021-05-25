@@ -4,22 +4,25 @@ import { ComponentModule } from 'src/app/components/component.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RoutinesComponent } from './routines/routines.component';
 import { LevelsComponent } from './levels/levels.component';
+import { CreateRoutineComponent } from './create-routine/create-routine.component';
 
 
 
 @NgModule({
   declarations: [
     RoutinesComponent,
-    LevelsComponent
+    LevelsComponent,
+    CreateRoutineComponent
   ],
   imports: [
     CommonModule,
     ComponentModule,
-    SharedModule
+    SharedModule,
   ],
   exports:[
     RoutinesComponent,
-    LevelsComponent
+    LevelsComponent,
+    CreateRoutineComponent,
   ]
 })
 export class RoutineModule { }

@@ -6,6 +6,7 @@ import { SharedModule } from './shared/shared.module';
 import { ComponentModule } from './components/component.module';
 import { ExerciseModule } from './pages/exercise/exercise.module';
 import { RoutineModule } from './pages/routine/routine.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +17,8 @@ import { RoutineModule } from './pages/routine/routine.module';
     SharedModule,
     ExerciseModule,
     ComponentModule,
-    RoutineModule
+    RoutineModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
