@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { RoutinesComponent } from './routines/routines.component';
 import { LevelsComponent } from './levels/levels.component';
 import { CreateRoutineComponent } from './create-routine/create-routine.component';
+import { ExercisesRoutineComponent } from './exercises-routine/exercises-routine.component';
 
 
 
@@ -12,7 +13,9 @@ import { CreateRoutineComponent } from './create-routine/create-routine.componen
   declarations: [
     RoutinesComponent,
     LevelsComponent,
-    CreateRoutineComponent
+    CreateRoutineComponent,
+    ExercisesRoutineComponent,
+
   ],
   imports: [
     CommonModule,
@@ -23,6 +26,8 @@ import { CreateRoutineComponent } from './create-routine/create-routine.componen
     RoutinesComponent,
     LevelsComponent,
     CreateRoutineComponent,
+    ExercisesRoutineComponent
+
   ]
 })
 export class RoutineModule { }

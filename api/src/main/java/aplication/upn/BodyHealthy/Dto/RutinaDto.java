@@ -11,7 +11,7 @@ public class RutinaDto {
     @Getter @Setter
     private int idRutina;
     @Getter @Setter
-    private int idUsuario;
+    private String userName;
     @Getter @Setter
     private String nombre;
     @Getter @Setter

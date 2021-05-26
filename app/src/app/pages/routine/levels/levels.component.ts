@@ -17,13 +17,11 @@ export class LevelsComponent implements OnInit {
 
   ngOnInit(): void {
     let level: string = this.activatedRoute.snapshot.params.level;
-    console.log(level);
     this.fetchRoutines(level);
   }
   fetchRoutines(level: string) {
     this.routineService.getDefaultRoutinesByLevel(level).subscribe(
       (data) => {
-        console.log(data);
         this.routines = data;
       },
       (err) => {

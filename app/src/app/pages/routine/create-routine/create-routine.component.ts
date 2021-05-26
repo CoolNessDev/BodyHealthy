@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Exercise } from 'src/app/models/exercise';
 @Component({
   selector: 'bh-create-routine',
   templateUrl: './create-routine.component.html',
   styleUrls: ['./create-routine.component.css'],
 })
 export class CreateRoutineComponent implements OnInit {
+  exercises: Exercise[];
   itemDrop: boolean[]=[true,false];
   constructor(private modalService: NgbModal) {}
 
@@ -47,7 +49,7 @@ export class CreateRoutineComponent implements OnInit {
     }
 
   };
-  open(content) {
+  open=(content)=> {
     this.modalService.open(content);
   }
   save = () => {

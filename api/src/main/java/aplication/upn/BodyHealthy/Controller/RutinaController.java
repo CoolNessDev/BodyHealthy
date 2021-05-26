@@ -29,43 +29,49 @@ public class RutinaController {
         List<Rutina> lista = rutinaService.findAllDefault();
         return new ResponseEntity(lista, HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Rutina> getRutina(@PathVariable("id") int id){
-        if(!rutinaService.existsById(id)){
-            return new ResponseEntity(new Message("Rutina not found"),HttpStatus.NOT_FOUND);
+    public ResponseEntity<Rutina> getRutina(@PathVariable("id") int id) {
+        if (!rutinaService.existsById(id)) {
+            return new ResponseEntity(new Message("Rutina not found"), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(rutinaService.getRutina(id),HttpStatus.OK);
+        return new ResponseEntity(rutinaService.getRutina(id), HttpStatus.OK);
     }
+
     @GetMapping("/level/{level}")
-    public ResponseEntity<List<Rutina>> getRutinaByLevel(@PathVariable("level") String level){
-        if(!rutinaService.existsByNivel(level)){
-            return new ResponseEntity(new Message("Rutina by level not found"),HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<Rutina>> getRutinaByLevel(@PathVariable("level") String level) {
+        if (!rutinaService.existsByNivel(level)) {
+            return new ResponseEntity(new Message("Rutina by level not found"), HttpStatus.NOT_FOUND);
         }
         List<Rutina> lista = rutinaService.getAllByLevel(level);
-        return new ResponseEntity(lista,HttpStatus.OK);
+        return new ResponseEntity(lista, HttpStatus.OK);
     }
+
     @GetMapping("/user/{id}")
-    public ResponseEntity<Rutina> getRutinaByUser(@PathVariable("id") int id){
-        if(!usuarioService.existsById(id)){
-            return new ResponseEntity(new Message("User not found"),HttpStatus.NOT_FOUND);
+    public ResponseEntity<Rutina> getRutinaByUser(@PathVariable("id") int id) {
+        if (!usuarioService.existsById(id)) {
+            return new ResponseEntity(new Message("User not found"), HttpStatus.NOT_FOUND);
         }
         Usuario usuario = usuarioService.getUsuario(id);
-        if(!rutinaService.existsByUsuario(usuario)){
-            return new ResponseEntity(new Message("Rutina by user not found"),HttpStatus.NOT_FOUND);
+        if (!rutinaService.existsByUsuario(usuario)) {
+            return new ResponseEntity(new Message("Rutina by user not found"), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(rutinaService.getAllByUser(usuario),HttpStatus.OK);
+        return new ResponseEntity(rutinaService.getAllByUser(usuario), HttpStatus.OK);
     }
+
     @PostMapping("/create")
-    public ResponseEntity<?> createRutina(@RequestBody RutinaDto rutinaDto){
-        if(rutinaDto.getNivel()!="Principiante"&&rutinaDto.getNivel()!="Intermedio"&&rutinaDto.getNivel()!="Avanzado"){
+    public ResponseEntity<?> createRutina(@RequestBody RutinaDto rutinaDto) {
+        if (!rutinaDto.getNivel().equalsIgnoreCase("Principiante") &&
+                !rutinaDto.getNivel().equalsIgnoreCase("Intermedio") && !rutinaDto.getNivel().equalsIgnoreCase("Avanzado")) {
             return new ResponseEntity(new Message("Nivel invalido"), HttpStatus.BAD_REQUEST);
         }
-        if(rutinaDto.getNombre().length()<4){
+        if (rutinaDto.getNombre().length() < 4) {
             return new ResponseEntity(new Message("Nombre invalido"), HttpStatus.BAD_REQUEST);
         }
-        if(rutinaDto.getEjercicios().isEmpty()){
+        if (rutinaDto.getEjercicios().isEmpty()) {
             return new ResponseEntity(new Message("Rutina vacia"), HttpStatus.BAD_REQUEST);
-        }if(!usuarioService.existsById(rutinaDto.getIdUsuario())){
+        }
+        if (!usuarioService.existsByEmail(rutinaDto.getUserName())) {
             return new ResponseEntity(new Message("Usuario no existe"), HttpStatus.BAD_REQUEST);
         }
         Rutina rutina = new Rutina();
@@ -73,23 +79,25 @@ public class RutinaController {
         rutina.setNivel(rutinaDto.getNivel());
         rutina.setEstado(0);
         rutina.setEjercicios(rutinaDto.getEjercicios());
-        Usuario usuario = usuarioService.getUsuario(rutinaDto.getIdUsuario());
+        Usuario usuario = usuarioService.findByCorreo(rutinaDto.getUserName());
         rutina.setUsuario(usuario);
         rutinaService.save(rutina);
         return new ResponseEntity(new Message("Rutina creada"), HttpStatus.OK);
     }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/default")
-    public ResponseEntity<?> createRutinaDefault(@RequestBody RutinaDto rutinaDto){
-        if(rutinaDto.getNivel()!="Principiante"&&rutinaDto.getNivel()!="Intermedio"&&rutinaDto.getNivel()!="Avanzado"){
+    public ResponseEntity<?> createRutinaDefault(@RequestBody RutinaDto rutinaDto) {
+        if (rutinaDto.getNivel() != "Principiante" && rutinaDto.getNivel() != "Intermedio" && rutinaDto.getNivel() != "Avanzado") {
             return new ResponseEntity(new Message("Nivel invalido"), HttpStatus.BAD_REQUEST);
         }
-        if(rutinaDto.getNombre().length()<4){
+        if (rutinaDto.getNombre().length() < 4) {
             return new ResponseEntity(new Message("Nombre invalido"), HttpStatus.BAD_REQUEST);
         }
-        if(rutinaDto.getEjercicios().isEmpty()){
+        if (rutinaDto.getEjercicios().isEmpty()) {
             return new ResponseEntity(new Message("Rutina vacia"), HttpStatus.BAD_REQUEST);
-        }if(!usuarioService.existsById(rutinaDto.getIdUsuario())){
+        }
+        if (!usuarioService.existsByEmail(rutinaDto.getUserName())) {
             return new ResponseEntity(new Message("Usuario no existe"), HttpStatus.BAD_REQUEST);
         }
         Rutina rutina = new Rutina();
@@ -97,10 +105,37 @@ public class RutinaController {
         rutina.setNivel(rutinaDto.getNivel());
         rutina.setEstado(200);
         rutina.setEjercicios(rutinaDto.getEjercicios());
-        Usuario usuario = usuarioService.getUsuario(rutinaDto.getIdUsuario());
+        Usuario usuario = usuarioService.findByCorreo(rutinaDto.getUserName());
         rutina.setUsuario(usuario);
         rutinaService.save(rutina);
         return new ResponseEntity(new Message("Rutina por defecto creada"), HttpStatus.OK);
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateRutina(@PathVariable("id") int id,@RequestBody RutinaDto rutinaDto) {
+        if (rutinaDto.getNivel() != "Principiante" && rutinaDto.getNivel() != "Intermedio" && rutinaDto.getNivel() != "Avanzado") {
+            return new ResponseEntity(new Message("Nivel invalido"), HttpStatus.BAD_REQUEST);
+        }
+        if (rutinaDto.getNombre().length() < 4) {
+            return new ResponseEntity(new Message("Nombre invalido"), HttpStatus.BAD_REQUEST);
+        }
+        if (rutinaDto.getEjercicios().isEmpty()) {
+            return new ResponseEntity(new Message("Rutina vacia"), HttpStatus.BAD_REQUEST);
+        }
+        if(!rutinaService.existsById(id)){
+            return new ResponseEntity(new Message("Rutina not found"), HttpStatus.BAD_REQUEST);
+        }
+        if (!usuarioService.existsByEmail(rutinaDto.getUserName())) {
+            return new ResponseEntity(new Message("Usuario no existe"), HttpStatus.BAD_REQUEST);
+        }
+        Rutina rutina = rutinaService.getRutina(id);
+        rutina.setNombre(rutinaDto.getNombre());
+        rutina.setNivel(rutinaDto.getNivel());
+        rutina.setEstado(rutinaDto.getEstado());
+        rutina.setEjercicios(rutinaDto.getEjercicios());
+        Usuario usuario = usuarioService.findByCorreo(rutinaDto.getUserName());
+        rutina.setUsuario(usuario);
+        rutinaService.save(rutina);
+        return new ResponseEntity(new Message("Rutina actualizada"), HttpStatus.OK);
     }
 
 }

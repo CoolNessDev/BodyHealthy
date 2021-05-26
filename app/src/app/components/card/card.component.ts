@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TokenService } from 'src/app/services/auth/token/token.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { ExercisesService } from 'src/app/services/exercises.service';
-import {getUrl,getImageId} from '../../shared/utilities';
+import { getUrl, getImageId } from '../../shared/utilities';
 
 @Component({
   selector: 'bh-card',
@@ -14,9 +16,16 @@ import {getUrl,getImageId} from '../../shared/utilities';
 export class CardComponent implements OnInit {
   @Input()
   exercise!: any;
+  @Input()
+  onRutine!: boolean;
+  @Input()
+  exerciseCheck: boolean = false;
+
   exerciseImagen: string;
   roles: string[];
   isAdmin = false;
+  @Output()
+  checkEvent = new EventEmitter<boolean>();
   constructor(
     private exercisesService: ExercisesService,
     private cloudinaryService: CloudinaryService,
@@ -26,7 +35,7 @@ export class CardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.exerciseImagen=getUrl(this.exercise.imagen);
+    this.exerciseImagen = getUrl(this.exercise.imagen);
     this.roles = this.tokenService.getAuthorities();
     this.roles.forEach((rol) => {
       if (rol === 'ADMIN') {
@@ -58,5 +67,12 @@ export class CardComponent implements OnInit {
         console.log('Error: ', err.meesage);
       }
     );
+  }
+  onCheckChange(event) {
+    if (event.target.checked) {
+      this.checkEvent.emit(true);
+    } else {
+      this.checkEvent.emit(false);
+    }
   }
 }

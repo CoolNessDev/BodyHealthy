@@ -1,7 +1,7 @@
 <div class="container mt-10">
   <div class="row row-cols-2">
     <div *ngFor="let routine of routines" class="card col shadow m-2 bg-body rounded" style="width: 18rem;">
-      <div class="card-body">
+      <div class="card-body" routerLink="/rutinas/ejercicios/{{routine.idRutina}}">
         <h5 class="card-title">{{routine.nombre}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{routine.nivel}}</h6>
         <ng-container *ngIf="routine.id_ejercicio.length>0; else elseTemplate">

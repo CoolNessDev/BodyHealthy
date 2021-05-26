@@ -21,6 +21,9 @@ export class RoutineService {
   public getDefaultRoutinesByLevel(level:string): Observable<Routine[]> {
     return this.httpClient.get<Routine[]>(`${this.routineURL}/level/${level}`);
   }
+  public getRoutine(id:number):Observable<Routine>{
+    return this.httpClient.get<Routine>(`${this.routineURL}/${id}`)
+  }
   private setHttpOptions() {
     this.httpOptions.headers = this.httpOptions.headers.set(
       'Authorization',
