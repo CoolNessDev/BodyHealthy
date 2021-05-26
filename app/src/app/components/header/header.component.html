@@ -6,13 +6,13 @@
       <ul>
         <li><a class="nav-link scrollto" [ngClass]="activeSection[0]?'active':''" href="#hero">Inicio</a></li>
         <li><a class="nav-link scrollto" [ngClass]="activeSection[1]?'active':''" href="#about">Noticias</a></li>
-        <li class="dropdown"><a href="#about" [ngClass]="activeSection[2]?'active':''"><span>Rutinas</span> <i class="bi bi-chevron-down"></i></a>
+        <li class="dropdown"><a routerLink="/rutinas" [ngClass]="activeSection[2]?'active':''"><span>Rutinas</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li class="dropdown"><a href="#"><span>Nivel</span> <i class="bi bi-chevron-right"></i></a>
+            <li class="dropdown"><a routerLink="/rutinas"><span>Nivel</span> <i class="bi bi-chevron-right"></i></a>
               <ul>
-                <li><a href="#">Basico</a></li>
-                <li><a href="#">Intermedio</a></li>
-                <li><a href="#">Avanzado</a></li>
+                <li><a href="/rutinas/principiante">Principiante</a></li>
+                <li><a href="/rutinas/intermedio">Intermedio</a></li>
+                <li><a href="/rutinas/avanzado">Avanzado</a></li>
               </ul>
             </li>
           </ul>

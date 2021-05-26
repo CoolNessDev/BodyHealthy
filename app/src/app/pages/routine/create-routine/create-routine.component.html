@@ -1,0 +1,175 @@
+<div class="d-flex" id="wrapper">
+  <!-- Page content wrapper-->
+  <div
+    id="page-content-wrapper flex-grow-1 bd-highlight"
+    class="cards-cont"
+    (dragover)="onDragOver($event)"
+    (drop)="onCardDrop($event)"
+  >
+    <div class="row justify-content-between mt-3 ms-1">
+      <div class="col-4">
+        <div ngbDropdown class="">
+          <button
+            class="btn btn-outline-primary"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          >
+            Musculos
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem>Abdominales</button>
+            <button ngbDropdownItem>Espalda</button>
+            <button ngbDropdownItem>Brazos</button>
+            <button ngbDropdownItem>Hombros</button>
+            <button ngbDropdownItem>Gluteos</button>
+            <button ngbDropdownItem>Piernas</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 me-3">
+        <div class="input-group">
+          <input
+            type="search"
+            class="form-control rounded"
+            placeholder="buscar"
+            aria-label="Search"
+            aria-describedby="search-addon"
+            [formControl]=""
+          />
+          <button type="button" class="btn btn-outline-primary">Buscar</button>
+        </div>
+      </div>
+    </div>
+    <!-- Page content-->
+    <div class="row row-cols-2" id="cardZone">
+      <div
+        id="draggable-1"
+        class="card col shadow m-2 bg-body rounded"
+        style="width: 18rem"
+        draggable="true"
+        (dragstart)="onDragStart($event)"
+      >
+        <ng-container *ngIf="itemDrop[0]; else elseTemplate">
+          <button type="button" class="addCard" (click)="onDrop($event,'draggable-1')">
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+        </ng-container>
+
+        <ng-template #elseTemplate>
+          <button type="button" class="addCard" (click)="onCardDrop($event,'draggable-1')">
+            <span aria-hidden="true">&larr;</span>
+          </button>
+        </ng-template>
+
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+          <a href="#" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
+      </div>
+      <div
+        id="draggable-2"
+        class="card col shadow m-2 bg-body rounded"
+        style="width: 18rem"
+        draggable="true"
+        (dragstart)="onDragStart($event)"
+      >
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+          <a href="#" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
+      </div>
+      <div
+        id="draggable-3"
+        class="card col shadow m-2 bg-body rounded"
+        style="width: 18rem"
+        draggable="true"
+        (dragstart)="onDragStart($event)"
+      >
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+          <a href="#" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sidebar-->
+  <div
+    class="border-start bg-white container"
+    id="sidebar-wrapper"
+    (dragover)="onDragOver($event)"
+    (drop)="onDrop($event)"
+  >
+    <h4 class="sidebar-heading border-bottom">Rutina</h4>
+    <div id="dropZone" class="list-group list-group-flush list-content"></div>
+  </div>
+</div>
+<!-- Button trigger modal -->
+<a class="fixedButton">
+  <button
+    type="submit"
+    class="btn btn-warning roundedFixedBtn"
+    (click)="open(content)"
+  >
+    Guardar
+  </button>
+</a>
+<!-- Modal -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nueva rutina</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <!-- Modal body -->
+  <div class="modal-body">
+    <form [formGroup]="newRutineForm" (ngSubmit)="save()" #f="ngForm">
+      <label class="form-label">Nombre</label>
+      <input type="text" class="form-control" formControlName="name" required />
+      <hr />
+      <label class="form-label">Nivel</label>
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        formControlName="duracion"
+      >
+        <option value="1" selected>Principiante</option>
+        <option value="2">Intermedio</option>
+        <option value="3">Avanzado</option>
+      </select>
+    </form>
+  </div>
+  <!-- End modal body -->
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-outline-dark"
+      (click)="modal.close(save())"
+    >
+      Confirmar
+    </button>
+  </div>
+</ng-template>

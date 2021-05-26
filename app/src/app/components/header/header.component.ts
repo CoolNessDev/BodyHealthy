@@ -42,6 +42,9 @@ export class HeaderComponent implements OnInit {
     }else if(url.includes("/ejercicio")){
       this.activeSectionReset();
       this.activeSection[3]=true;
+    }else if(url.includes("/rutinas")){
+      this.activeSectionReset();
+      this.activeSection[2]=true;
     }
   }
   activeSectionReset=()=>{

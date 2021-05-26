@@ -10,6 +10,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { AlertComponent } from './alert/alert.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -28,7 +29,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     ToastrModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgbModule
   ],
   exports:[
     AppRoutingModule,
@@ -41,7 +43,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     NgxSpinnerModule,
     SpinnerComponent,
     AlertComponent,
-    PaginationComponent
+    PaginationComponent,
+    NgbModule
   ]
 })
 export class SharedModule { }

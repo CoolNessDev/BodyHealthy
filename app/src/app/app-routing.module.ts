@@ -6,11 +6,17 @@ import { ExerciseUpdateComponent } from './pages/exercise/exercise-update/exerci
 import { ExercisesComponent } from './pages/exercise/exercises/exercises.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { CreateRoutineComponent } from './pages/routine/create-routine/create-routine.component';
+import { LevelsComponent } from './pages/routine/levels/levels.component';
+import { RoutinesComponent } from './pages/routine/routines/routines.component';
 import { GuardService as guard } from './services/guard/guard.service';
 const routes: Routes = [
-
+  // redirect if no exist :id
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'rutinas', component: RoutinesComponent },
+  { path: 'rutinas/crear', component: CreateRoutineComponent },
+  { path: 'rutinas/:level', component: LevelsComponent },
   { path: 'ejercicios', component: ExercisesComponent },
   { path: 'ejercicios/musculos', component: ExerciseMuscleComponent },
   { path: 'ejercicios/musculos/:id', component: ExerciseMuscleComponent },
