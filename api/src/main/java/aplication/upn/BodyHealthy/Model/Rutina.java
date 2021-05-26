@@ -41,7 +41,9 @@ public class Rutina {
     @Getter @Setter
     private Set<Ejercicio> ejercicios = new HashSet<>();
 
-    @ManyToMany(mappedBy = "rutinas")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "id_usuario")
     @Getter @Setter
-    private Set<Usuario> usuarios = new HashSet<>();
+    private Usuario usuario;
 }

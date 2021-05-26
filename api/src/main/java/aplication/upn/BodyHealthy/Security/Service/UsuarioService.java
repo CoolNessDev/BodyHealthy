@@ -15,25 +15,35 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public List<Usuario> getAll(){
+    public List<Usuario> getAll() {
         return usuarioRepository.findAll();
     }
-    public Usuario getUsuario(int id){
+
+    public Usuario getUsuario(int id) {
         return usuarioRepository.getUsuario(id);
     }
+
     public Usuario insert(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
-    public List<Usuario> getByRol(int idRol){
+
+    public List<Usuario> getByRol(int idRol) {
         return usuarioRepository.getByRol(idRol);
     }
-    public Usuario findByCorreo(String s){
+
+    public Usuario findByCorreo(String s) {
         return usuarioRepository.findByCorreo(s);
     }
-    public boolean existsByEmail(String email){
+
+    public boolean existsById(int id) {
+        return usuarioRepository.existsById(id);
+    }
+
+    public boolean existsByEmail(String email) {
         return usuarioRepository.existsByCorreo(email);
     }
-    public void save(Usuario usuario){
+
+    public void save(Usuario usuario) {
         usuarioRepository.save(usuario);
     }
 
