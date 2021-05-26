@@ -1,15 +1,35 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Routine } from 'src/app/models/routine';
+import { RoutineService } from 'src/app/services/routine.service';
 
 @Component({
   selector: 'bh-levels',
   templateUrl: './levels.component.html',
-  styleUrls: ['./levels.component.css']
+  styleUrls: ['./levels.component.css'],
 })
 export class LevelsComponent implements OnInit {
-
-  constructor() { }
+  routines: Routine[];
+  constructor(
+    private routineService: RoutineService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    let level: string = this.activatedRoute.snapshot.params.level;
+    console.log(level);
+    this.fetchRoutines(level);
   }
-
+  fetchRoutines(level: string) {
+    this.routineService.getDefaultRoutinesByLevel(level).subscribe(
+      (data) => {
+        console.log(data);
+        this.routines = data;
+      },
+      (err) => {
+        console.log('Error: ', err);
+        window.location.href="";
+      }
+    );
+  }
 }

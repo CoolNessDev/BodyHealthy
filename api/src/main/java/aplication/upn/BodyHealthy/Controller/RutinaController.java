@@ -26,7 +26,7 @@ public class RutinaController {
 
     @GetMapping("/list")
     public ResponseEntity<List<Rutina>> list() {
-        List<Rutina> lista = rutinaService.getAll();
+        List<Rutina> lista = rutinaService.findAllDefault();
         return new ResponseEntity(lista, HttpStatus.OK);
     }
     @GetMapping("/{id}")

@@ -14,6 +14,9 @@ public interface RutinaRepository extends JpaRepository<Rutina, Integer> {
     @Query(value="{call getRutina(:in_idRutina)}", nativeQuery = true)
     Rutina getRutina(@Param("in_idRutina") Integer in_idRutina);
 
+    @Query(value="{call getDefaultRutinas(:in_estado)}", nativeQuery = true)
+    List<Rutina> findAllDefault(@Param("in_estado") float in_estado);
+
     boolean existsByNivel(String nivel);
     boolean existsByUsuario(Usuario user);
 

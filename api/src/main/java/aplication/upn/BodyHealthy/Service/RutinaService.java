@@ -13,8 +13,8 @@ public class RutinaService {
     @Autowired
     RutinaRepository rutinaRepository;
 
-    public List<Rutina> getAll() {
-        return rutinaRepository.findAll();
+    public List<Rutina> findAllDefault() {
+        return rutinaRepository.findAllDefault(200);
     }
 
     public Rutina getRutina(int id) {

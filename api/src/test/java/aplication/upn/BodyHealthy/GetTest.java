@@ -33,7 +33,7 @@ public class GetTest {
 
     @Test
     public void testGetRutina() {
-        System.out.println(rutinaService.getAll().get(0).getNombre());
+        System.out.println(rutinaService.findAllDefault().get(0).getNombre());
     }
 
     @Test
