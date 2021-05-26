@@ -30,6 +30,9 @@ public class UsuarioService {
     public List<Usuario> getByRol(int idRol) {
         return usuarioRepository.getByRol(idRol);
     }
+    public Usuario getByEmail(String email) {
+        return usuarioRepository.getByEmail(email);
+    }
 
     public Usuario findByCorreo(String s) {
         return usuarioRepository.findByCorreo(s);

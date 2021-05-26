@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Muscle } from 'src/app/models/muscle';
+import { User } from 'src/app/models/user';
 import { TokenService } from 'src/app/services/auth/token/token.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'bh-header',
@@ -9,17 +11,20 @@ import { TokenService } from 'src/app/services/auth/token/token.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  user?: User;
   isLogged: boolean;
   butguerStatus=false;
   muscles: Muscle;
   roles: string[];
   isAdmin = false;
   activeSection: boolean[]=[false,false,false,false,false];
-  constructor(private tokenService: TokenService,private router: Router) { }
+  constructor(private tokenService: TokenService,private router: Router,private userService: UserService) { }
 
   ngOnInit(): void {
     if(this.tokenService.getToken()){
       this.isLogged=true;
+      let email:string = this.tokenService.getUsername();
+      this.fetchUser(email);
     }
     this.butguerStatus=false
 
@@ -62,6 +67,12 @@ export class HeaderComponent implements OnInit {
   }
   onBurguerClick(){
     this.butguerStatus=!this.butguerStatus;
+  }
+  fetchUser=(email:string)=>{
+    this.userService.getUser(email).subscribe(data=>{
+      console.log(data);
+      this.user=data;
+    })
   }
 
 }
