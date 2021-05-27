@@ -17,12 +17,12 @@
             Musculos
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button ngbDropdownItem>Abdominales</button>
-            <button ngbDropdownItem>Espalda</button>
-            <button ngbDropdownItem>Brazos</button>
-            <button ngbDropdownItem>Hombros</button>
-            <button ngbDropdownItem>Gluteos</button>
-            <button ngbDropdownItem>Piernas</button>
+            <button (click)="onMuscle(1)" ngbDropdownItem>Abdominales</button>
+            <button (click)="onMuscle(2)" ngbDropdownItem>Espalda</button>
+            <button (click)="onMuscle(3)" ngbDropdownItem>Brazos</button>
+            <button (click)="onMuscle(4)" ngbDropdownItem>Hombros</button>
+            <button (click)="onMuscle(5)" ngbDropdownItem>Gluteos</button>
+            <button (click)="onMuscle(6)" ngbDropdownItem>Piernas</button>
           </div>
         </div>
       </div>
@@ -32,90 +32,76 @@
             type="search"
             class="form-control rounded"
             placeholder="buscar"
-            aria-label="Search"
             aria-describedby="search-addon"
-            [formControl]=""
+            [formControl]="nameSearched"
           />
-          <button type="button" class="btn btn-outline-primary">Buscar</button>
+          <button (click)="onSearch()" type="button" class="btn btn-outline-primary">Buscar</button>
         </div>
       </div>
     </div>
     <!-- Page content-->
     <div class="row row-cols-2" id="cardZone">
+      <!-- card -->
       <div
-        id="draggable-1"
+        *ngFor="let exercise of exercises"
+        [id]="exercise.idEjercicio"
         class="card col shadow m-2 bg-body rounded"
         style="width: 18rem"
         draggable="true"
-        (dragstart)="onDragStart($event)"
+        (dragstart)="onDragStart($event,exercise)"
       >
         <ng-container *ngIf="itemDrop[0]; else elseTemplate">
-          <button type="button" class="addCard" (click)="onDrop($event,'draggable-1')">
+          <button
+            type="button"
+            class="addCard"
+            (click)="onDrop($event, exercise)"
+          >
             <span aria-hidden="true">&rarr;</span>
           </button>
         </ng-container>
 
         <ng-template #elseTemplate>
-          <button type="button" class="addCard" (click)="onCardDrop($event,'draggable-1')">
+          <button
+            type="button"
+            class="addCard"
+            (click)="onCardDrop($event, exercise.idEjercicio)"
+          >
             <span aria-hidden="true">&larr;</span>
           </button>
         </ng-template>
 
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <h5 class="card-title">{{ exercise.nombre }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            {{ exercise.idEjercicio }}
+          </h6>
           <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            {{ exercise.descripcion }}
           </p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
         </div>
       </div>
-      <div
-        id="draggable-2"
-        class="card col shadow m-2 bg-body rounded"
-        style="width: 18rem"
-        draggable="true"
-        (dragstart)="onDragStart($event)"
-      >
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
-        </div>
-      </div>
-      <div
-        id="draggable-3"
-        class="card col shadow m-2 bg-body rounded"
-        style="width: 18rem"
-        draggable="true"
-        (dragstart)="onDragStart($event)"
-      >
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
-        </div>
-      </div>
+      <!-- end Card -->
     </div>
+    <div class="mt-2">
+      <bh-alert
+      *ngIf="!loaded"
+      [alertClass]="'alert-primary'"
+      [message]="'Cargando ejercicios....'"
+    ></bh-alert>
+    <bh-alert
+      *ngIf="error"
+      [alertClass]="'alert-danger'"
+      [message]="'Error al cargar ejercicios'"
+    ></bh-alert>
+    </div>
+    <!-- End page content -->
   </div>
   <!-- Sidebar-->
   <div
     class="border-start bg-white container"
     id="sidebar-wrapper"
     (dragover)="onDragOver($event)"
-    (drop)="onDrop($event)"
+    (drop)="onDrop($event,null)"
   >
     <h4 class="sidebar-heading border-bottom">Rutina</h4>
     <div id="dropZone" class="list-group list-group-flush list-content"></div>

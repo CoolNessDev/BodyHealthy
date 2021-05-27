@@ -24,6 +24,9 @@ export class RoutineService {
   public getRoutine(id:number):Observable<Routine>{
     return this.httpClient.get<Routine>(`${this.routineURL}/${id}`)
   }
+  public getRoutinesByUser(id:Number): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.routineURL}/user/${id}`);
+  }
   private setHttpOptions() {
     this.httpOptions.headers = this.httpOptions.headers.set(
       'Authorization',

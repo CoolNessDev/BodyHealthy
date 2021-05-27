@@ -6,6 +6,7 @@ import { RoutinesComponent } from './routines/routines.component';
 import { LevelsComponent } from './levels/levels.component';
 import { CreateRoutineComponent } from './create-routine/create-routine.component';
 import { ExercisesRoutineComponent } from './exercises-routine/exercises-routine.component';
+import { MyroutinesComponent } from './myroutines/myroutines.component';
 
 
 
@@ -15,6 +16,7 @@ import { ExercisesRoutineComponent } from './exercises-routine/exercises-routine
     LevelsComponent,
     CreateRoutineComponent,
     ExercisesRoutineComponent,
+    MyroutinesComponent,
 
   ],
   imports: [
@@ -26,8 +28,8 @@ import { ExercisesRoutineComponent } from './exercises-routine/exercises-routine
     RoutinesComponent,
     LevelsComponent,
     CreateRoutineComponent,
-    ExercisesRoutineComponent
-
+    ExercisesRoutineComponent,
+    MyroutinesComponent,
   ]
 })
 export class RoutineModule { }

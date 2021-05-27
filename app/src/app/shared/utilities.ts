@@ -15,4 +15,10 @@ const getImageId=(img: string): string=> {
     return null;
   }
 }
-export {getUrl,getImageId}
+const removeItem=(arr:any[],item:any)=>{
+  return arr.filter(i => {
+    console.log(i.idEjercicio, "- ",item.idEjercicio," - ",i.idEjercicio!=item.idEjercicio);
+    return i.idEjercicio !=item.idEjercicio;
+  });
+}
+export {getUrl,getImageId,removeItem}

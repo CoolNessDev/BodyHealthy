@@ -11,7 +11,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  user?: User;
+  userNames?: string;
+  userImg?: string;
   isLogged: boolean;
   butguerStatus=false;
   muscles: Muscle;
@@ -23,8 +24,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     if(this.tokenService.getToken()){
       this.isLogged=true;
-      let email:string = this.tokenService.getUsername();
-      this.fetchUser(email);
+      this.userNames=this.userService.getNames();
+      this.userImg=this.userService.getUserImg();
     }
     this.butguerStatus=false
 
@@ -67,12 +68,6 @@ export class HeaderComponent implements OnInit {
   }
   onBurguerClick(){
     this.butguerStatus=!this.butguerStatus;
-  }
-  fetchUser=(email:string)=>{
-    this.userService.getUser(email).subscribe(data=>{
-      console.log(data);
-      this.user=data;
-    })
   }
 
 }

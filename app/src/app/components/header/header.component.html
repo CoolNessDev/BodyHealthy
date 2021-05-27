@@ -108,14 +108,14 @@
               width="30px"
               height="30px"
               alt="100x100"
-              [src]="user?user.imagen:'https://i.ibb.co/SyGszR2/descargar.jpg'"
+              [src]="userImg?userImg:'https://i.ibb.co/SyGszR2/descargar.jpg'"
               data-holder-rendered="true"
             />
-            <label class="username">{{user?user.nombres:'Usuario'}}</label>
+            <label class="username">{{userNames?userNames:'Usuario'}}</label>
             <div class="dropdown-divider"></div>
             <button ngbDropdownItem class="dropitem">Mi perfil</button>
             <div class="dropdown-divider"></div>
-            <button ngbDropdownItem class="dropitem">Mis rutinas</button>
+            <button routerLink="/rutinas/misrutinas" ngbDropdownItem class="dropitem">Mis rutinas</button>
             <div class="dropdown-divider"></div>
             <button ngbDropdownItem class="dropLink"><a href="" (click)="onLogOut()">Cerrar sesión</a></button>
 

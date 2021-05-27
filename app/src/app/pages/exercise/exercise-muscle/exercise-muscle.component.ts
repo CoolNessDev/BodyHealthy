@@ -32,6 +32,7 @@ export class ExerciseMuscleComponent implements OnInit {
 
   }
   private fetchExercise(muscleId:number) {
+    this.exercises=[];
     this.loaded = false;
     this.error = false;
     this.exercisesService.getExercisesByMuscle(muscleId).subscribe(
