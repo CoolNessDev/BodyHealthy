@@ -7,11 +7,13 @@ import { ComponentModule } from './components/component.module';
 import { ExerciseModule } from './pages/exercise/exercise.module';
 import { RoutineModule } from './pages/routine/routine.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterComponent } from './pages/register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     SharedModule,

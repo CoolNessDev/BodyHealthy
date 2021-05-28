@@ -6,6 +6,7 @@ import { ExerciseUpdateComponent } from './pages/exercise/exercise-update/exerci
 import { ExercisesComponent } from './pages/exercise/exercises/exercises.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 import { CreateRoutineComponent } from './pages/routine/create-routine/create-routine.component';
 import { ExercisesRoutineComponent } from './pages/routine/exercises-routine/exercises-routine.component';
 import { LevelsComponent } from './pages/routine/levels/levels.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   // redirect if no exist :id
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'registro', component: RegisterComponent },
   { path: 'rutinas', component: RoutinesComponent },
   { path: 'rutinas/crear', component: CreateRoutineComponent, canActivate: [guard], data: { expectedRol: ['admin','user'] }  },
   { path: 'rutinas/misrutinas', component: MyroutinesComponent, canActivate: [guard], data: { expectedRol: ['admin','user'] } },
