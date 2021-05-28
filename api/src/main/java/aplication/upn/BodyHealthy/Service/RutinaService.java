@@ -16,6 +16,9 @@ public class RutinaService {
     public List<Rutina> findAllDefault() {
         return rutinaRepository.findAllDefault(200);
     }
+    public List<Rutina> findDefaultByLevel(String level) {
+        return rutinaRepository.findDefaultByLevel(level,200);
+    }
 
     public Rutina getRutina(int id) {
         return rutinaRepository.getRutina(id);

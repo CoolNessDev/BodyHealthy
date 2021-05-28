@@ -18,14 +18,34 @@ export class RoutineService {
     private httpClient: HttpClient,
     private tokenService: TokenService
   ) {}
-  public getDefaultRoutinesByLevel(level:string): Observable<Routine[]> {
-    return this.httpClient.get<Routine[]>(`${this.routineURL}/level/${level}`);
+  public getDefaultRoutinesByLevel(level: string): Observable<Routine[]> {
+    return this.httpClient.get<Routine[]>(`${this.routineURL}/listdefault/${level}`);
   }
-  public getRoutine(id:number):Observable<Routine>{
-    return this.httpClient.get<Routine>(`${this.routineURL}/${id}`)
+  public getRoutine(id: number): Observable<Routine> {
+    return this.httpClient.get<Routine>(`${this.routineURL}/${id}`);
   }
-  public getRoutinesByUser(id:Number): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.routineURL}/user/${id}`);
+  public getRoutinesByUser(id: Number): Observable<any[]> {
+    this.setHttpOptions();
+    return this.httpClient.get<any[]>(
+      `${this.routineURL}/user/${id}`,
+      this.httpOptions
+    );
+  }
+  public postRoutine(routine: Routine): Observable<Routine> {
+    this.setHttpOptions();
+    return this.httpClient.post<Routine>(
+      `${this.routineURL}/create`,
+      routine,
+      this.httpOptions
+    );
+  }
+  public postRoutineDefault(routine: Routine): Observable<Routine> {
+    this.setHttpOptions();
+    return this.httpClient.post<Routine>(
+      `${this.routineURL}/default`,
+      routine,
+      this.httpOptions
+    );
   }
   private setHttpOptions() {
     this.httpOptions.headers = this.httpOptions.headers.set(

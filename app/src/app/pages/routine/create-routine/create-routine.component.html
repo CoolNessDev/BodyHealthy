@@ -4,7 +4,7 @@
     id="page-content-wrapper flex-grow-1 bd-highlight"
     class="cards-cont"
     (dragover)="onDragOver($event)"
-    (drop)="onCardDrop($event)"
+    (drop)="onCardDrop($event,null)"
   >
     <div class="row justify-content-between mt-3 ms-1">
       <div class="col-4">
@@ -50,12 +50,12 @@
         draggable="true"
         (dragstart)="onDragStart($event,exercise)"
       >
-        <ng-container *ngIf="itemDrop[0]; else elseTemplate">
+        <ng-container *ngIf="itemsDrop[exercise.idEjercicio]; else elseTemplate">
           <button
             type="button"
             class="addCard"
             (click)="onDrop($event, exercise)"
-          >
+            >
             <span aria-hidden="true">&rarr;</span>
           </button>
         </ng-container>
@@ -64,7 +64,7 @@
           <button
             type="button"
             class="addCard"
-            (click)="onCardDrop($event, exercise.idEjercicio)"
+            (click)="onCardDrop($event, exercise)"
           >
             <span aria-hidden="true">&larr;</span>
           </button>
@@ -113,7 +113,7 @@
     type="submit"
     class="btn btn-warning roundedFixedBtn"
     (click)="open(content)"
-  >
+    >
     Guardar
   </button>
 </a>
@@ -140,11 +140,11 @@
       <select
         class="form-select"
         aria-label="Default select example"
-        formControlName="duracion"
+        formControlName="nivel"
       >
-        <option value="1" selected>Principiante</option>
-        <option value="2">Intermedio</option>
-        <option value="3">Avanzado</option>
+        <option value="Principiante" selected>Principiante</option>
+        <option value="Intermedio">Intermedio</option>
+        <option value="Avanzado">Avanzado</option>
       </select>
     </form>
   </div>
@@ -153,6 +153,7 @@
     <button
       type="submit"
       class="btn btn-outline-dark"
+      [disabled]="newRutineForm.invalid"
       (click)="modal.close(save())"
     >
       Confirmar

@@ -6,6 +6,7 @@ export class Routine{
   nivel: string;
   estado: number;
   idUsuario: number;
+  userName?: string;
   ejercicios: Exercise[];
   id_ejercicio?: number[];
   constructor() {

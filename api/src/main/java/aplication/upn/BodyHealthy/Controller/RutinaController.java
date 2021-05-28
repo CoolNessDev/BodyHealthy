@@ -26,7 +26,16 @@ public class RutinaController {
 
     @GetMapping("/list")
     public ResponseEntity<List<Rutina>> list() {
+
         List<Rutina> lista = rutinaService.findAllDefault();
+        return new ResponseEntity(lista, HttpStatus.OK);
+    }
+    @GetMapping("/listdefault/{level}")
+    public ResponseEntity<List<Rutina>> listDefault(@PathVariable("level") String level) {
+        if (!rutinaService.existsByNivel(level)) {
+            return new ResponseEntity(new Message("Rutina by level not found"), HttpStatus.NOT_FOUND);
+        }
+        List<Rutina> lista = rutinaService.findDefaultByLevel(level);
         return new ResponseEntity(lista, HttpStatus.OK);
     }
 
@@ -46,7 +55,7 @@ public class RutinaController {
         List<Rutina> lista = rutinaService.getAllByLevel(level);
         return new ResponseEntity(lista, HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     @GetMapping("/user/{id}")
     public ResponseEntity<Rutina> getRutinaByUser(@PathVariable("id") int id) {
         if (!usuarioService.existsById(id)) {
@@ -58,7 +67,7 @@ public class RutinaController {
         }
         return new ResponseEntity(rutinaService.getAllByUser(usuario), HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> createRutina(@RequestBody RutinaDto rutinaDto) {
         if (!rutinaDto.getNivel().equalsIgnoreCase("Principiante") &&
@@ -88,7 +97,8 @@ public class RutinaController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/default")
     public ResponseEntity<?> createRutinaDefault(@RequestBody RutinaDto rutinaDto) {
-        if (rutinaDto.getNivel() != "Principiante" && rutinaDto.getNivel() != "Intermedio" && rutinaDto.getNivel() != "Avanzado") {
+        if (!rutinaDto.getNivel().equalsIgnoreCase("Principiante") &&
+                !rutinaDto.getNivel().equalsIgnoreCase("Intermedio") && !rutinaDto.getNivel().equalsIgnoreCase("Avanzado")) {
             return new ResponseEntity(new Message("Nivel invalido"), HttpStatus.BAD_REQUEST);
         }
         if (rutinaDto.getNombre().length() < 4) {
@@ -110,6 +120,7 @@ public class RutinaController {
         rutinaService.save(rutina);
         return new ResponseEntity(new Message("Rutina por defecto creada"), HttpStatus.OK);
     }
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateRutina(@PathVariable("id") int id,@RequestBody RutinaDto rutinaDto) {
         if (rutinaDto.getNivel() != "Principiante" && rutinaDto.getNivel() != "Intermedio" && rutinaDto.getNivel() != "Avanzado") {
