@@ -1,7 +1,9 @@
 <header id="header" class="fixed-top">
   <div class="container d-flex align-items-center justify-content-lg-between">
     <h1 class="logo me-auto me-lg-0">
-      <a href="#hero">B<span class="mobile-title">odyHealthy</span><span>.</span></a>
+      <a href="#hero"
+        >B<span class="mobile-title">odyHealthy</span><span>.</span></a
+      >
     </h1>
     <nav
       id="navbar"
@@ -19,6 +21,7 @@
         </li>
         <li>
           <a
+            routerLink="/noticias"
             class="nav-link scrollto"
             [ngClass]="activeSection[1] ? 'active' : ''"
             href="#about"
@@ -26,15 +29,17 @@
           >
         </li>
         <li class="dropdown">
-          <a routerLink="/rutinas" [ngClass]="activeSection[2] ? 'active' : ''"
-            ><span>Rutinas</span> <i class="bi bi-chevron-down"></i
+          <a class="dropdownLink" [ngClass]="activeSection[2] ? 'active' : ''"
+            ><span routerLink="/rutinas">Rutinas</span>
+            <i class="bi bi-chevron-down" (click)="onArrowClick(0, 0)"></i
           ></a>
-          <ul>
+          <ul [ngClass]="arrowStatus[0][0] ? 'dropdown-active' : ''">
             <li class="dropdown">
-              <a routerLink="/rutinas"
-                ><span>Nivel</span> <i class="bi bi-chevron-right"></i
+              <a
+                ><span routerLink="/rutinas">Nivel</span>
+                <i class="bi bi-chevron-right" (click)="onArrowClick(0, 1)"></i
               ></a>
-              <ul>
+              <ul [ngClass]="arrowStatus[0][1] ? 'dropdown-active' : ''">
                 <li><a href="/rutinas/principiante">Principiante</a></li>
                 <li><a href="/rutinas/intermedio">Intermedio</a></li>
                 <li><a href="/rutinas/avanzado">Avanzado</a></li>
@@ -43,20 +48,20 @@
           </ul>
         </li>
         <li class="dropdown">
-          <a
-            routerLink="/ejercicios"
-            [ngClass]="activeSection[3] ? 'active' : ''"
-            ><span>Ejercicios</span> <i class="bi bi-chevron-down"></i
+          <a class="dropdownLink" [ngClass]="activeSection[3] ? 'active' : ''"
+            ><span routerLink="/ejercicios">Ejercicios</span>
+            <i class="bi bi-chevron-down" (click)="onArrowClick(1, 0)"></i
           ></a>
-          <ul>
+          <ul [ngClass]="arrowStatus[1][0] ? 'dropdown-active' : ''">
             <li *ngIf="isAdmin">
               <a routerLink="/ejercicios/insertar">Insertar</a>
             </li>
             <li class="dropdown">
-              <a routerLink="/ejercicios/musculos"
-                ><span>Musculos</span> <i class="bi bi-chevron-right"></i
+              <a
+                ><span routerLink="/ejercicios/musculos">Musculos</span>
+                <i class="bi bi-chevron-right" (click)="onArrowClick(1, 1)"></i
               ></a>
-              <ul>
+              <ul [ngClass]="arrowStatus[1][1] ? 'dropdown-active' : ''">
                 <li><a href="/ejercicios/musculos/1">Abdominales</a></li>
                 <li><a href="/ejercicios/musculos/2">Espalda</a></li>
                 <li><a href="/ejercicios/musculos/3">Brazos</a></li>
@@ -81,8 +86,8 @@
         class="bi mobile-nav-toggle"
         [ngClass]="butguerStatus ? 'bi-x' : 'bi-list'"
         (click)="onBurguerClick()"
-        ><img width="35px" src="../../../assets/icons/burguer.svg"></i
-      >
+        ><img width="35px" src="../../../assets/icons/burguer.svg"
+      /></i>
     </nav>
     <a *ngIf="!isLogged" class="get-started-btn scrollto" routerLink="/login"
       >Get Started</a
@@ -107,17 +112,28 @@
               width="30px"
               height="30px"
               alt="100x100"
-              [src]="userImg?userImg:'https://i.ibb.co/SyGszR2/descargar.jpg'"
+              [src]="
+                userImg ? userImg : 'https://i.ibb.co/SyGszR2/descargar.jpg'
+              "
               data-holder-rendered="true"
             />
-            <label class="username">{{userNames?userNames:'Usuario'}}</label>
+            <label class="username">{{
+              userNames ? userNames : "Usuario"
+            }}</label>
             <div class="dropdown-divider"></div>
             <button ngbDropdownItem class="dropitem">Mi perfil</button>
             <div class="dropdown-divider"></div>
-            <button routerLink="/rutinas/misrutinas" ngbDropdownItem class="dropitem">Mis rutinas</button>
+            <button
+              routerLink="/rutinas/misrutinas"
+              ngbDropdownItem
+              class="dropitem"
+            >
+              Mis rutinas
+            </button>
             <div class="dropdown-divider"></div>
-            <button ngbDropdownItem class="dropLink"><a href="" (click)="onLogOut()">Cerrar sesión</a></button>
-
+            <button ngbDropdownItem class="dropLink">
+              <a href="" (click)="onLogOut()">Cerrar sesión</a>
+            </button>
           </div>
         </div>
       </div>

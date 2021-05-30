@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
   userImg?: string;
   isLogged: boolean;
   butguerStatus=false;
+  arrowStatus=[[false,false],[false,false]];
+  arrow2Status=false;
   muscles: Muscle;
   roles: string[];
   isAdmin = false;
@@ -48,6 +50,9 @@ export class HeaderComponent implements OnInit {
     }else if(url.includes("/ejercicio")){
       this.activeSectionReset();
       this.activeSection[3]=true;
+    }else if(url.includes("/noticias")){
+      this.activeSectionReset();
+      this.activeSection[1]=true;
     }else if(url.includes("/rutinas")){
       this.activeSectionReset();
       this.activeSection[2]=true;
@@ -60,14 +65,17 @@ export class HeaderComponent implements OnInit {
     this.activeSection[3]=false;
     this.activeSection[4]=false;
   }
-  onLogOut():void{
+  onLogOut=():void=>{
     this.tokenService.logOut();
     this.isLogged=false;
     this.router.navigate(["/"]);
     window.location.reload()
   }
-  onBurguerClick(){
+  onBurguerClick=()=>{
     this.butguerStatus=!this.butguerStatus;
+  }
+  onArrowClick=(i:number,j:number)=>{
+    this.arrowStatus[i][j]=!this.arrowStatus[i][j];
   }
 
 }

@@ -58,3 +58,39 @@ select:focus,
   display: inline;
   margin-left: 0.5em;
 }
+.dropdown a{
+  cursor: pointer;
+}
+.dropdownLink{
+  color: white;
+}
+@media (max-width: 991px){
+  .navbar a i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+  }
+  .bi-chevron-down::before {
+    content: "^";
+  }
+  .bi-chevron-right::before {
+    content: "^";
+  }
+  [class^="bi-"]::before, [class*=" bi-"]::before {
+    display: inline-block;
+    font-family: bootstrap-icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: -.125em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .dropdownLink{
+    color: black;
+  }
+}
+
+
