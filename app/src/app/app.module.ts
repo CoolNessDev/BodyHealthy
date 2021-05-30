@@ -8,12 +8,18 @@ import { ExerciseModule } from './pages/exercise/exercise.module';
 import { RoutineModule } from './pages/routine/routine.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterComponent } from './pages/register/register.component';
+import { AccountComponent } from './pages/account/account.component';
+import { MainComponent } from './pages/news/main/main.component';
+import { ArticleComponent } from './pages/news/article/article.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AccountComponent,
+    MainComponent,
+    ArticleComponent
   ],
   imports: [
     SharedModule,

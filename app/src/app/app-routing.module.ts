@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountComponent } from './pages/account/account.component';
 import { ExerciseFormComponent } from './pages/exercise/exercise-form/exercise-form.component';
 import { ExerciseMuscleComponent } from './pages/exercise/exercise-muscle/exercise-muscle.component';
 import { ExerciseUpdateComponent } from './pages/exercise/exercise-update/exercise-update.component';
 import { ExercisesComponent } from './pages/exercise/exercises/exercises.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ArticleComponent } from './pages/news/article/article.component';
+import { MainComponent } from './pages/news/main/main.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { CreateRoutineComponent } from './pages/routine/create-routine/create-routine.component';
 import { ExercisesRoutineComponent } from './pages/routine/exercises-routine/exercises-routine.component';
@@ -18,6 +21,9 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegisterComponent },
+  { path: 'noticias', component:  MainComponent},
+  { path: 'noticias/:id', component: ArticleComponent },
+  { path: 'micuenta', component: AccountComponent },
   { path: 'rutinas', component: RoutinesComponent },
   { path: 'rutinas/crear', component: CreateRoutineComponent, canActivate: [guard], data: { expectedRol: ['admin','user'] }  },
   { path: 'rutinas/misrutinas', component: MyroutinesComponent, canActivate: [guard], data: { expectedRol: ['admin','user'] } },
