@@ -28,13 +28,13 @@
   text-decoration: underline;
   cursor: pointer;
 }
-.btn-send{
-  display: flex;
-  justify-content: flex-end;
-}
 .load-m{
   display: flex;
   justify-content: center;
+}
+.btn-send{
+  display: flex;
+  justify-content: flex-end;
 }
 textarea:focus,
 .uneditable-input:focus {
