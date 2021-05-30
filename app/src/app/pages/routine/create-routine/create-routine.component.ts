@@ -22,7 +22,9 @@ export class CreateRoutineComponent implements OnInit {
   routine: Routine = new Routine();
   exercises: Exercise[] = [];
   exercisesDrop: Exercise[] = [];
+  // html drag elements
   draggableElements: any[] = [];
+  // pageable parameters
   totalExercises: number = 30;
   totalPages: number = 4;
   pageSize: number = 4;
@@ -168,7 +170,8 @@ export class CreateRoutineComponent implements OnInit {
   private get nivel() {
     return this.newRutineForm.get('nivel');
   }
-  // Drag and drop functions
+
+  // ### DRAG AND DROP FUNCTIONS ######################################
   onDragStart = (event, exercise: Exercise) => {
     var j = JSON.stringify(exercise);
     // add exercise in JSON
@@ -236,7 +239,7 @@ export class CreateRoutineComponent implements OnInit {
         JSON.parse(ex).idEjercicio.toString()
       );
       // set itemdrop false to arrow icon
-      this.itemsDrop[JSON.parse(ex).idEjercicio] = false;
+      this.itemsDrop[JSON.parse(ex).idEjercicio] = true;
       // add element to cardzone
       this.cardzone.appendChild(draggableElement);
       // remove element html and exercise from routine

@@ -123,7 +123,8 @@ public class RutinaController {
     @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateRutina(@PathVariable("id") int id,@RequestBody RutinaDto rutinaDto) {
-        if (rutinaDto.getNivel() != "Principiante" && rutinaDto.getNivel() != "Intermedio" && rutinaDto.getNivel() != "Avanzado") {
+        if (!rutinaDto.getNivel().equalsIgnoreCase("Principiante") &&
+                !rutinaDto.getNivel().equalsIgnoreCase("Intermedio") && !rutinaDto.getNivel().equalsIgnoreCase("Avanzado")) {
             return new ResponseEntity(new Message("Nivel invalido"), HttpStatus.BAD_REQUEST);
         }
         if (rutinaDto.getNombre().length() < 4) {
@@ -139,11 +140,15 @@ public class RutinaController {
             return new ResponseEntity(new Message("Usuario no existe"), HttpStatus.BAD_REQUEST);
         }
         Rutina rutina = rutinaService.getRutina(id);
+        Usuario usuario = usuarioService.findByCorreo(rutinaDto.getUserName());
+        if(usuario.getRol().getCargo().equals("ADMIN")){
+            rutina.setEstado(200);
+        }else{
+            rutina.setEstado(0);
+        }
         rutina.setNombre(rutinaDto.getNombre());
         rutina.setNivel(rutinaDto.getNivel());
-        rutina.setEstado(rutinaDto.getEstado());
         rutina.setEjercicios(rutinaDto.getEjercicios());
-        Usuario usuario = usuarioService.findByCorreo(rutinaDto.getUserName());
         rutina.setUsuario(usuario);
         rutinaService.save(rutina);
         return new ResponseEntity(new Message("Rutina actualizada"), HttpStatus.OK);
