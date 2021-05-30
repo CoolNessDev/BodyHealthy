@@ -1,3 +1,11 @@
+.mobile-title{
+  color: white !important;
+}
+@media (max-width: 991px){
+  .mobile-title{
+    display: none;
+  }
+}
 .get-started-btn{
   background:rgba(0, 0, 0, 0);
 }

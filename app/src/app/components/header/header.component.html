@@ -1,9 +1,8 @@
 <header id="header" class="fixed-top">
   <div class="container d-flex align-items-center justify-content-lg-between">
     <h1 class="logo me-auto me-lg-0">
-      <a href="#hero">BodyHealthy<span>.</span></a>
+      <a href="#hero">B<span class="mobile-title">odyHealthy</span><span>.</span></a>
     </h1>
-
     <nav
       id="navbar"
       class="navbar order-last order-lg-0"
@@ -82,7 +81,7 @@
         class="bi mobile-nav-toggle"
         [ngClass]="butguerStatus ? 'bi-x' : 'bi-list'"
         (click)="onBurguerClick()"
-        >burguer</i
+        ><img width="35px" src="../../../assets/icons/burguer.svg"></i
       >
     </nav>
     <a *ngIf="!isLogged" class="get-started-btn scrollto" routerLink="/login"
