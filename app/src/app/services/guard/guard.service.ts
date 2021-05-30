@@ -21,7 +21,7 @@ export class GuardService implements CanActivate {
       }
     });
     if (!this.tokenService.getToken() || expectedRol.indexOf(this.rol) === -1) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
       return false;
     }
     return true;
