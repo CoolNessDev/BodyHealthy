@@ -6,11 +6,7 @@ import { Routine } from 'src/app/models/routine';
 import { TokenService } from 'src/app/services/auth/token/token.service';
 import { ExercisesService } from 'src/app/services/exercises.service';
 import { RoutineService } from 'src/app/services/routine.service';
-import {
-  removeExercise,
-  removeDropElement,
-  concatUniqueExercise,
-} from '../../../shared/utilities';
+import { removeExercise } from '../../../shared/utilities';
 
 @Component({
   selector: 'bh-create-routine',
@@ -22,12 +18,11 @@ export class CreateRoutineComponent implements OnInit {
   routine: Routine = new Routine();
   exercises: Exercise[] = [];
   exercisesDrop: Exercise[] = [];
-  // html drag elements
-  draggableElements: any[] = [];
+
   // pageable parameters
   totalExercises: number = 30;
-  totalPages: number = 4;
-  pageSize: number = 4;
+  totalPages: number = 3;
+  pageSize: number = 6;
   currentPageExercise: number = 1;
   // alerts
   loaded: boolean;
@@ -38,21 +33,15 @@ export class CreateRoutineComponent implements OnInit {
   roles: string[];
   isAdmin = false;
   itemsDrop: any = {};
-  // DropZones
-  dropzone;
-  cardzone = document.getElementById('cardZone');
+
   constructor(
     private modalService: NgbModal,
     private exercisesService: ExercisesService,
     private tokenService: TokenService,
     private routineService: RoutineService
-  ) {
-    // no traer los que estan en routine
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.dropzone = document.getElementById('dropZone');
-    this.cardzone = document.getElementById('cardZone');
     this.initForm();
     this.roles = this.tokenService.getAuthorities();
     this.roles.forEach((rol) => {
@@ -69,9 +58,9 @@ export class CreateRoutineComponent implements OnInit {
         this.itemsDrop[id] = true;
       }
     }
-    console.log('ItemsDrop: ', this.itemsDrop);
   };
   private fetchExercise = () => {
+    this.exercises = [];
     this.loaded = false;
     this.error = false;
     this.exercisesService
@@ -86,21 +75,18 @@ export class CreateRoutineComponent implements OnInit {
           this.totalExercises = data.totalElements;
           this.totalPages = Math.round(data.totalElements / this.pageSize);
           this.loaded = true;
-          this.exercises = concatUniqueExercise(this.exercises, data.content);
+          this.exercises = data.content;
           this.setItems(this.exercises);
-          // update items droped
-          this.dropItems(this.draggableElements);
         },
         (err) => {
           this.loaded = true;
           this.error = true;
-          // update items droped
-          this.dropItems(this.draggableElements);
           console.log('Error: ', err.message);
         }
       );
   };
   onMuscle = (muscleId: number) => {
+    this.exercises = [];
     this.loaded = false;
     this.error = false;
     this.exercisesService.getExercisesByMuscle(muscleId).subscribe(
@@ -109,23 +95,18 @@ export class CreateRoutineComponent implements OnInit {
           this.error = true;
         }
         this.loaded = true;
-        this.exercises = concatUniqueExercise(this.exercises, data);
-        // this.exercises=this.exercises.reverse();
+        this.exercises = data;
         this.setItems(this.exercises);
-        // update items droped
-        this.dropItems(this.draggableElements);
       },
       (err) => {
         this.loaded = true;
         this.error = true;
-        // update items droped
-        this.dropItems(this.draggableElements);
         console.log('Error: ', err.message);
       }
     );
   };
   onSearch = () => {
-    // Limitar resultados
+    this.exercises = [];
     if (!/^\s*$/.test(this.nameSearched.value)) {
       this.loaded = false;
       this.error = false;
@@ -135,16 +116,12 @@ export class CreateRoutineComponent implements OnInit {
           (data) => {
             this.loaded = true;
             console.log(data);
-            this.exercises = concatUniqueExercise(this.exercises, data);
+            this.exercises = data;
             this.setItems(this.exercises);
-            // update items droped
-            this.dropItems(this.draggableElements);
           },
           (err) => {
             this.loaded = true;
             this.error = true;
-            // update items droped
-            this.dropItems(this.draggableElements);
             console.log('Error: ', err.message);
           }
         );
@@ -185,49 +162,21 @@ export class CreateRoutineComponent implements OnInit {
     if (event.dataTransfer) {
       // get exercise in JSON
       const ex = event.dataTransfer.getData('exercise');
-      // console.log(ex);
-      const draggableElement = document.getElementById(
-        JSON.parse(ex).idEjercicio.toString()
-      );
+
       this.exercisesDrop = removeExercise(this.exercisesDrop, JSON.parse(ex));
-      this.draggableElements = removeDropElement(
-        this.draggableElements,
-        draggableElement
-      );
+
       // set itemdrop false to arrow icon
       this.itemsDrop[JSON.parse(ex).idEjercicio] = false;
       // save element html and exercise
-      this.draggableElements.push(draggableElement);
+
       this.exercisesDrop.push(JSON.parse(ex));
-      // drop elements in dropzone
-      this.dropItems(this.draggableElements);
 
       event.dataTransfer.clearData();
     } else {
       // drop by arrow button
-      const draggableElement = document.getElementById(
-        exercise.idEjercicio.toString()
-      );
       // set itemdrop false to arrow icon
       this.itemsDrop[exercise.idEjercicio] = false;
-      this.draggableElements.push(draggableElement);
       this.exercisesDrop.push(exercise);
-      this.dropItems(this.draggableElements);
-    }
-  };
-  // drop items in Routine
-  dropItems = (draggableElements: any[]) => {
-    this.dropzone.innerHTML = '';
-    for (let index = 0; index < draggableElements.length; index++) {
-      const element = draggableElements[index];
-      this.dropzone.appendChild(element);
-    }
-  };
-  // drop items in cardZone
-  dropItemsCard = (draggableElements: any[]) => {
-    for (let index = 0; index < draggableElements.length; index++) {
-      const element = draggableElements[index];
-      this.cardzone.appendChild(element);
     }
   };
   // On cards zone
@@ -235,38 +184,19 @@ export class CreateRoutineComponent implements OnInit {
     if (event.dataTransfer) {
       // get exercise in JSON
       const ex = event.dataTransfer.getData('exercise');
-      const draggableElement = document.getElementById(
-        JSON.parse(ex).idEjercicio.toString()
-      );
+
       // set itemdrop false to arrow icon
       this.itemsDrop[JSON.parse(ex).idEjercicio] = true;
-      // add element to cardzone
-      this.cardzone.appendChild(draggableElement);
-      // remove element html and exercise from routine
+
+      // remove exercise from routine
       this.exercisesDrop = removeExercise(this.exercisesDrop, JSON.parse(ex));
-      this.draggableElements = removeDropElement(
-        this.draggableElements,
-        draggableElement
-      );
-      // update items droped
-      this.dropItems(this.draggableElements);
+
       event.dataTransfer.clearData();
     } else {
       // drop by arrow button
-      const draggableElement = document.getElementById(
-        exercise.idEjercicio.toString()
-      );
-      // add element to cardzone
-      this.cardzone.appendChild(draggableElement);
-      // remove element html and exercise from routine
+      // remove exercise from routine
       this.itemsDrop[exercise.idEjercicio] = true;
       this.exercisesDrop = removeExercise(this.exercisesDrop, exercise);
-      this.draggableElements = removeDropElement(
-        this.draggableElements,
-        draggableElement
-      );
-      // update items droped
-      this.dropItems(this.draggableElements);
     }
   };
   open = (content) => {

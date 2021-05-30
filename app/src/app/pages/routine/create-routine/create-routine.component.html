@@ -105,8 +105,45 @@
   >
     <h4 class="sidebar-heading border-bottom">Rutina</h4>
     <!-- DropZone -->
-    <div id="dropZone" class="list-group list-group-flush list-content">
+    <div id="" class="list-group list-group-flush list-content">
+      <div
+        *ngFor="let exercise of exercisesDrop"
+        [id]="exercise.idEjercicio"
+        class="card col shadow m-2 bg-body rounded"
+        style="width: 18rem"
+        draggable="true"
+        (dragstart)="onDragStart($event,exercise)"
+      >
+        <ng-container *ngIf="itemsDrop[exercise.idEjercicio]; else elseTemplate">
+          <button
+            type="button"
+            class="addCard"
+            (click)="onDrop($event, exercise)"
+            >
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+        </ng-container>
 
+        <ng-template #elseTemplate>
+          <button
+            type="button"
+            class="addCard"
+            (click)="onCardDrop($event, exercise)"
+          >
+            <span aria-hidden="true">&larr;</span>
+          </button>
+        </ng-template>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ exercise.nombre }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            {{ exercise.idEjercicio }}
+          </h6>
+          <p class="card-text">
+            {{ exercise.descripcion }}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
