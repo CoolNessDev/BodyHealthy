@@ -2,10 +2,12 @@ package aplication.upn.BodyHealthy.Security.Dto;
 
 import aplication.upn.BodyHealthy.Security.Model.Rol;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
 
+@NoArgsConstructor
 public class UserDto {
     @Getter @Setter
     private String imagen;

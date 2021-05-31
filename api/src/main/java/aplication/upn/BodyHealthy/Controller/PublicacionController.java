@@ -1,6 +1,7 @@
 package aplication.upn.BodyHealthy.Controller;
 
 import aplication.upn.BodyHealthy.Dto.Message;
+import aplication.upn.BodyHealthy.Dto.PublicacionDto;
 import aplication.upn.BodyHealthy.Model.Publicacion;
 import aplication.upn.BodyHealthy.Security.Model.Usuario;
 import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -50,16 +52,28 @@ public class PublicacionController {
         return new ResponseEntity<Page<Publicacion>>(publicacions, HttpStatus.OK);
 
     }
+
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<List<Publicacion>> getByUsuario(@PathVariable("id") int id){
-        if(!usuarioService.existsById(id)){
+    public ResponseEntity<List<PublicacionDto>> getByUsuario(@PathVariable("id") int id) {
+        if (!usuarioService.existsById(id)) {
             return new ResponseEntity(new Message("Usuario no encontrado"), HttpStatus.NOT_FOUND);
         }
         Usuario usuario = usuarioService.getUsuario(id);
-        if(!publicacionService.existByUsuario(usuario)){
+        if (!publicacionService.existByUsuario(usuario)) {
             return new ResponseEntity(new Message("Publication by user not found"), HttpStatus.NOT_FOUND);
         }
         List<Publicacion> publicacions = publicacionService.findByUsuario(usuario);
-        return new ResponseEntity<List<Publicacion>>(publicacions, HttpStatus.OK);
+        List<PublicacionDto> publicacionsDto = new ArrayList<>();
+        for (Publicacion p : publicacions) {
+            Usuario usuarioDto = new Usuario();
+            usuarioDto.setIdUsuario(p.getUsuario().getIdUsuario());
+            usuarioDto.setNombres(p.getUsuario().getNombres());
+            usuarioDto.setApellidos(p.getUsuario().getApellidos());
+            usuarioDto.setImagen(p.getUsuario().getImagen());
+            p.setUsuario(usuarioDto);
+            PublicacionDto publicacionDto = new PublicacionDto(p.getIdPublicacion(),p.getUsuario(),p.getMensaje(),p.getImagen(),p.getFecha());
+            publicacionsDto.add(publicacionDto);
+        }
+        return new ResponseEntity<List<PublicacionDto>>(publicacionsDto, HttpStatus.OK);
     }
 }
