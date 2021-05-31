@@ -1,0 +1,65 @@
+package aplication.upn.BodyHealthy.Controller;
+
+import aplication.upn.BodyHealthy.Dto.Message;
+import aplication.upn.BodyHealthy.Model.Publicacion;
+import aplication.upn.BodyHealthy.Security.Model.Usuario;
+import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
+import aplication.upn.BodyHealthy.Service.PublicacionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@CrossOrigin(allowedHeaders = "*", origins = "*")
+@RequestMapping("/publicacion")
+public class PublicacionController {
+    @Autowired
+    PublicacionService publicacionService;
+    @Autowired
+    UsuarioService usuarioService;
+
+    @GetMapping("/list")
+    public ResponseEntity<List<Publicacion>> getAllPublicacion() {
+        List<Publicacion> publicacions = publicacionService.getAll();
+        return new ResponseEntity(publicacions, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Publicacion> getPublicacion(@PathVariable("id") int id) {
+        if (!publicacionService.existById(id)) {
+            return new ResponseEntity(new Message("Publicacion no encontrada"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(publicacionService.getPublicacion(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Publicacion>> getAllPageable(@RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size,
+                                                            @RequestParam(defaultValue = "fecha") String order,
+                                                            @RequestParam(defaultValue = "true") boolean asc) {
+        Page<Publicacion> publicacions = publicacionService.getAllPageable(PageRequest.of(page, size, Sort.by(order)));
+        if (!asc) {
+            publicacions = publicacionService.getAllPageable(PageRequest.of(page, size, Sort.by(order).descending()));
+        }
+        return new ResponseEntity<Page<Publicacion>>(publicacions, HttpStatus.OK);
+
+    }
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<Publicacion>> getByUsuario(@PathVariable("id") int id){
+        if(!usuarioService.existsById(id)){
+            return new ResponseEntity(new Message("Usuario no encontrado"), HttpStatus.NOT_FOUND);
+        }
+        Usuario usuario = usuarioService.getUsuario(id);
+        if(!publicacionService.existByUsuario(usuario)){
+            return new ResponseEntity(new Message("Publication by user not found"), HttpStatus.NOT_FOUND);
+        }
+        List<Publicacion> publicacions = publicacionService.findByUsuario(usuario);
+        return new ResponseEntity<List<Publicacion>>(publicacions, HttpStatus.OK);
+    }
+}

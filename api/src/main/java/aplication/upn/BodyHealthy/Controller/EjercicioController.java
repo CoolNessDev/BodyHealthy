@@ -39,12 +39,12 @@ public class EjercicioController {
             @RequestParam(defaultValue = "nombre") String order,
             @RequestParam(defaultValue = "true") boolean asc
     ){
-        Page<Ejercicio> paises = ejercicioService.pages(
+        Page<Ejercicio> ejercicios = ejercicioService.pages(
                 PageRequest.of(page, size, Sort.by(order)));
         if(!asc)
-            paises = ejercicioService.pages(
+            ejercicios = ejercicioService.pages(
                     PageRequest.of(page, size, Sort.by(order).descending()));
-        return new ResponseEntity<Page<Ejercicio>>(paises, HttpStatus.OK);
+        return new ResponseEntity<Page<Ejercicio>>(ejercicios, HttpStatus.OK);
     }
     @GetMapping("/find")
     public ResponseEntity<List<Ejercicio>> findEjercicio(@RequestParam(defaultValue = "")String var){
