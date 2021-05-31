@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Routine } from 'src/app/models/routine';
 import { RoutineService } from 'src/app/services/routine.service';
 import { UserService } from 'src/app/services/user.service';
@@ -6,24 +7,50 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'bh-myroutines',
   templateUrl: './myroutines.component.html',
-  styleUrls: ['./myroutines.component.css']
+  styleUrls: ['./myroutines.component.css'],
 })
 export class MyroutinesComponent implements OnInit {
+  spinnerMessage: string = 'Eliminando rutina';
   routines?: Routine[];
-  constructor(private routinesService: RoutineService, private userServices: UserService) { }
+  loaded: boolean = false;
+  error: boolean = false;
+  constructor(
+    private routinesService: RoutineService,
+    private userServices: UserService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
-    let userId:number = parseInt(this.userServices.getUserId());
-    this.fetchRoutines(userId)
+    const userId: number = parseInt(this.userServices.getUserId());
+    this.fetchRoutines(userId);
   }
   fetchRoutines(userId: number) {
-    console.log(userId);
-    this.routinesService.getRoutinesByUser(userId).subscribe(data =>{
-      console.log("Data: ",data);
-      this.routines=data;
-    },err=>{
-      console.log(err.error.message);
-    })
+    this.loaded = false;
+    this.error = false;
+    this.routinesService.getRoutinesByUser(userId).subscribe(
+      (data) => {
+        this.routines = data;
+        this.loaded = true;
+      },
+      (err) => {
+        this.error = true;
+        console.log(err.error.message);
+      }
+    );
   }
-
+  onDelete = (id: number) => {
+    this.spinner.show();
+    const userId: number = parseInt(this.userServices.getUserId());
+    this.routinesService.deleteRoutine(id, userId).subscribe(
+      (data) => {
+        console.log(data);
+        this.spinner.hide();
+      },
+      (err) => {
+        console.log('Error: ', err);
+        this.spinner.hide();
+        window.location.reload();
+      }
+    );
+  };
 }

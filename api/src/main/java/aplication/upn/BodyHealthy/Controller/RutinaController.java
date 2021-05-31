@@ -6,13 +6,13 @@ import aplication.upn.BodyHealthy.Model.Rutina;
 import aplication.upn.BodyHealthy.Security.Model.Usuario;
 import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
 import aplication.upn.BodyHealthy.Service.RutinaService;
-import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -153,5 +153,30 @@ public class RutinaController {
         rutinaService.save(rutina);
         return new ResponseEntity(new Message("Rutina actualizada"), HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteRutina(@RequestParam(defaultValue = "-1")int idRutina,
+                                          @RequestParam(defaultValue = "-1")int idUsuario){
+        if(!rutinaService.existsById(idRutina)){
+            return new ResponseEntity(new Message("Rutina no encontrada"), HttpStatus.NOT_FOUND);
+        }
+        if(!usuarioService.existsById(idUsuario)){
+            return new ResponseEntity(new Message("Usuario no encontrado"), HttpStatus.NOT_FOUND);
+        }
+        Rutina rutina = rutinaService.getRutina(idRutina);
+        if(rutina.getUsuario().getIdUsuario()!=idUsuario){
+            return new ResponseEntity(new Message("La rutina no corresponde al usuario"), HttpStatus.NOT_FOUND);
+        }
+        rutinaService.delete(rutina);
+        return new ResponseEntity(new Message("Rutina eliminada"), HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @DeleteMapping("deletedefault/{id}")
+    public ResponseEntity<?> deleteDefaultRoutine(@PathVariable("id") int id){
+        if(!rutinaService.existsById(id)){
+            return new ResponseEntity(new Message("Rutina no encontrada"), HttpStatus.NOT_FOUND);
+        }
+        rutinaService.delete(rutinaService.getRutina(id));
+        return new ResponseEntity(new Message("Rutina elimnada"),HttpStatus.OK);
+    }
 }
