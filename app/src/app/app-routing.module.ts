@@ -14,6 +14,7 @@ import { CreateRoutineComponent } from './pages/routine/create-routine/create-ro
 import { ExercisesRoutineComponent } from './pages/routine/exercises-routine/exercises-routine.component';
 import { LevelsComponent } from './pages/routine/levels/levels.component';
 import { MyroutinesComponent } from './pages/routine/myroutines/myroutines.component';
+import { RoutineFormComponent } from './pages/routine/routine-form/routine-form.component';
 import { RoutinesComponent } from './pages/routine/routines/routines.component';
 import { GuardService as guard } from './services/guard/guard.service';
 const routes: Routes = [
@@ -25,8 +26,9 @@ const routes: Routes = [
   { path: 'noticias/:id', component: ArticleComponent },
   { path: 'micuenta', component: AccountComponent },
   { path: 'rutinas', component: RoutinesComponent },
-  { path: 'rutinas/crear', component: CreateRoutineComponent, canActivate: [guard], data: { expectedRol: ['admin','user'] }  },
+  { path: 'rutinas/crear', component: RoutineFormComponent, canActivate: [guard], data: { expectedRol: ['admin','user'] }  },
   { path: 'rutinas/misrutinas', component: MyroutinesComponent, canActivate: [guard], data: { expectedRol: ['admin','user'] } },
+  { path: 'rutinas/editar/:id', component: RoutineFormComponent, canActivate: [guard], data: { expectedRol: ['admin','user'] } },
   { path: 'rutinas/:level', component: LevelsComponent },
   { path: 'rutinas/ejercicios/:id', component: ExercisesRoutineComponent },
   { path: 'ejercicios', component: ExercisesComponent },

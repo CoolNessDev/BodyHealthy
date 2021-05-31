@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Exercise } from '../models/exercise';
 import { TokenService } from './auth/token/token.service';
-// import axios from 'axios'
 @Injectable({
   providedIn: 'root',
 })

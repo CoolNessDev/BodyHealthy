@@ -47,6 +47,14 @@ export class RoutineService {
       this.httpOptions
     );
   }
+  public putRoutine(id: number,routine: Routine): Observable<Routine> {
+    this.setHttpOptions();
+    return this.httpClient.put<Routine>(
+      `${this.routineURL}/update/${id}`,
+      routine,
+      this.httpOptions
+    );
+  }
   private setHttpOptions() {
     this.httpOptions.headers = this.httpOptions.headers.set(
       'Authorization',

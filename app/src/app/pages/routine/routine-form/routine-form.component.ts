@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Exercise } from 'src/app/models/exercise';
 import { Routine } from 'src/app/models/routine';
@@ -9,11 +10,11 @@ import { RoutineService } from 'src/app/services/routine.service';
 import { removeExercise } from '../../../shared/utilities';
 
 @Component({
-  selector: 'bh-create-routine',
-  templateUrl: './create-routine.component.html',
-  styleUrls: ['./create-routine.component.css'],
+  selector: 'bh-routine-form',
+  templateUrl: './routine-form.component.html',
+  styleUrls: ['./routine-form.component.css'],
 })
-export class CreateRoutineComponent implements OnInit {
+export class RoutineFormComponent implements OnInit {
   newRutineForm: FormGroup;
   routine: Routine = new Routine();
   exercises: Exercise[] = [];
@@ -33,8 +34,10 @@ export class CreateRoutineComponent implements OnInit {
   roles: string[];
   isAdmin = false;
   itemsDrop: any = {};
+  inEdit: boolean = false;
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private modalService: NgbModal,
     private exercisesService: ExercisesService,
     private tokenService: TokenService,
@@ -42,6 +45,12 @@ export class CreateRoutineComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.params.id;
+    console.log('RUTA: ', id);
+    if (id) {
+      this.getRoutine(id);
+      this.inEdit = true;
+    }
     this.initForm();
     this.roles = this.tokenService.getAuthorities();
     this.roles.forEach((rol) => {
@@ -50,9 +59,22 @@ export class CreateRoutineComponent implements OnInit {
       }
     });
     this.fetchExercise();
-    this.loadData(null);
-    this.getRoutineExercises();
   }
+  private getRoutine = (id: number) => {
+    this.routineService.getRoutine(id).subscribe(
+      (data) => {
+        console.log('Routine: ', data);
+        this.routine = data;
+        console.log(this.routine);
+        this.loadData(data);
+        this.getRoutineExercises(id);
+      },
+      (err) => {
+        console.log('Error: ', err);
+        window.location.href = '';
+      }
+    );
+  };
   private setItems = (exercises: Exercise[]) => {
     for (let index = 0; index < exercises.length; index++) {
       let id = exercises[index].idEjercicio;
@@ -87,12 +109,12 @@ export class CreateRoutineComponent implements OnInit {
         }
       );
   };
-  private getRoutineExercises=()=>{
-    this.exercisesService.getExercisesByRoutine(11).subscribe(data=>{
+  private getRoutineExercises = (id: number) => {
+    this.exercisesService.getExercisesByRoutine(id).subscribe((data) => {
       console.log(data);
-      this.exercisesDrop=data;
-    })
-  }
+      this.exercisesDrop = data;
+    });
+  };
 
   onMuscle = (muscleId: number) => {
     this.exercises = [];
@@ -145,8 +167,8 @@ export class CreateRoutineComponent implements OnInit {
     });
   };
   loadData = (data): void => {
-    this.newRutineForm.get('name').setValue("prueba data");
-    this.newRutineForm.get('nivel').setValue("Intermedio");
+    this.newRutineForm.get('name').setValue(data.nombre);
+    this.newRutineForm.get('nivel').setValue(data.nivel);
   };
   setValues() {
     this.routine.nombre = this.name.value;
@@ -211,26 +233,34 @@ export class CreateRoutineComponent implements OnInit {
   save = () => {
     this.setValues();
     console.log(this.routine);
-    if (this.isAdmin) {
-      this.routineService.postRoutineDefault(this.routine).subscribe(
-        (data) => {
-          console.log('Data: ', data);
-        },
-        (err) => {
-          console.log('error: ', err);
-        }
-      );
+    if (this.inEdit) {
+      const id = this.activatedRoute.snapshot.params.id;
+      this.routineService.putRoutine(id,this.routine).subscribe(data=>{
+        console.log(data);
+      },err=>{
+        console.log("Error: ",err);
+      })
     } else {
-      this.routineService.postRoutine(this.routine).subscribe(
-        (data) => {
-          console.log('Data: ', data);
-        },
-        (err) => {
-          console.log('error: ', err);
-        }
-      );
+      if (this.isAdmin) {
+        this.routineService.postRoutineDefault(this.routine).subscribe(
+          (data) => {
+            console.log('Data: ', data);
+          },
+          (err) => {
+            console.log('error: ', err);
+          }
+        );
+      } else {
+        this.routineService.postRoutine(this.routine).subscribe(
+          (data) => {
+            console.log('Data: ', data);
+          },
+          (err) => {
+            console.log('error: ', err);
+          }
+        );
+      }
     }
-
     console.log('Close');
   };
 }
