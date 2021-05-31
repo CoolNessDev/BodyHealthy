@@ -34,11 +34,19 @@ public class PublicacionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Publicacion> getPublicacion(@PathVariable("id") int id) {
+    public ResponseEntity<PublicacionDto> getPublicacion(@PathVariable("id") int id) {
         if (!publicacionService.existById(id)) {
             return new ResponseEntity(new Message("Publicacion no encontrada"), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(publicacionService.getPublicacion(id), HttpStatus.OK);
+        Publicacion p =publicacionService.getPublicacion(id);
+        Usuario usuarioDto = new Usuario();
+        usuarioDto.setIdUsuario(p.getUsuario().getIdUsuario());
+        usuarioDto.setNombres(p.getUsuario().getNombres());
+        usuarioDto.setApellidos(p.getUsuario().getApellidos());
+        usuarioDto.setImagen(p.getUsuario().getImagen());
+        p.setUsuario(usuarioDto);
+        PublicacionDto publicacionDto = new PublicacionDto(p.getIdPublicacion(),p.getUsuario(),p.getMensaje(),p.getImagen(),p.getFecha());
+        return new ResponseEntity(publicacionDto, HttpStatus.OK);
     }
 
     @GetMapping("/pageable")
