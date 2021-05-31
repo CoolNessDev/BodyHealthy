@@ -8,6 +8,7 @@ import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
 import aplication.upn.BodyHealthy.Service.PublicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class PublicacionController {
     }
 
     @GetMapping("/pageable")
-    public ResponseEntity<Page<Publicacion>> getAllPageable(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<PublicacionDto>> getAllPageable(@RequestParam(defaultValue = "0") int page,
                                                             @RequestParam(defaultValue = "10") int size,
                                                             @RequestParam(defaultValue = "fecha") String order,
                                                             @RequestParam(defaultValue = "true") boolean asc) {
@@ -49,7 +50,20 @@ public class PublicacionController {
         if (!asc) {
             publicacions = publicacionService.getAllPageable(PageRequest.of(page, size, Sort.by(order).descending()));
         }
-        return new ResponseEntity<Page<Publicacion>>(publicacions, HttpStatus.OK);
+        List<PublicacionDto> publicacionsDto = new ArrayList<>();
+        for (Publicacion p : publicacions.getContent()) {
+            Usuario usuarioDto = new Usuario();
+            usuarioDto.setIdUsuario(p.getUsuario().getIdUsuario());
+            usuarioDto.setNombres(p.getUsuario().getNombres());
+            usuarioDto.setApellidos(p.getUsuario().getApellidos());
+            usuarioDto.setImagen(p.getUsuario().getImagen());
+            p.setUsuario(usuarioDto);
+            PublicacionDto publicacionDto = new PublicacionDto(p.getIdPublicacion(),p.getUsuario(),p.getMensaje(),p.getImagen(),p.getFecha());
+            publicacionsDto.add(publicacionDto);
+        }
+        Page<PublicacionDto> publicacionDtos = new PageImpl<PublicacionDto>(publicacionsDto);
+
+        return new ResponseEntity<Page<PublicacionDto>>(publicacionDtos, HttpStatus.OK);
 
     }
 
