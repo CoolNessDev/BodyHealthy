@@ -9,6 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ArticleComponent } from './pages/news/article/article.component';
 import { MainComponent } from './pages/news/main/main.component';
+import { MyArticlesComponent } from './pages/news/my-articles/my-articles.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ExercisesRoutineComponent } from './pages/routine/exercises-routine/exercises-routine.component';
 import { LevelsComponent } from './pages/routine/levels/levels.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegisterComponent },
   { path: 'noticias', component:  MainComponent},
+  { path: 'noticias/mispublicaciones', component:  MyArticlesComponent},
   { path: 'noticias/:id', component: ArticleComponent },
   { path: 'micuenta', component: AccountComponent },
   { path: 'rutinas', component: RoutinesComponent },
