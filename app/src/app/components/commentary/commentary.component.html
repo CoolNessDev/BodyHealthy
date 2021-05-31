@@ -5,11 +5,11 @@
       width="30px"
       height="30px"
       alt="100x100"
-      src="https://i.ibb.co/SyGszR2/descargar.jpg"
+      [src]="commentary.usuario.imagen"
       data-holder-rendered="true"
     />
     <span class="userName">
-      Nombres Apellidos
+      {{commentary.usuario.nombres}} {{commentary.usuario.apellidos}}
     </span>
     <div ngbDropdown class="toggleButton">
       <i ngbDropdownToggle><img width="30px" src="../../../assets/icons/points.svg"></i>
@@ -20,9 +20,9 @@
     </div>
   </div>
   <div class="card-body">
-    <p class="date">10 de julio, 2020</p>
+    <p class="date">{{commentary.fecha | date: format}}</p>
     <p class="card-text">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod enim sit adipisci! Quasi, quisquam ratione inventore cupiditate, hic voluptate, minus culpa placeat aspernatur enim fuga quidem eveniet vero nobis repellat.
+      {{commentary.mensaje}}
     </p>
   </div>
 </div>

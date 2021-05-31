@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Exercise } from 'src/app/models/exercise';
 import { Routine } from 'src/app/models/routine';
 import { TokenService } from 'src/app/services/auth/token/token.service';
@@ -15,6 +16,8 @@ import { removeExercise } from '../../../shared/utilities';
   styleUrls: ['./routine-form.component.css'],
 })
 export class RoutineFormComponent implements OnInit {
+  spinnerMessage: string="Actualizando"
+  // form
   newRutineForm: FormGroup;
   routine: Routine = new Routine();
   exercises: Exercise[] = [];
@@ -41,7 +44,8 @@ export class RoutineFormComponent implements OnInit {
     private modalService: NgbModal,
     private exercisesService: ExercisesService,
     private tokenService: TokenService,
-    private routineService: RoutineService
+    private routineService: RoutineService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -75,11 +79,13 @@ export class RoutineFormComponent implements OnInit {
       }
     );
   };
-  private setItems = (exercises: Exercise[]) => {
+  private setItems = (exercises: Exercise[],boolValue:boolean) => {
     for (let index = 0; index < exercises.length; index++) {
       let id = exercises[index].idEjercicio;
       if (this.itemsDrop[id] == undefined) {
-        this.itemsDrop[id] = true;
+        this.itemsDrop[id] = boolValue;
+      }if(this.inEdit){
+        this.itemsDrop[id] = boolValue;
       }
     }
   };
@@ -100,7 +106,7 @@ export class RoutineFormComponent implements OnInit {
           this.totalPages = Math.round(data.totalElements / this.pageSize);
           this.loaded = true;
           this.exercises = data.content;
-          this.setItems(this.exercises);
+          this.setItems(this.exercises,true);
         },
         (err) => {
           this.loaded = true;
@@ -113,6 +119,7 @@ export class RoutineFormComponent implements OnInit {
     this.exercisesService.getExercisesByRoutine(id).subscribe((data) => {
       console.log(data);
       this.exercisesDrop = data;
+      this.setItems(this.exercisesDrop,false);
     });
   };
 
@@ -127,7 +134,7 @@ export class RoutineFormComponent implements OnInit {
         }
         this.loaded = true;
         this.exercises = data;
-        this.setItems(this.exercises);
+        this.setItems(this.exercises,true);
       },
       (err) => {
         this.loaded = true;
@@ -148,7 +155,7 @@ export class RoutineFormComponent implements OnInit {
             this.loaded = true;
             console.log(data);
             this.exercises = data;
-            this.setItems(this.exercises);
+            this.setItems(this.exercises,true);
           },
           (err) => {
             this.loaded = true;
@@ -231,32 +238,44 @@ export class RoutineFormComponent implements OnInit {
     this.modalService.open(content);
   };
   save = () => {
+    this.spinner.show();
     this.setValues();
     console.log(this.routine);
     if (this.inEdit) {
+      this.spinnerMessage="Actualizando rutina";
       const id = this.activatedRoute.snapshot.params.id;
       this.routineService.putRoutine(id,this.routine).subscribe(data=>{
         console.log(data);
+        this.spinner.hide();
+        window.location.href="/rutinas/misrutinas"
       },err=>{
         console.log("Error: ",err);
+        this.spinner.hide();
       })
     } else {
+      this.spinnerMessage="Creando rutina";
       if (this.isAdmin) {
         this.routineService.postRoutineDefault(this.routine).subscribe(
           (data) => {
             console.log('Data: ', data);
+            this.spinner.hide();
+            window.location.href="/rutinas/misrutinas"
           },
           (err) => {
             console.log('error: ', err);
+            this.spinner.hide();
           }
         );
       } else {
         this.routineService.postRoutine(this.routine).subscribe(
           (data) => {
             console.log('Data: ', data);
+            this.spinner.hide();
+            window.location.href="/rutinas/misrutinas"
           },
           (err) => {
             console.log('error: ', err);
+            this.spinner.hide();
           }
         );
       }

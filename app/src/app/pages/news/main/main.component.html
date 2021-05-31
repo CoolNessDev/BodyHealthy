@@ -26,5 +26,12 @@
       </div>
     </div>
   </div>
-  <bh-article></bh-article>
+  <ng-container *ngIf="publications&&publications.length>0; else elseTemplate">
+    <bh-article *ngFor="let publication of publications" [publication]="publication"></bh-article>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <h1>Sin publicaciones</h1>
+  </ng-template>
+
+
 </div>

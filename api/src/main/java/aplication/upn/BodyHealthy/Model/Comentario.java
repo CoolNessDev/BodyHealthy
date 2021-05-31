@@ -1,6 +1,7 @@
 package aplication.upn.BodyHealthy.Model;
 
 import aplication.upn.BodyHealthy.Security.Model.Usuario;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +19,13 @@ public class Comentario {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Getter @Setter
     private int idComentario;
-    @ManyToOne(optional = false)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "id_usuario")
     @Getter @Setter
     private Usuario usuario;
-    @ManyToOne(optional = false)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "id_publicacion")
     @Getter @Setter
     private Publicacion publicacion;

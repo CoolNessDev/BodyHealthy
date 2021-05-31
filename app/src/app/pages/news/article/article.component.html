@@ -5,11 +5,11 @@
       width="30px"
       height="30px"
       alt="100x100"
-      src="https://i.ibb.co/SyGszR2/descargar.jpg"
+      [src]="publication.usuario.imagen"
       data-holder-rendered="true"
     />
     <span class="userName">
-      Nombres Apellidos
+      {{publication.usuario.nombres}} {{publication.usuario.apellidos}}
     </span>
     <div ngbDropdown class="toggleButton">
       <!-- <a class="" id="dropdownForm1" ngbDropdownToggle>Toggle dropdown</a> -->
@@ -22,20 +22,27 @@
     </div>
   </div>
   <div class="card-body">
-    <p class="date">10 de julio, 2020</p>
+    <p class="date">{{publication.fecha | date: format}}</p>
     <p class="card-text">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod enim sit adipisci! Quasi, quisquam ratione inventore cupiditate, hic voluptate, minus culpa placeat aspernatur enim fuga quidem eveniet vero nobis repellat.
+      {{publication.mensaje}}
     </p>
-    <img src="https://images.pexels.com/photos/35888/amazing-beautiful-breathtaking-clouds.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="img-fluid" alt="...">
+    <img *ngIf="publication.imagen!=''" [src]="publication.imagen" class="img-fluid" alt="...">
   </div>
-  <ngb-accordion #acc="ngbAccordion"activeIds="ngb-panel-0" >
+  <!-- activeIds="ngb-panel-0" -->
+  <ngb-accordion #acc="ngbAccordion"activeIds="" >
     <ngb-panel>
       <ng-template ngbPanelTitle>
         <span class="btn-link">Comentarios</span>
       </ng-template>
       <ng-template ngbPanelContent>
+        <!-- comentaries container -->
+        <ng-container *ngIf="commentaries&&commentaries.length>0; else elseTemplate">
+          <bh-commentary *ngFor="let commentary of commentaries" [commentary]="commentary"></bh-commentary>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <h1>Sin comentarios</h1>
+        </ng-template>
 
-        <bh-commentary></bh-commentary>
         <div class="load-m">
           <span class="btn-link">Ver mas</span>
         </div>

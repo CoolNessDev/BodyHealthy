@@ -11,6 +11,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AccountComponent } from './pages/account/account.component';
 import { MainComponent } from './pages/news/main/main.component';
 import { ArticleComponent } from './pages/news/article/article.component';
+import { MyArticlesComponent } from './pages/news/my-articles/my-articles.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { ArticleComponent } from './pages/news/article/article.component';
     RegisterComponent,
     AccountComponent,
     MainComponent,
-    ArticleComponent
+    ArticleComponent,
+    MyArticlesComponent
   ],
   imports: [
     SharedModule,

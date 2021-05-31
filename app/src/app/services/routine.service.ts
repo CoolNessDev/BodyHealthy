@@ -55,6 +55,20 @@ export class RoutineService {
       this.httpOptions
     );
   }
+  public deleteRoutine(idRoutine: number,idUser: number): Observable<Routine> {
+    this.setHttpOptions();
+    return this.httpClient.delete<Routine>(
+      `${this.routineURL}/delete?idRutina=${idRoutine}&idUsuario=${idUser}`,
+      this.httpOptions
+    );
+  }
+  public deleteDefaultRoutine(id: number): Observable<Routine> {
+    this.setHttpOptions();
+    return this.httpClient.delete<Routine>(
+      `${this.routineURL}/deletedefault/${id}`,
+      this.httpOptions
+    );
+  }
   private setHttpOptions() {
     this.httpOptions.headers = this.httpOptions.headers.set(
       'Authorization',
