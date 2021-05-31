@@ -34,7 +34,7 @@
   <bh-alert
     *ngIf="error"
     [alertClass]="'alert-danger'"
-    [message]="'Error al cargar rutinas'"
+    [message]="errorMessage"
   ></bh-alert>
 </div>
 <a class="fixedButton" routerLink="/rutinas/crear">

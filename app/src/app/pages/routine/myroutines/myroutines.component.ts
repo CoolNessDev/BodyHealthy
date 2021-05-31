@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MyroutinesComponent implements OnInit {
   spinnerMessage: string = 'Eliminando rutina';
+  errorMessage: string = 'Error al cargar rutinas';
   routines?: Routine[];
   loaded: boolean = false;
   error: boolean = false;
@@ -34,7 +35,8 @@ export class MyroutinesComponent implements OnInit {
       },
       (err) => {
         this.error = true;
-        console.log(err.error.message);
+        this.loaded = true;
+        this.errorMessage=err.error.message;
       }
     );
   }
