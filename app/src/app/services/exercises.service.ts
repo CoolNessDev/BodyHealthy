@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Exercise } from '../models/exercise';
 import { TokenService } from './auth/token/token.service';
-// import axios from 'axios'
 @Injectable({
   providedIn: 'root',
 })
@@ -28,6 +27,9 @@ export class ExercisesService {
   }
   public getExercisesByPages(page: number, size: number, order: string, asc: boolean): Observable<any> {
     return this.httpClient.get<any>(`${this.exerciseURL}/list?` + `page=${page}&size=${size}&order=${order}&asc=${asc}`);
+  }
+  public getExercisesByRoutine(id:number): Observable<any> {
+    return this.httpClient.get<any>(`${this.exerciseURL}/rutina/${id}`);
   }
   public getExercisesByMuscle(id: number): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.exerciseURL}/musculo/${id}`);

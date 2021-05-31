@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LoginUserDto } from 'src/app/models/loginUserDto';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { TokenService } from 'src/app/services/auth/token/token.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'bh-login',
@@ -20,13 +21,14 @@ export class LoginComponent implements OnInit {
     private tokenService: TokenService,
     private authService: AuthService,
     private router: Router,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      username: new FormControl(null),
-      password: new FormControl(null),
+      username: new FormControl(null,Validators.required),
+      password: new FormControl(null,Validators.required),
     });
     // this.loginForm.valueChanges.subscribe((value) => {
     //   console.log(value);
@@ -49,13 +51,13 @@ export class LoginComponent implements OnInit {
       );
       this.authService.login(this.loginUser).subscribe(
         (data) => {
+          console.log(data);
           this.tokenService.setToken(data.token);
           this.tokenService.setUsername(data.nombreUsuario);
           this.tokenService.setAuthorities(data.authorities);
           this.roles = data.authorities;
+          this.fetchUser(data.nombreUsuario);
 
-          this.spinner.hide();
-          window.location.reload();
         },
         (err) => {
         this.error=true;
@@ -63,5 +65,19 @@ export class LoginComponent implements OnInit {
 
       }
     );
+  }
+  fetchUser=(email:string)=>{
+    this.userService.getUser(email).subscribe(data=>{
+      console.log(data);
+      this.userService.setUserId(data.idUsuario.toString());
+      this.userService.setUserImg(data.imagen);
+      this.userService.setNames(data.nombres);
+      this.spinner.hide();
+      window.location.reload();
+    },err=>{
+      console.log("Error: ",err);
+      this.spinner.hide();
+      this.error=true;
+    })
   }
 }

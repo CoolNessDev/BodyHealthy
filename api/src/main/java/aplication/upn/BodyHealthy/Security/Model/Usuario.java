@@ -54,13 +54,17 @@ public class Usuario {
 	@OneToMany(mappedBy = "usuario")
 	@Getter @Setter
 	private Set<Comentario> comentarios = new HashSet<>();
-	@ManyToMany
-	@JoinTable(
-			name = "rutina_usuario",
-			joinColumns = @JoinColumn(name = "id_usuario"),
-			inverseJoinColumns = @JoinColumn(name = "id_rutina"))
-	@Getter @Setter
-	private Set<Rutina> rutinas = new HashSet<>();
+//	@ManyToMany
+//	@JoinTable(
+//			name = "rutina_usuario",
+//			joinColumns = @JoinColumn(name = "id_usuario"),
+//			inverseJoinColumns = @JoinColumn(name = "id_rutina"))
+//	@Getter @Setter
+//	private Set<Rutina> rutinas = new HashSet<>();
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+    @Getter @Setter
+    private Set<Rutina> rutinas = new HashSet<>();
 
 	public Usuario(String imagen, String nombres, String apellidos, Date fechaNacimiento, float altura, float peso, String correo, String contra) {
 		this.imagen = imagen;

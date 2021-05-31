@@ -14,7 +14,7 @@ public class RutinaTest {
 
     @Test
     public void getAllRutinaTest(){
-        String actual =rutinaService.getAll().get(0).getNombre();
+        String actual =rutinaService.findAllDefault().get(0).getNombre();
         System.out.println(actual);
         String esperado="Principiante Divertida";
         assertEquals(esperado,actual);
@@ -26,11 +26,5 @@ public class RutinaTest {
         String esperado="Principiante Divertida";
         assertEquals(esperado,actual);
     }
-//    @Test
-//    public void postRutinaTest(){
-//        String actual =rutinaService.getAll().get(0).getNombre();
-//        System.out.println(actual);
-//        String esperado="Principiante Divertida";
-//        assertEquals(esperado,actual);
-//    }
+
 }

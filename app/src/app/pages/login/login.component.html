@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-10">
   <bh-alert *ngIf="error" [alertClass]="'alert-danger'" [message]="'Error al acceder'"></bh-alert>
   <bh-spinner [message]="'Accediento'"></bh-spinner>
   <div class="row justify-content-center mt-5">
@@ -32,7 +32,9 @@
               <label for="remember" class="form-label">Remember Me</label>
             </div>
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary">Login</button>
+              <button [disabled]="loginForm.invalid" type="submit" class="btn btn-warning">Login</button>
+              <br>
+              <a routerLink="/registro">Registrate</a>
             </div>
           </form>
         </div>

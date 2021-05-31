@@ -80,6 +80,14 @@
               <button *ngIf="isAdmin" class="btn btn-warning" routerLink="/ejercicios/editar/{{exercise.idEjercicio}}" >Editar</button >
                 &nbsp;
                 <button *ngIf="isAdmin" class="btn btn-danger" routerLink="/ejercicios" (click)="borrar(exercise.idEjercicio)">Eliminar</button >
+                  &nbsp;
+                  <div *ngIf="onRutine" class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" [value]="1"
+                    [checked]="exerciseCheck"
+                    (change)="onCheckChange($event)"
+                    >
+                    <label class="form-check-label">Completado</label>
+                </div>
             </div>
           </div>
         </div>

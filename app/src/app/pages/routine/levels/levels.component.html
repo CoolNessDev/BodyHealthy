@@ -1,0 +1,26 @@
+<div class="container mt-10">
+  <div class="row row-cols-2">
+    <div *ngFor="let routine of routines" class="card col shadow m-2 bg-body rounded" style="width: 18rem;">
+      <div class="card-body" routerLink="/rutinas/ejercicios/{{routine.idRutina}}">
+        <h5 class="card-title">{{routine.nombre}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{routine.nivel}}</h6>
+        <ng-container *ngIf="routine.id_ejercicio.length>0; else elseTemplate">
+          <p class="card-text">{{routine.id_ejercicio.length}} ejercicios</p>
+
+        </ng-container>
+        <ng-template #elseTemplate>
+
+          <p class="card-text">Sin ejercicios</p>
+        </ng-template>
+
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<a class="fixedButton" routerLink="/rutinas/crear">
+  <div class="roundedFixedBtn"><img class="icon" width="40px" src="../../../../assets/icons/add.svg" alt=""></div>
+</a>

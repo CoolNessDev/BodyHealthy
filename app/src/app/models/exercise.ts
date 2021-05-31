@@ -1,6 +1,6 @@
 import { Muscle } from "./muscle";
 export class Exercise {
-    id?: number;
+    idEjercicio?: number;
     nombre: string;
     duracion: number;
     series: number;

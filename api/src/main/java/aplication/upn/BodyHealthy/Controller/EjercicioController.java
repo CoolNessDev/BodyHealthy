@@ -56,6 +56,11 @@ public class EjercicioController {
         List<Ejercicio> lista = musculoService.getAllEjeciciosByMusculos(id);
         return new ResponseEntity(lista, HttpStatus.OK);
     }
+    @GetMapping("/rutina/{id}")
+    public ResponseEntity<List<Ejercicio>> listarByRutina(@PathVariable("id") int id) {
+        List<Ejercicio> lista = ejercicioService.getByRutina(id);
+        return new ResponseEntity(lista, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Ejercicio> getById(@PathVariable("id") int id) {
         if (!ejercicioService.existsById(id))
@@ -70,7 +75,6 @@ public class EjercicioController {
             return new ResponseEntity(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if (ejercicioDto.getSeries() < 0)
             return new ResponseEntity(new Message("el valor debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
-        System.out.println("POST");
         Ejercicio ejercicio = new Ejercicio(ejercicioDto.getNombre(), ejercicioDto.getDuracion(), ejercicioDto.getSeries(), ejercicioDto.getRepeticiones(), ejercicioDto.getImagen(),
                 ejercicioDto.getDescripcion(), ejercicioDto.getDescanso(), ejercicioDto.getMusculos());
         ejercicioService.insert(ejercicio);
@@ -85,7 +89,6 @@ public class EjercicioController {
             return new ResponseEntity(new Message("el nombre requiere mas de 4 caracteres"), HttpStatus.BAD_REQUEST);
         if (ejercicioDto.getSeries() < 0)
             return new ResponseEntity(new Message("el valor debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
-        System.out.println("PUT");
         Ejercicio ejercicio = ejercicioService.getOne(id).get();
         ejercicio.setNombre(ejercicioDto.getNombre());
         ejercicio.setDuracion(ejercicioDto.getDuracion());

@@ -4,13 +4,15 @@ import { HeaderComponent } from './header/header.component';
 import { MainModalComponent } from './main-modal/main-modal.component';
 import { CardComponent } from './card/card.component';
 import { SharedModule } from '../shared/shared.module';
+import { CommentaryComponent } from './commentary/commentary.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     MainModalComponent,
-    CardComponent
+    CardComponent,
+    CommentaryComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { SharedModule } from '../shared/shared.module';
   exports:[
     HeaderComponent,
     MainModalComponent,
-    CardComponent
+    CardComponent,
+    CommentaryComponent
   ]
 })
 export class ComponentModule {}
