@@ -4,7 +4,6 @@ import { ComponentModule } from 'src/app/components/component.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RoutinesComponent } from './routines/routines.component';
 import { LevelsComponent } from './levels/levels.component';
-import { CreateRoutineComponent } from './create-routine/create-routine.component';
 import { ExercisesRoutineComponent } from './exercises-routine/exercises-routine.component';
 import { MyroutinesComponent } from './myroutines/myroutines.component';
 import { RoutineFormComponent } from './routine-form/routine-form.component';
@@ -15,7 +14,6 @@ import { RoutineFormComponent } from './routine-form/routine-form.component';
   declarations: [
     RoutinesComponent,
     LevelsComponent,
-    CreateRoutineComponent,
     ExercisesRoutineComponent,
     MyroutinesComponent,
     RoutineFormComponent,
@@ -29,7 +27,6 @@ import { RoutineFormComponent } from './routine-form/routine-form.component';
   exports:[
     RoutinesComponent,
     LevelsComponent,
-    CreateRoutineComponent,
     ExercisesRoutineComponent,
     MyroutinesComponent,
     RoutineFormComponent,

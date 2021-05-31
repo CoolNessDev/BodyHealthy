@@ -10,7 +10,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { ArticleComponent } from './pages/news/article/article.component';
 import { MainComponent } from './pages/news/main/main.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { CreateRoutineComponent } from './pages/routine/create-routine/create-routine.component';
 import { ExercisesRoutineComponent } from './pages/routine/exercises-routine/exercises-routine.component';
 import { LevelsComponent } from './pages/routine/levels/levels.component';
 import { MyroutinesComponent } from './pages/routine/myroutines/myroutines.component';
