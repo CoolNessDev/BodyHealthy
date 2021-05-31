@@ -28,14 +28,21 @@
     </p>
     <img *ngIf="publication.imagen!=''" [src]="publication.imagen" class="img-fluid" alt="...">
   </div>
-  <ngb-accordion #acc="ngbAccordion"activeIds="ngb-panel-0" >
+  <!-- activeIds="ngb-panel-0" -->
+  <ngb-accordion #acc="ngbAccordion"activeIds="" >
     <ngb-panel>
       <ng-template ngbPanelTitle>
         <span class="btn-link">Comentarios</span>
       </ng-template>
       <ng-template ngbPanelContent>
+        <!-- comentaries container -->
+        <ng-container *ngIf="commentaries&&commentaries.length>0; else elseTemplate">
+          <bh-commentary *ngFor="let commentary of commentaries" [commentary]="commentary"></bh-commentary>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <h1>Sin comentarios</h1>
+        </ng-template>
 
-        <bh-commentary></bh-commentary>
         <div class="load-m">
           <span class="btn-link">Ver mas</span>
         </div>
