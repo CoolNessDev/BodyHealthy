@@ -2,6 +2,7 @@ package aplication.upn.BodyHealthy.Security.Model;
 import aplication.upn.BodyHealthy.Model.Comentario;
 import aplication.upn.BodyHealthy.Model.Publicacion;
 import aplication.upn.BodyHealthy.Model.Rutina;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,10 +48,12 @@ public class Usuario {
 	@Getter @Setter
 	private String contra;
 
+	@JsonIgnore
 	@OneToMany(fetch =FetchType.LAZY ,mappedBy = "usuario")
 	@Getter @Setter
 	private Set<Publicacion> publicaciones = new HashSet<>();
 
+	@JsonIgnore
 	@OneToMany(fetch =FetchType.LAZY,mappedBy = "usuario")
 	@Getter @Setter
 	private Set<Comentario> comentarios = new HashSet<>();

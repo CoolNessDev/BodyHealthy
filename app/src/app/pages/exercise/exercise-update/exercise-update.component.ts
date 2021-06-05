@@ -87,13 +87,14 @@ export class ExerciseUpdateComponent implements OnInit {
               console.log('imagen eliminado');
             },
             (err) => {
-              console.log('Error: ', err.meesage);
+              console.log('Error: ', err.message);
             }
           );
         }
       },
       err => {
-        alert(err.error.mensaje);
+        console.log(err);
+        alert(err.error.message);
         this.spinner.hide();
       }
     );
