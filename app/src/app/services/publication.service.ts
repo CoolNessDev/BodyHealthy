@@ -8,11 +8,11 @@ import { TokenService } from './auth/token/token.service';
   providedIn: 'root',
 })
 export class PublicationService {
-  httpOptions = {
-    headers: new HttpHeaders({
-      Authorization: 'my-auth-token',
-    }),
-  };
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     Authorization: 'my-auth-token',
+  //   }),
+  // };
   publicationURL = 'http://localhost:8080/publicacion';
   constructor(
     private httpClient: HttpClient,
@@ -27,10 +27,10 @@ export class PublicationService {
   public getPublicationsByUser(id: number): Observable<Publication[]>{
     return this.httpClient.get<Publication[]>(`${this.publicationURL}/usuario/${id}`);
   }
-  private setHttpOptions() {
-    this.httpOptions.headers = this.httpOptions.headers.set(
-      'Authorization',
-      'Bearer ' + this.tokenService.getToken()
-    );
-  }
+  // private setHttpOptions() {
+  //   this.httpOptions.headers = this.httpOptions.headers.set(
+  //     'Authorization',
+  //     'Bearer ' + this.tokenService.getToken()
+  //   );
+  // }
 }

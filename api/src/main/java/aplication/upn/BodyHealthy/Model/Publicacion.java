@@ -24,7 +24,7 @@ public class Publicacion {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Getter @Setter
     private int idPublicacion;
-    @JsonBackReference
+
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "id_usuario")
     @Getter @Setter
