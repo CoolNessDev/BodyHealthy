@@ -62,8 +62,10 @@ public class AuthController {
     public ResponseEntity<JwtDto> login(@RequestBody LoginUserDto loginUserDto, BindingResult bindingResult) {
 //        loginUserDto to error
         if (bindingResult.hasErrors()) {
-
             return new ResponseEntity(new Message("campos mal puestos"), HttpStatus.BAD_REQUEST);
+        }
+        if(!usuarioService.existsByEmail(loginUserDto.getCorreo())){
+            return new ResponseEntity(new Message("Usuario o correo no encontrado"), HttpStatus.NOT_FOUND);
         }
         Authentication authentication =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDto.getCorreo(), loginUserDto.getContra()));

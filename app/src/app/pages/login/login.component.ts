@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   roles: string[];
   loginUser: LoginUserDto;
   error: boolean;
+  errormessage : string = 'Error al acceder';
   constructor(
     private tokenService: TokenService,
     private authService: AuthService,
@@ -62,8 +64,9 @@ export class LoginComponent implements OnInit {
         (err) => {
         this.error=true;
         this.spinner.hide();
-
-      }
+        console.log("Error Login: ",err.error);
+        this.errormessage = err.error.message;
+        }
     );
   }
   fetchUser=(email:string)=>{

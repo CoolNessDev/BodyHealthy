@@ -75,6 +75,7 @@ public class EjercicioController {
             return new ResponseEntity(new Message("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if (ejercicioDto.getSeries() < 0)
             return new ResponseEntity(new Message("el valor debe ser mayor a 0"), HttpStatus.BAD_REQUEST);
+
         Ejercicio ejercicio = new Ejercicio(ejercicioDto.getNombre(), ejercicioDto.getDuracion(), ejercicioDto.getSeries(), ejercicioDto.getRepeticiones(), ejercicioDto.getImagen(),
                 ejercicioDto.getDescripcion(), ejercicioDto.getDescanso(), ejercicioDto.getMusculos());
         ejercicioService.insert(ejercicio);
