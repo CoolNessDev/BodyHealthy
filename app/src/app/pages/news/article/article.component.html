@@ -26,7 +26,7 @@
     <p class="card-text">
       {{publication.mensaje}}
     </p>
-    <img *ngIf="publication.imagen!=''" [src]="publication.imagen" class="img-fluid" alt="...">
+    <img *ngIf="publication.imagen" [src]="publication.imagen" class="img-fluid" alt="...">
   </div>
   <!-- activeIds="ngb-panel-0" -->
   <ngb-accordion #acc="ngbAccordion"activeIds="" >

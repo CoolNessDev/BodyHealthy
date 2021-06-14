@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Publication } from 'src/app/models/publication';
 import { User } from 'src/app/models/user';
+import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { PublicationService } from 'src/app/services/publication.service';
 import { UserService } from 'src/app/services/user.service';
+import { getUrl } from 'src/app/shared/utilities';
 
 @Component({
   selector: 'bh-main',
@@ -12,7 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MainComponent implements OnInit {
   // Main user
-  user: User=new User();
+  user: User = new User();
   // publication
   publication: Publication = new Publication();
   publicationForm: FormGroup;
@@ -28,7 +30,8 @@ export class MainComponent implements OnInit {
   currentPage: number = 1;
   constructor(
     private publicationService: PublicationService,
-    private userService: UserService
+    private userService: UserService,
+    private cloudinaryService: CloudinaryService
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +40,8 @@ export class MainComponent implements OnInit {
       message: new FormControl(null, Validators.required),
     });
     this.user.idUsuario = parseInt(this.userService.getUserId());
-    this.user.nombres= this.userService.getNames();
-    this.user.imagen= this.userService.getUserImg();
+    this.user.nombres = this.userService.getNames();
+    this.user.imagen = this.userService.getUserImg();
   }
   fetchPublications() {
     this.publicationService
@@ -51,6 +54,11 @@ export class MainComponent implements OnInit {
       .subscribe(
         (data) => {
           this.publications = data.content;
+          this.publications.map(i=>{
+            if(i.imagen){
+              return i.imagen=getUrl(i.imagen)
+            }
+          })
         },
         (err) => {
           console.log('Error: ', err);
@@ -70,7 +78,38 @@ export class MainComponent implements OnInit {
     this.imagen = null;
     this.imagenSrc = null;
   }
-  onPublicate = () => {};
+  onUpdate() {
+    this.publicationService.postPublication(this.publication).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  onPublicate = () => {
+    this.publication.fecha = new Date();
+    this.publication.mensaje = this.message.value;
+    this.publication.usuario = this.user;
+    if (this.newImg) {
+      this.cloudinaryService.uploadImage(this.imagen).subscribe(
+        (data) => {
+          console.log('Imagen subida: ', data.message);
+          this.publication.imagen = data.message;
+          this.onUpdate();
+        },
+        (err) => {
+          alert(err.error.mensaje);
+          // this.spinner.hide();
+          this.reset();
+        }
+      );
+    } else {
+      this.onUpdate();
+    }
+    console.log(this.publication);
+  };
   private get message() {
     return this.publicationForm.get('message');
   }

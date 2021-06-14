@@ -24,7 +24,9 @@ export class ArticleComponent implements OnInit {
     this.commentaryService.getComentariesByPublication(this.publication.idPublicacion).subscribe(data=>{
       this.commentaries=data;
     },err=>{
-      console.log("Error: ",err);
+      if(err.status!=404){
+        console.log("Error: ",err);
+      }
     })
   }
 
