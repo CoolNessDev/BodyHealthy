@@ -7,10 +7,10 @@
           width="30px"
           height="30px"
           alt="100x100"
-          [src]="userImg?userImg:'https://i.ibb.co/SyGszR2/descargar.jpg'"
+          [src]="user.imagen?user.imagen:'https://i.ibb.co/SyGszR2/descargar.jpg'"
           data-holder-rendered="true"
         />
-        <span class="userName">{{userNames?userNames:'Yo'}}</span>
+        <span class="userName">{{user.nombres?user.nombres:'Yo'}}</span>
           <div class="file-select icon" id="src-file1">
             <input type="file" name="src-file1" aria-label="Archivo" (change)="onFileChange($event)">
           </div>

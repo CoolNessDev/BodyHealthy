@@ -12,9 +12,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MainComponent implements OnInit {
   // Main user
-  userNames: string;
-  userImg: string;
+  user: User=new User();
   // publication
+  publication: Publication = new Publication();
   publicationForm: FormGroup;
   publications: Publication[] = [];
   // img
@@ -36,8 +36,9 @@ export class MainComponent implements OnInit {
     this.publicationForm = new FormGroup({
       message: new FormControl(null, Validators.required),
     });
-    this.userNames = this.userService.getNames();
-    this.userImg = this.userService.getUserImg();
+    this.user.idUsuario = parseInt(this.userService.getUserId());
+    this.user.nombres= this.userService.getNames();
+    this.user.imagen= this.userService.getUserImg();
   }
   fetchPublications() {
     this.publicationService
@@ -70,4 +71,7 @@ export class MainComponent implements OnInit {
     this.imagenSrc = null;
   }
   onPublicate = () => {};
+  private get message() {
+    return this.publicationForm.get('message');
+  }
 }
