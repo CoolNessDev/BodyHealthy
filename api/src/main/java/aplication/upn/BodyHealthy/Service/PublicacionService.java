@@ -39,4 +39,7 @@ public class PublicacionService {
     public void delete(Publicacion publicacion) {
         publicacionRepository.delete(publicacion);
     }
+    public void delete(int id){
+        publicacionRepository.deleteById(id);
+    }
 }

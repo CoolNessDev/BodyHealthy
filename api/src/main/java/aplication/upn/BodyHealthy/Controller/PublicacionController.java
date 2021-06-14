@@ -1,7 +1,9 @@
 package aplication.upn.BodyHealthy.Controller;
 
+import aplication.upn.BodyHealthy.Dto.EjercicioDto;
 import aplication.upn.BodyHealthy.Dto.Message;
 import aplication.upn.BodyHealthy.Dto.PublicacionDto;
+import aplication.upn.BodyHealthy.Model.Ejercicio;
 import aplication.upn.BodyHealthy.Model.Publicacion;
 import aplication.upn.BodyHealthy.Security.Model.Usuario;
 import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -97,5 +100,35 @@ public class PublicacionController {
             publicacionsDto.add(publicacionDto);
         }
         return new ResponseEntity<List<PublicacionDto>>(publicacionsDto, HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
+    @PostMapping("/create")
+    public ResponseEntity<?> create(@RequestBody PublicacionDto publicacionDto) {
+        if (publicacionDto.getMensaje().equals(""))
+            return new ResponseEntity(new Message("el mensaje es obligatorio"), HttpStatus.BAD_REQUEST);
+        if (!usuarioService.existsById(publicacionDto.getUsuario().getIdUsuario()))
+            return new ResponseEntity(new Message("el usuario relacionado no es encontrado"), HttpStatus.NOT_FOUND);
+        Publicacion publicacion = new Publicacion();
+        publicacion.setUsuario(publicacionDto.getUsuario());
+        publicacion.setImagen(publicacionDto.getImagen());
+        publicacion.setFecha(publicacionDto.getFecha());
+        publicacion.setMensaje(publicacionDto.getMensaje());
+        publicacionService.insert(publicacion);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam(defaultValue = "0") int id, @RequestParam(defaultValue = "0") int idUsuario) {
+        if (id<=0||idUsuario<=0)
+            return new ResponseEntity(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
+        if (!usuarioService.existsById(idUsuario))
+            return new ResponseEntity(new Message("El usuario relacionado no es encontrado"), HttpStatus.NOT_FOUND);
+        if (!publicacionService.existById(id))
+            return new ResponseEntity(new Message("Publicación no encontrada"), HttpStatus.NOT_FOUND);
+        Publicacion publicacio = publicacionService.getPublicacion(id);
+        if (publicacio.getUsuario().getIdUsuario()!=idUsuario)
+            return new ResponseEntity(new Message("El usuario no es dueño de esta publicaión"), HttpStatus.BAD_REQUEST);
+        publicacionService.delete(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
