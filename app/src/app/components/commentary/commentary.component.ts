@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Commentary } from 'src/app/models/commentary';
+import { CommmentaryService } from 'src/app/services/commentary.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,7 +14,10 @@ export class CommentaryComponent implements OnInit {
   format: string = 'dd/MM/yyyy';
 
   options: boolean = false;
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private commentaryService: CommmentaryService
+  ) {}
 
   ngOnInit(): void {
     if (
@@ -24,4 +28,16 @@ export class CommentaryComponent implements OnInit {
       this.options = true;
     }
   }
+  onDelete = () => {
+    this.commentaryService
+      .deleteCommentary(this.commentary.idComentario)
+      .subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  };
 }
