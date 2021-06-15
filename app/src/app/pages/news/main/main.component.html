@@ -23,6 +23,12 @@
           rows="2"
           formControlName="message"
         ></textarea>
+        <img
+      *ngIf="newImg"
+      [src]="imagenSrc"
+      class="img-fluid"
+      alt="..."
+      />
         <!-- <img src="https://images.pexels.com/photos/35888/amazing-beautiful-breathtaking-clouds.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="img-fluid mt-2" alt="..."> -->
         <div class="btn-send mt-2">
           <button type="submit" class="btn btn-warning" [disabled]="publicationForm.invalid">Enviar</button>
