@@ -38,7 +38,7 @@ public class PublicacionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PublicacionDto> getPublicacion(@PathVariable("id") int id) {
-        if (!publicacionService.existById(id)) {
+        if (!publicacionService.existsById(id)) {
             return new ResponseEntity(new Message("Publicacion no encontrada"), HttpStatus.NOT_FOUND);
         }
         Publicacion p =publicacionService.getPublicacion(id);
@@ -123,7 +123,7 @@ public class PublicacionController {
             return new ResponseEntity(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
         if (!usuarioService.existsById(idUsuario))
             return new ResponseEntity(new Message("El usuario relacionado no es encontrado"), HttpStatus.NOT_FOUND);
-        if (!publicacionService.existById(id))
+        if (!publicacionService.existsById(id))
             return new ResponseEntity(new Message("Publicación no encontrada"), HttpStatus.NOT_FOUND);
         Publicacion publicacio = publicacionService.getPublicacion(id);
         if (publicacio.getUsuario().getIdUsuario()!=idUsuario)

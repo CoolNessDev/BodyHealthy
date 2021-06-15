@@ -27,7 +27,7 @@ public class PublicacionService {
     public boolean existByUsuario(Usuario usuario){
         return publicacionRepository.existsByUsuario(usuario);
     }
-    public boolean existById(int id){
+    public boolean existsById(int id){
         return publicacionRepository.existsById(id);
     }
     public Publicacion getPublicacion(int id){
