@@ -4,6 +4,7 @@ import { Commentary } from 'src/app/models/commentary';
 import { Publication } from 'src/app/models/publication';
 import { CommmentaryService } from 'src/app/services/commentary.service';
 import { PublicationService } from 'src/app/services/publication.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'bh-article',
@@ -11,9 +12,11 @@ import { PublicationService } from 'src/app/services/publication.service';
   styleUrls: ['./article.component.css'],
 })
 export class ArticleComponent implements OnInit {
-  spinnerMessage: string='Actualizando';
+  spinnerMessage: string = 'Actualizando';
   @Input()
   publication: Publication;
+
+  options: boolean = false;
 
   commentaries: Commentary[] = [];
 
@@ -22,10 +25,18 @@ export class ArticleComponent implements OnInit {
     private commentaryService: CommmentaryService,
     private publicationService: PublicationService,
     private spinner: NgxSpinnerService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.fetchComentaries();
+    if (
+      this.publication &&
+      this.publication.usuario.idUsuario ==
+        parseInt(this.userService.getUserId())
+    ) {
+      this.options=true
+    }
   }
   fetchComentaries() {
     this.commentaryService
@@ -42,18 +53,18 @@ export class ArticleComponent implements OnInit {
       );
   }
   onDelete = () => {
-    this.spinnerMessage='Eliminando publicaión'
-    this.spinner.show()
+    this.spinnerMessage = 'Eliminando publicaión';
+    this.spinner.show();
     this.publicationService
       .deletePublication(this.publication.idPublicacion)
       .subscribe(
         (data) => {
           console.log(data);
-          this.spinner.hide()
-          window.location.reload()
+          this.spinner.hide();
+          window.location.reload();
         },
         (err) => {
-          this.spinner.hide()
+          this.spinner.hide();
           console.log(err);
         }
       );
