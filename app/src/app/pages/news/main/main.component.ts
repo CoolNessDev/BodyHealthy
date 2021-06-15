@@ -52,7 +52,7 @@ export class MainComponent implements OnInit {
         this.currentPage - 1,
         this.pageSize,
         'fecha',
-        true
+        false
       )
       .subscribe(
         (data) => {

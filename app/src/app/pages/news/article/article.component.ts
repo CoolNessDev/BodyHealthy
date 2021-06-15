@@ -51,6 +51,8 @@ export class ArticleComponent implements OnInit {
     }
   }
   onComment = () => {
+    this.spinnerMessage = 'Publicando';
+    this.spinner.show();
     this.commentary.fecha = new Date();
     this.commentary.mensaje = this.message.value;
     this.commentary.usuario = this.user;
@@ -58,9 +60,12 @@ export class ArticleComponent implements OnInit {
     this.commentaryService.postCommentary(this.commentary).subscribe(
       (data) => {
         console.log(data);
+        this.spinner.hide();
+        window.location.reload();
       },
       (err) => {
         console.log(err);
+        this.spinner.hide();
       }
     );
   };
