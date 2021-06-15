@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Commentary } from 'src/app/models/commentary';
 import { Publication } from 'src/app/models/publication';
 import { CommmentaryService } from 'src/app/services/commentary.service';
@@ -10,6 +11,7 @@ import { PublicationService } from 'src/app/services/publication.service';
   styleUrls: ['./article.component.css'],
 })
 export class ArticleComponent implements OnInit {
+  spinnerMessage: string='Actualizando';
   @Input()
   publication: Publication;
 
@@ -18,7 +20,8 @@ export class ArticleComponent implements OnInit {
   format: string = 'dd/MM/yyyy';
   constructor(
     private commentaryService: CommmentaryService,
-    private publicationService: PublicationService
+    private publicationService: PublicationService,
+    private spinner: NgxSpinnerService,
   ) {}
 
   ngOnInit(): void {
@@ -39,13 +42,18 @@ export class ArticleComponent implements OnInit {
       );
   }
   onDelete = () => {
+    this.spinnerMessage='Eliminando publicaión'
+    this.spinner.show()
     this.publicationService
       .deletePublication(this.publication.idPublicacion)
       .subscribe(
         (data) => {
           console.log(data);
+          this.spinner.hide()
+          window.location.reload()
         },
         (err) => {
+          this.spinner.hide()
           console.log(err);
         }
       );

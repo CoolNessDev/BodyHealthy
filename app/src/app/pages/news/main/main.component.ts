@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Publication } from 'src/app/models/publication';
 import { User } from 'src/app/models/user';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
@@ -13,6 +14,7 @@ import { getUrl } from 'src/app/shared/utilities';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
+  spinnerMessage: string='Actualizando';
   // Main user
   user: User = new User();
   // publication
@@ -31,7 +33,8 @@ export class MainComponent implements OnInit {
   constructor(
     private publicationService: PublicationService,
     private userService: UserService,
-    private cloudinaryService: CloudinaryService
+    private cloudinaryService: CloudinaryService,
+    private spinner: NgxSpinnerService,
   ) {}
 
   ngOnInit(): void {
@@ -54,11 +57,11 @@ export class MainComponent implements OnInit {
       .subscribe(
         (data) => {
           this.publications = data.content;
-          this.publications.map(i=>{
-            if(i.imagen){
-              return i.imagen=getUrl(i.imagen)
+          this.publications.map((i) => {
+            if (i.imagen) {
+              return (i.imagen = getUrl(i.imagen));
             }
-          })
+          });
         },
         (err) => {
           console.log('Error: ', err);
@@ -82,13 +85,18 @@ export class MainComponent implements OnInit {
     this.publicationService.postPublication(this.publication).subscribe(
       (data) => {
         console.log(data);
+        this.spinner.hide()
+        window.location.reload()
       },
       (err) => {
         console.log(err);
+        this.spinner.hide()
       }
     );
   }
   onPublicate = () => {
+    this.spinnerMessage='Publicando'
+    this.spinner.show()
     this.publication.fecha = new Date();
     this.publication.mensaje = this.message.value;
     this.publication.usuario = this.user;
@@ -101,7 +109,7 @@ export class MainComponent implements OnInit {
         },
         (err) => {
           alert(err.error.mensaje);
-          // this.spinner.hide();
+          this.spinner.hide();
           this.reset();
         }
       );
