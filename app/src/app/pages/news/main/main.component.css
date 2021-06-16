@@ -70,3 +70,12 @@ input[type="file"]{
   height: 30px;
   width: 30px;
 }
+.more-button{
+  background-color: transparent;
+  border: none;
+  margin-left: auto;
+  margin-bottom: 10px;
+}
+.btn-link{
+  color: #f7a80b;
+}

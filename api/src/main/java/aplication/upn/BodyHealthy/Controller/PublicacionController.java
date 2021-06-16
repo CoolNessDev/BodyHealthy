@@ -2,6 +2,7 @@ package aplication.upn.BodyHealthy.Controller;
 
 import aplication.upn.BodyHealthy.Dto.EjercicioDto;
 import aplication.upn.BodyHealthy.Dto.Message;
+import aplication.upn.BodyHealthy.Dto.PagePublicationDto;
 import aplication.upn.BodyHealthy.Dto.PublicacionDto;
 import aplication.upn.BodyHealthy.Model.Ejercicio;
 import aplication.upn.BodyHealthy.Model.Publicacion;
@@ -53,11 +54,12 @@ public class PublicacionController {
     }
 
     @GetMapping("/pageable")
-    public ResponseEntity<Page<PublicacionDto>> getAllPageable(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<?> getAllPageable(@RequestParam(defaultValue = "0") int page,
                                                             @RequestParam(defaultValue = "10") int size,
                                                             @RequestParam(defaultValue = "fecha") String order,
                                                             @RequestParam(defaultValue = "true") boolean asc) {
         Page<Publicacion> publicacions = publicacionService.getAllPageable(PageRequest.of(page, size, Sort.by(order)));
+        System.out.println(publicacions.getTotalElements());
         if (!asc) {
             publicacions = publicacionService.getAllPageable(PageRequest.of(page, size, Sort.by(order).descending()));
         }
@@ -73,8 +75,9 @@ public class PublicacionController {
             publicacionsDto.add(publicacionDto);
         }
         Page<PublicacionDto> publicacionDtos = new PageImpl<PublicacionDto>(publicacionsDto);
-
-        return new ResponseEntity<Page<PublicacionDto>>(publicacionDtos, HttpStatus.OK);
+        System.out.println(publicacionDtos.getTotalElements());
+        PagePublicationDto pagePublicationDto = new PagePublicationDto(publicacionDtos,publicacions.getTotalElements());
+        return new ResponseEntity(pagePublicationDto, HttpStatus.OK);
 
     }
 

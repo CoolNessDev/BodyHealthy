@@ -56,10 +56,16 @@ export class MainComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          this.publications = data.content;
+          console.log(data);
+
+          this.publications = data.publicacionDtos.content;
+          this.totalPages = Math.round(data.totalElements / this.pageSize);
+          console.log(data.totalElements );
+          console.log(this.totalPages);
+
           this.publications.map((i) => {
             if (i.imagen) {
-              i.imagenId = getImageId(i.imagen);//to cloudinary delete
+              i.imagenId = getImageId(i.imagen); //to cloudinary delete
               return (i.imagen = getUrl(i.imagen));
             }
           });
