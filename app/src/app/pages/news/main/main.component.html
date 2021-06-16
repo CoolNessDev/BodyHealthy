@@ -56,7 +56,8 @@
       *ngFor="let publication of publications"
       [publication]="publication"
     ></bh-article>
-    <button class="more-button">
+    <bh-circle-spinner></bh-circle-spinner>
+    <button *ngIf="pageValidator" class="more-button" (click)="onMore()">
       <span class="btn-link">Ver mas</span>
     </button>
   </ng-container>

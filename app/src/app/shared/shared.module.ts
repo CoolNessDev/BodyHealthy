@@ -11,6 +11,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { AlertComponent } from './alert/alert.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CircleSpinnerComponent } from './circle-spinner/circle-spinner.component';
 
 
 
@@ -18,7 +19,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     SpinnerComponent,
     AlertComponent,
-    PaginationComponent
+    PaginationComponent,
+    CircleSpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -44,6 +46,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SpinnerComponent,
     AlertComponent,
     PaginationComponent,
+    CircleSpinnerComponent,
     NgbModule
   ]
 })

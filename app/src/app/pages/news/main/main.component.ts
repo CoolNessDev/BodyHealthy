@@ -15,6 +15,8 @@ import { getImageId, getUrl } from 'src/app/shared/utilities';
 })
 export class MainComponent implements OnInit {
   spinnerMessage: string = 'Actualizando';
+  pageValidator: boolean = true;
+  pageLoading: boolean = false;
   // Main user
   user: User = new User();
   // publication
@@ -39,6 +41,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchPublications();
+    this.pageValidator = this.currentPage < this.totalPages;
     this.publicationForm = new FormGroup({
       message: new FormControl(null, Validators.required),
     });
@@ -57,14 +60,15 @@ export class MainComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log(data);
-
-          this.publications = data.publicacionDtos.content;
+          this.publications = this.publications.concat(
+            data.publicacionDtos.content
+          );
           this.totalPages = Math.round(data.totalElements / this.pageSize);
-          console.log(data.totalElements );
+          console.log(data.totalElements);
           console.log(this.totalPages);
 
           this.publications.map((i) => {
-            if (i.imagen) {
+            if (i.imagen && getImageId(i.imagen) != null) {
               i.imagenId = getImageId(i.imagen); //to cloudinary delete
               return (i.imagen = getUrl(i.imagen));
             }
@@ -75,6 +79,13 @@ export class MainComponent implements OnInit {
         }
       );
   }
+  onMore = () => {
+    if (this.pageValidator) {
+      this.currentPage++;
+      this.pageValidator = this.currentPage < this.totalPages;
+      this.fetchPublications();
+    }
+  };
   onFileChange(event) {
     this.imagen = event.target.files[0];
     const fr = new FileReader();
