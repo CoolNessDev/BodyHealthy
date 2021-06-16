@@ -6,7 +6,7 @@ import { User } from 'src/app/models/user';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { PublicationService } from 'src/app/services/publication.service';
 import { UserService } from 'src/app/services/user.service';
-import { getUrl } from 'src/app/shared/utilities';
+import { getImageId, getUrl } from 'src/app/shared/utilities';
 
 @Component({
   selector: 'bh-main',
@@ -14,7 +14,7 @@ import { getUrl } from 'src/app/shared/utilities';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
-  spinnerMessage: string='Actualizando';
+  spinnerMessage: string = 'Actualizando';
   // Main user
   user: User = new User();
   // publication
@@ -34,7 +34,7 @@ export class MainComponent implements OnInit {
     private publicationService: PublicationService,
     private userService: UserService,
     private cloudinaryService: CloudinaryService,
-    private spinner: NgxSpinnerService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +59,7 @@ export class MainComponent implements OnInit {
           this.publications = data.content;
           this.publications.map((i) => {
             if (i.imagen) {
+              i.imagenId = getImageId(i.imagen);//to cloudinary delete
               return (i.imagen = getUrl(i.imagen));
             }
           });
@@ -85,18 +86,18 @@ export class MainComponent implements OnInit {
     this.publicationService.postPublication(this.publication).subscribe(
       (data) => {
         console.log(data);
-        this.spinner.hide()
-        window.location.reload()
+        this.spinner.hide();
+        window.location.reload();
       },
       (err) => {
         console.log(err);
-        this.spinner.hide()
+        this.spinner.hide();
       }
     );
   }
   onPublicate = () => {
-    this.spinnerMessage='Publicando'
-    this.spinner.show()
+    this.spinnerMessage = 'Publicando';
+    this.spinner.show();
     this.publication.fecha = new Date();
     this.publication.mensaje = this.message.value;
     this.publication.usuario = this.user;

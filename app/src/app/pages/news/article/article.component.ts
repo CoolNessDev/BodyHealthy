@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Commentary } from 'src/app/models/commentary';
 import { Publication } from 'src/app/models/publication';
 import { User } from 'src/app/models/user';
+import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { CommmentaryService } from 'src/app/services/commentary.service';
 import { PublicationService } from 'src/app/services/publication.service';
 import { UserService } from 'src/app/services/user.service';
@@ -18,7 +19,8 @@ export class ArticleComponent implements OnInit {
   commentaryForm: FormGroup;
   @Input()
   publication: Publication;
-
+  @Input()
+  imgSrc:string;
   // Main user
   user: User = new User();
 
@@ -31,6 +33,7 @@ export class ArticleComponent implements OnInit {
   constructor(
     private commentaryService: CommmentaryService,
     private publicationService: PublicationService,
+    private cloudinaryService: CloudinaryService,
     private spinner: NgxSpinnerService,
     private userService: UserService
   ) {}
@@ -91,8 +94,21 @@ export class ArticleComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log(data);
-          this.spinner.hide();
-          window.location.reload();
+          if (this.publication.imagenId != null) {
+            this.cloudinaryService
+              .deleteImage(this.publication.imagenId)
+              .subscribe(
+                (data) => {
+                  console.log('imagen eliminadaaa');
+                  this.spinner.hide();
+                  window.location.reload();
+                },
+                (err) => {
+                  console.log('Error: ', err.message);
+                  this.spinner.hide();
+                }
+              );
+          }
         },
         (err) => {
           this.spinner.hide();
