@@ -56,10 +56,10 @@
       *ngFor="let publication of publications"
       [publication]="publication"
     ></bh-article>
-    <bh-circle-spinner></bh-circle-spinner>
     <button *ngIf="pageValidator" class="more-button" (click)="onMore()">
       <span class="btn-link">Ver mas</span>
     </button>
+    <bh-circle-spinner *ngIf="pageLoading"></bh-circle-spinner>
   </ng-container>
   <ng-template #elseTemplate>
     <h1>Sin publicaciones</h1>

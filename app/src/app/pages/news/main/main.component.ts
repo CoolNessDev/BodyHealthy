@@ -50,6 +50,7 @@ export class MainComponent implements OnInit {
     this.user.imagen = this.userService.getUserImg();
   }
   fetchPublications() {
+    this.pageLoading = true;
     this.publicationService
       .getPublicationsByPages(
         this.currentPage - 1,
@@ -73,9 +74,11 @@ export class MainComponent implements OnInit {
               return (i.imagen = getUrl(i.imagen));
             }
           });
+          this.pageLoading = false;
         },
         (err) => {
           console.log('Error: ', err);
+          this.pageLoading = false;
         }
       );
   }
