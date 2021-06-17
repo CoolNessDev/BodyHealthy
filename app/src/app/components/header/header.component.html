@@ -113,7 +113,7 @@
               height="30px"
               alt="100x100"
               [src]="
-                userImg ? userImg : 'https://i.ibb.co/SyGszR2/descargar.jpg'
+                userImg && userImg!='null'? userImg : 'https://i.ibb.co/SyGszR2/descargar.jpg'
               "
               data-holder-rendered="true"
             />
