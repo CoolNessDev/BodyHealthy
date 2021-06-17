@@ -107,7 +107,10 @@ export class MainComponent implements OnInit {
       (data) => {
         console.log(data);
         this.spinner.hide();
-        window.location.reload();
+        // window.location.reload();
+        this.publications.unshift(this.publication);
+        this.publicationForm.get('message').setValue('')
+        this.reset();
       },
       (err) => {
         console.log(err);

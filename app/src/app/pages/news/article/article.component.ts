@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Commentary } from 'src/app/models/commentary';
@@ -17,10 +17,12 @@ import { UserService } from 'src/app/services/user.service';
 export class ArticleComponent implements OnInit {
   spinnerMessage: string = 'Actualizando';
   commentaryForm: FormGroup;
+  commentariesLoading: boolean = false;
+  commentariesDrop: boolean = false;
   @Input()
   publication: Publication;
   @Input()
-  imgSrc:string;
+  imgSrc: string;
   // Main user
   user: User = new User();
 
@@ -39,7 +41,6 @@ export class ArticleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchComentaries();
     this.commentaryForm = new FormGroup({
       message: new FormControl(null, Validators.required),
     });
@@ -64,7 +65,9 @@ export class ArticleComponent implements OnInit {
       (data) => {
         console.log(data);
         this.spinner.hide();
-        window.location.reload();
+        this.commentaries.push(this.commentary)
+        this.commentaryForm.get('message').setValue('')
+        // window.location.reload();
       },
       (err) => {
         console.log(err);
@@ -73,18 +76,28 @@ export class ArticleComponent implements OnInit {
     );
   };
   fetchComentaries = () => {
+    this.commentariesLoading = true;
     this.commentaryService
       .getComentariesByPublication(this.publication.idPublicacion)
       .subscribe(
         (data) => {
           this.commentaries = data;
+          this.commentariesLoading = false;
+          this.commentariesDrop = true;
         },
         (err) => {
-          if (err.status != 404) {
-            console.log('Error: ', err);
-          }
+          // if (err.status != 404) {
+          //   console.log('Error: ', err);
+          // }
+          this.commentariesLoading = false;
+          this.commentariesDrop = true;
         }
       );
+  };
+  onShowComentaries = () => {
+    if (!this.commentariesDrop) {
+      this.fetchComentaries();
+    }
   };
   onDelete = () => {
     this.spinnerMessage = 'Eliminando publicaión';
