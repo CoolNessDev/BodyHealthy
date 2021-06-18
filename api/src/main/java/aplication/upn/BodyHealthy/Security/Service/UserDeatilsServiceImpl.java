@@ -2,9 +2,7 @@ package aplication.upn.BodyHealthy.Security.Service;
 
 import aplication.upn.BodyHealthy.Security.Model.CustomUserDetails;
 import aplication.upn.BodyHealthy.Security.Model.Usuario;
-import aplication.upn.BodyHealthy.Security.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

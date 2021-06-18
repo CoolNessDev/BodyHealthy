@@ -3,9 +3,6 @@ package aplication.upn.BodyHealthy.Service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Singleton {
     private static Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "coolness",

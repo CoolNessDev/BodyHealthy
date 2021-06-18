@@ -1,6 +1,5 @@
 package aplication.upn.BodyHealthy.Service;
 
-import aplication.upn.BodyHealthy.Model.Ejercicio;
 import aplication.upn.BodyHealthy.Model.Rutina;
 import aplication.upn.BodyHealthy.Repository.RutinaRepository;
 import aplication.upn.BodyHealthy.Security.Model.Usuario;
