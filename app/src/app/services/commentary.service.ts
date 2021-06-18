@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Commentary } from '../models/commentary';
 import { TokenService } from './auth/token/token.service';
 import { UserService } from './user.service';
-
+import { environment } from '../shared/environment.prod';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,8 +14,7 @@ export class CommmentaryService {
       Authorization: 'my-auth-token',
     }),
   };
-  // comentaryURL = 'http://localhost:8080/comentario';
-  comentaryURL = 'https://bodyhealthy.herokuapp.com/comentario';
+  comentaryURL = `${environment.apiUrl}/comentario`;
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService,

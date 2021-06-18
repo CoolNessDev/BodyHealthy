@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TokenService } from './auth/token/token.service';
-
+import { environment } from '../shared/environment.prod';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,9 +12,7 @@ export class CloudinaryService {
       Authorization: 'my-auth-token',
     }),
   };
-
-  // imagenURL = 'http://localhost:8080/cloudinary';
-  imagenURL = 'https://bodyhealthy.herokuapp.com/cloudinary';
+  imagenURL = `${environment.apiUrl}/cloudinary` ;
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService

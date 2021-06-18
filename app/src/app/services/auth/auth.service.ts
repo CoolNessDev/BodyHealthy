@@ -5,7 +5,7 @@ import { JwtDTO } from 'src/app/models/jwtDto';
 import { LoginUserDto } from 'src/app/models/loginUserDto';
 import { User } from 'src/app/models/user';
 import { TokenService } from './token/token.service';
-
+import { environment } from '../../shared/environment.prod';
 @Injectable({
   providedIn: 'root',
 })
@@ -15,8 +15,7 @@ export class AuthService {
       Authorization: 'my-auth-token',
     }),
   };
-  // authURL = 'http://localhost:8080/auth/';
-  authURL = 'https://bodyhealthy.herokuapp.com/auth/';
+  authURL = `${environment.apiUrl}/auth/`;
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService

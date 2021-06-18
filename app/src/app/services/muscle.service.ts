@@ -2,13 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Muscle } from '../models/muscle';
-
+import { environment } from '../shared/environment.prod';
 @Injectable({
   providedIn: 'root'
 })
 export class MuscleService {
-  // muscleURL = "http://localhost:8080/musculo";
-  muscleURL = "https://bodyhealthy.herokuapp.com/musculo";
+  muscleURL = `${environment.apiUrl}/musculo`;
   constructor(private httpClient: HttpClient) { }
 
 

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Publication } from '../models/publication';
 import { TokenService } from './auth/token/token.service';
 import { UserService } from './user.service';
+import { environment } from '../shared/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +15,7 @@ export class PublicationService {
       Authorization: 'my-auth-token',
     }),
   };
-  // publicationURL = 'http://localhost:8080/publicacion';
-  publicationURL = 'https://bodyhealthy.herokuapp.com/publicacion';
+  publicationURL = `${environment.apiUrl}/publicacion`;
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService,

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Exercise } from '../models/exercise';
 import { TokenService } from './auth/token/token.service';
+import { environment } from '../shared/environment.prod';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,10 +12,8 @@ export class ExercisesService {
       Authorization: 'my-auth-token',
     }),
   };
-  // exerciseURL = 'http://localhost:8080/ejercicio';
-  // imagenURL = 'http://localhost:8080/cloudinary';
-  exerciseURL = 'https://bodyhealthy.herokuapp.com/ejercicio';
-  imagenURL = 'https://bodyhealthy.herokuapp.com/cloudinary';
+  exerciseURL = `${environment.apiUrl}/ejercicio`;
+  imagenURL = `${environment.apiUrl}/cloudinary`;
 
   constructor(
     private httpClient: HttpClient,

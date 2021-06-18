@@ -25,10 +25,8 @@ export class ExercisesRoutineComponent implements OnInit {
 
   ngOnInit(): void {
     let id: number = this.activatedRouter.snapshot.params.id;
-    console.log(id);
-
     this.fetchRoutine(id);
-    this.fetchExercises(id);
+
   }
   fetchRoutine(id: number) {
     this.spinner.show();
@@ -36,6 +34,7 @@ export class ExercisesRoutineComponent implements OnInit {
       (data) => {
         this.routine = data;
         this.routine.estado = 80;
+        this.fetchExercises(id);
         this.spinner.hide();
       },
       (err) => {
@@ -50,7 +49,7 @@ export class ExercisesRoutineComponent implements OnInit {
     this.error = false;
     this.exerciseService.getExercisesByRoutine(id).subscribe(
       (data) => {
-        console.log(data);
+        // console.log(data);
         if(data.length<=0){
           this.error = true;
         }
@@ -58,7 +57,7 @@ export class ExercisesRoutineComponent implements OnInit {
         this.loaded = true;
       },
       (err) => {
-        console.log('Error: ', err);
+        // console.log('Error: ', err);
         this.error = true;
       }
     );
