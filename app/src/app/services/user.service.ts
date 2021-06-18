@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
+import { environment } from '../shared/environment.prod';
 const USERIMG_KEY = 'Userimg';
 const USERID_KEY = 'UserId';
 const NAMES_KEY = 'Names';
@@ -14,8 +15,7 @@ export class UserService {
       Authorization: 'my-auth-token',
     }),
   };
-  // userURL = 'http://localhost:8080/usuario';
-  userURL = 'https://bodyhealthy.herokuapp.com/usuario';
+  userURL = `${environment.apiUrl}/usuario`;
   constructor(private httpClient: HttpClient) {}
   public setUserImg(img: string): void {
     window.sessionStorage.removeItem(USERIMG_KEY);
