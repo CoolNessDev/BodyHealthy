@@ -36,7 +36,7 @@ export class MyroutinesComponent implements OnInit {
       (err) => {
         this.error = true;
         this.loaded = true;
-        this.errorMessage=err.error.message;
+        this.errorMessage = err.error.message;
       }
     );
   }
@@ -47,6 +47,7 @@ export class MyroutinesComponent implements OnInit {
       (data) => {
         console.log(data);
         this.spinner.hide();
+        window.location.reload();
       },
       (err) => {
         console.log('Error: ', err);
