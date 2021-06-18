@@ -14,7 +14,7 @@
           height="30px"
           alt="100x100"
           [src]="
-            user.imagen && user.imagen!='null'? user.imagen : 'https://i.ibb.co/SyGszR2/descargar.jpg'
+            user.imagen && user.imagen!='null'? getUrl(user.imagen) : 'https://i.ibb.co/SyGszR2/descargar.jpg'
           "
           data-holder-rendered="true"
         />

@@ -4,6 +4,7 @@ import { Muscle } from 'src/app/models/muscle';
 import { User } from 'src/app/models/user';
 import { TokenService } from 'src/app/services/auth/token/token.service';
 import { UserService } from 'src/app/services/user.service';
+import { getUrl } from 'src/app/shared/utilities';
 
 @Component({
   selector: 'bh-header',
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   roles: string[];
   isAdmin = false;
   activeSection: boolean[]=[false,false,false,false,false];
+  getUrl=getUrl
   constructor(private tokenService: TokenService,private router: Router,private userService: UserService) { }
 
   ngOnInit(): void {

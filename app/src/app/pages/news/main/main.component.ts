@@ -32,6 +32,7 @@ export class MainComponent implements OnInit {
   totalPages: number = 4;
   pageSize: number = 4;
   currentPage: number = 1;
+  getUrl=getUrl;
   constructor(
     private publicationService: PublicationService,
     private userService: UserService,

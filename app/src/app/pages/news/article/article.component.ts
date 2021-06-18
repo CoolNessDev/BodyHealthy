@@ -8,6 +8,7 @@ import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { CommmentaryService } from 'src/app/services/commentary.service';
 import { PublicationService } from 'src/app/services/publication.service';
 import { UserService } from 'src/app/services/user.service';
+import { getUrl } from 'src/app/shared/utilities';
 
 @Component({
   selector: 'bh-article',
@@ -32,6 +33,7 @@ export class ArticleComponent implements OnInit {
   commentaries: Commentary[] = [];
 
   format: string = 'dd/MM/yyyy';
+  getUrl=getUrl
   constructor(
     private commentaryService: CommmentaryService,
     private publicationService: PublicationService,
