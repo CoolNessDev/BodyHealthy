@@ -15,7 +15,8 @@ export class AuthService {
       Authorization: 'my-auth-token',
     }),
   };
-  authURL = 'http://localhost:8080/auth/';
+  // authURL = 'http://localhost:8080/auth/';
+  authURL = 'https://bodyhealthy.herokuapp.com/auth/';
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService

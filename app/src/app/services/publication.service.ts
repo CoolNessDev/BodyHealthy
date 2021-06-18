@@ -14,7 +14,8 @@ export class PublicationService {
       Authorization: 'my-auth-token',
     }),
   };
-  publicationURL = 'http://localhost:8080/publicacion';
+  // publicationURL = 'http://localhost:8080/publicacion';
+  publicationURL = 'https://bodyhealthy.herokuapp.com/publicacion';
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService,

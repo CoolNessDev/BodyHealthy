@@ -12,8 +12,10 @@ export class ExercisesService {
       Authorization: 'my-auth-token',
     }),
   };
-  exerciseURL = 'http://localhost:8080/ejercicio';
-  imagenURL = 'http://localhost:8080/cloudinary';
+  // exerciseURL = 'http://localhost:8080/ejercicio';
+  // imagenURL = 'http://localhost:8080/cloudinary';
+  exerciseURL = 'https://bodyhealthy.herokuapp.com/ejercicio';
+  imagenURL = 'https://bodyhealthy.herokuapp.com/cloudinary';
 
   constructor(
     private httpClient: HttpClient,

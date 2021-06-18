@@ -7,7 +7,8 @@ import { Muscle } from '../models/muscle';
   providedIn: 'root'
 })
 export class MuscleService {
-  muscleURL = "http://localhost:8080/musculo";
+  // muscleURL = "http://localhost:8080/musculo";
+  muscleURL = "https://bodyhealthy.herokuapp.com/musculo";
   constructor(private httpClient: HttpClient) { }
 
 

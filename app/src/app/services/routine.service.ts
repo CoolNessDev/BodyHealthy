@@ -13,7 +13,8 @@ export class RoutineService {
       Authorization: 'my-auth-token',
     }),
   };
-  routineURL = 'http://localhost:8080/rutina';
+  // routineURL = 'http://localhost:8080/rutina';
+  routineURL = 'https://bodyhealthy.herokuapp.com/rutina';
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService

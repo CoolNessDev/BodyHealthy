@@ -13,7 +13,8 @@ export class CloudinaryService {
     }),
   };
 
-  imagenURL = 'http://localhost:8080/cloudinary';
+  // imagenURL = 'http://localhost:8080/cloudinary';
+  imagenURL = 'https://bodyhealthy.herokuapp.com/cloudinary';
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService

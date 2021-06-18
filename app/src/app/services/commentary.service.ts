@@ -14,7 +14,8 @@ export class CommmentaryService {
       Authorization: 'my-auth-token',
     }),
   };
-  comentaryURL = 'http://localhost:8080/comentario';
+  // comentaryURL = 'http://localhost:8080/comentario';
+  comentaryURL = 'https://bodyhealthy.herokuapp.com/comentario';
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService,

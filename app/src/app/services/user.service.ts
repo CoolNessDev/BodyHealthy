@@ -14,7 +14,8 @@ export class UserService {
       Authorization: 'my-auth-token',
     }),
   };
-  userURL = 'http://localhost:8080/usuario';
+  // userURL = 'http://localhost:8080/usuario';
+  userURL = 'https://bodyhealthy.herokuapp.com/usuario';
   constructor(private httpClient: HttpClient) {}
   public setUserImg(img: string): void {
     window.sessionStorage.removeItem(USERIMG_KEY);
