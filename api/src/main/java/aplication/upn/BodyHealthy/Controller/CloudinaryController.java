@@ -39,7 +39,7 @@ public class CloudinaryController {
        List<String> imagen = new ArrayList<>();
        imagen.add((String)result.get("original_filename"));
        imagen.add((String)result.get("url"));
-/*        System.out.println(imagen.get(1));*/
+        System.out.println(imagen.get(1));
        imagen.add((String)result.get("public_id"));
 
         return new ResponseEntity(new Message(imagen.get(1)+":-:"+imagen.get(2)), HttpStatus.OK);
