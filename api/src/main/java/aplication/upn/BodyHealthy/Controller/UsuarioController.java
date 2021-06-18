@@ -19,7 +19,7 @@ public class UsuarioController {
         if(!usuarioService.existsByEmail(email)){
             return new ResponseEntity(new Message("User not found"), HttpStatus.NOT_FOUND);
         }
-        Usuario usuario = usuarioService.getByEmail(email);
+        Usuario usuario = usuarioService.findByCorreo(email);
         System.out.println("usuario: "+usuario.getRol().getCargo());
         return new ResponseEntity(usuario,HttpStatus.OK);
 
