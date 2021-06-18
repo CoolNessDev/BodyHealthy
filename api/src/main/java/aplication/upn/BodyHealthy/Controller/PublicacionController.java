@@ -1,7 +1,10 @@
 package aplication.upn.BodyHealthy.Controller;
 
+import aplication.upn.BodyHealthy.Dto.EjercicioDto;
 import aplication.upn.BodyHealthy.Dto.Message;
+import aplication.upn.BodyHealthy.Dto.PagePublicationDto;
 import aplication.upn.BodyHealthy.Dto.PublicacionDto;
+import aplication.upn.BodyHealthy.Model.Ejercicio;
 import aplication.upn.BodyHealthy.Model.Publicacion;
 import aplication.upn.BodyHealthy.Security.Model.Usuario;
 import aplication.upn.BodyHealthy.Security.Service.UsuarioService;
@@ -13,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -35,7 +39,7 @@ public class PublicacionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PublicacionDto> getPublicacion(@PathVariable("id") int id) {
-        if (!publicacionService.existById(id)) {
+        if (!publicacionService.existsById(id)) {
             return new ResponseEntity(new Message("Publicacion no encontrada"), HttpStatus.NOT_FOUND);
         }
         Publicacion p =publicacionService.getPublicacion(id);
@@ -50,11 +54,12 @@ public class PublicacionController {
     }
 
     @GetMapping("/pageable")
-    public ResponseEntity<Page<PublicacionDto>> getAllPageable(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<?> getAllPageable(@RequestParam(defaultValue = "0") int page,
                                                             @RequestParam(defaultValue = "10") int size,
                                                             @RequestParam(defaultValue = "fecha") String order,
                                                             @RequestParam(defaultValue = "true") boolean asc) {
         Page<Publicacion> publicacions = publicacionService.getAllPageable(PageRequest.of(page, size, Sort.by(order)));
+        System.out.println(publicacions.getTotalElements());
         if (!asc) {
             publicacions = publicacionService.getAllPageable(PageRequest.of(page, size, Sort.by(order).descending()));
         }
@@ -70,8 +75,9 @@ public class PublicacionController {
             publicacionsDto.add(publicacionDto);
         }
         Page<PublicacionDto> publicacionDtos = new PageImpl<PublicacionDto>(publicacionsDto);
-
-        return new ResponseEntity<Page<PublicacionDto>>(publicacionDtos, HttpStatus.OK);
+        System.out.println(publicacionDtos.getTotalElements());
+        PagePublicationDto pagePublicationDto = new PagePublicationDto(publicacionDtos,publicacions.getTotalElements());
+        return new ResponseEntity(pagePublicationDto, HttpStatus.OK);
 
     }
 
@@ -97,5 +103,35 @@ public class PublicacionController {
             publicacionsDto.add(publicacionDto);
         }
         return new ResponseEntity<List<PublicacionDto>>(publicacionsDto, HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
+    @PostMapping("/create")
+    public ResponseEntity<?> create(@RequestBody PublicacionDto publicacionDto) {
+        if (publicacionDto.getMensaje().equals(""))
+            return new ResponseEntity(new Message("el mensaje es obligatorio"), HttpStatus.BAD_REQUEST);
+        if (!usuarioService.existsById(publicacionDto.getUsuario().getIdUsuario()))
+            return new ResponseEntity(new Message("el usuario relacionado no es encontrado"), HttpStatus.NOT_FOUND);
+        Publicacion publicacion = new Publicacion();
+        publicacion.setUsuario(publicacionDto.getUsuario());
+        publicacion.setImagen(publicacionDto.getImagen());
+        publicacion.setFecha(publicacionDto.getFecha());
+        publicacion.setMensaje(publicacionDto.getMensaje());
+        publicacionService.insert(publicacion);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam(defaultValue = "0") int id, @RequestParam(defaultValue = "0") int idUsuario) {
+        if (id<=0||idUsuario<=0)
+            return new ResponseEntity(new Message("Campos invalidos"), HttpStatus.BAD_REQUEST);
+        if (!usuarioService.existsById(idUsuario))
+            return new ResponseEntity(new Message("El usuario relacionado no es encontrado"), HttpStatus.NOT_FOUND);
+        if (!publicacionService.existsById(id))
+            return new ResponseEntity(new Message("Publicación no encontrada"), HttpStatus.NOT_FOUND);
+        Publicacion publicacio = publicacionService.getPublicacion(id);
+        if (publicacio.getUsuario().getIdUsuario()!=idUsuario)
+            return new ResponseEntity(new Message("El usuario no es dueño de esta publicaión"), HttpStatus.BAD_REQUEST);
+        publicacionService.delete(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

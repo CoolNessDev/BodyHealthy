@@ -3,7 +3,7 @@ export class User {
   imagen: string;
   nombres: string;
   apellidos: string;
-  fechaNacimiento: Date;
+  fechaNacimiento: string;//to spring
   altura: number;
   peso: number;
   correo: string;

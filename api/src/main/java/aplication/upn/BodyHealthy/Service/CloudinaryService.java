@@ -29,11 +29,11 @@ public class CloudinaryService {
     public Map upload(MultipartFile multipartFile) throws IOException {
         File file = convert(multipartFile);
         Map result = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
-        Map result2 = cloudinary.uploader().upload(file,
+       /* Map result2 = cloudinary.uploader().upload(file,
                 ObjectUtils.asMap(
                         "eager", Arrays.asList(
                                 new EagerTransformation().width(400).height(300).crop("pad"),
-                                new EagerTransformation().width(260).height(200).crop("crop").gravity("north"))));
+                                new EagerTransformation().width(260).height(200).crop("crop").gravity("north"))));*/
         file.delete();
         return result;
     }

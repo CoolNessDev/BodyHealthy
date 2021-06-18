@@ -1,6 +1,8 @@
 package aplication.upn.BodyHealthy.Security.Controller;
 
+import aplication.upn.BodyHealthy.Dto.EjercicioDto;
 import aplication.upn.BodyHealthy.Dto.Message;
+import aplication.upn.BodyHealthy.Model.Ejercicio;
 import aplication.upn.BodyHealthy.Model.Person;
 import aplication.upn.BodyHealthy.Security.Dto.JwtDto;
 import aplication.upn.BodyHealthy.Security.Dto.LoginUserDto;
@@ -75,5 +77,22 @@ public class AuthController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
         return new ResponseEntity(jwtDto, HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody UserDto userDto) {
+        if (!usuarioService.existsById(id))
+            return new ResponseEntity(new Message("el usuario no existe"), HttpStatus.NOT_FOUND);
+        if (userDto.getNombres().length() < 4)
+            return new ResponseEntity(new Message("el nombre requiere mas de 4 caracteres"), HttpStatus.BAD_REQUEST);
+        Usuario usuario = usuarioService.getUsuario(id);
+        usuario.setImagen(userDto.getImagen());
+        usuario.setNombres(userDto.getNombres());
+        usuario.setApellidos(userDto.getApellidos());
+       /* usuario.setContra(passwordEncoder.encode(userDto.getContra()));*/
+        usuario.setAltura(userDto.getAltura());
+        usuario.setPeso(userDto.getPeso());
+        usuarioService.save(usuario);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

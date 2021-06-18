@@ -1,8 +1,9 @@
 <div class="container mt-10">
+  <bh-spinner [message]="'Registrando usuario'"></bh-spinner>
   <bh-alert
     *ngIf="error"
     [alertClass]="'alert-danger'"
-    [message]="'Error al acceder'"
+    [message]="errorMessage"
   ></bh-alert>
   <bh-spinner [message]="'Accediento'"></bh-spinner>
   <div class="row justify-content-center mt-5">
@@ -88,7 +89,7 @@
                   >Confirmar contraseña</label
                 >
                 <input
-                  type="password2"
+                  type="password"
                   class="form-control"
                   id="password2"
                   formControlName="password2"

@@ -41,10 +41,30 @@ const concatUniqueExercise = (
   });
   return arr1;
 };
+const calculateAge = (date) => {
+  let today: Date = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  let bdate: Date = new Date(date);
+  var dd2 = String(bdate.getDate()).padStart(2, '0');
+  var mm2 = String(bdate.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy2 = bdate.getFullYear();
+  let age = yyyy - yyyy2;
+  if (mm < mm2) {
+    return age - 1;
+  } else {
+    if (dd < dd2) {
+      return age - 1;
+    }
+  }
+  return age;
+};
 export {
   getUrl,
   getImageId,
   removeExercise,
   removeDropElement,
   concatUniqueExercise,
+  calculateAge,
 };

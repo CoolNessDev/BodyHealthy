@@ -7,7 +7,7 @@ import { TokenService } from './auth/token/token.service';
   providedIn: 'root',
 })
 export class ExercisesService {
-  httpOptions = {
+  private httpOptions = {
     headers: new HttpHeaders({
       Authorization: 'my-auth-token',
     }),

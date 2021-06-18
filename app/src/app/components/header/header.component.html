@@ -113,7 +113,7 @@
               height="30px"
               alt="100x100"
               [src]="
-                userImg ? userImg : 'https://i.ibb.co/SyGszR2/descargar.jpg'
+                userImg && userImg!='null'? userImg : 'https://i.ibb.co/SyGszR2/descargar.jpg'
               "
               data-holder-rendered="true"
             />
@@ -121,7 +121,7 @@
               userNames ? userNames : "Usuario"
             }}</label>
             <div class="dropdown-divider"></div>
-            <button ngbDropdownItem class="dropitem">Mi perfil</button>
+            <button ngbDropdownItem class="dropitem" routerLink="/micuenta">Mi perfil</button>
             <div class="dropdown-divider"></div>
             <button
               routerLink="/rutinas/misrutinas"

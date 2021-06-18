@@ -32,6 +32,9 @@ public class ComentarioService {
     public List<Comentario> findByUsuario(Usuario usuario){
         return comentarioRepository.findByUsuario(usuario);
     }
+    public boolean existsById(int id){
+        return comentarioRepository.existsById(id);
+    }
     public boolean existById(int id){
         return comentarioRepository.existsById(id);
     }

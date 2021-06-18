@@ -6,4 +6,6 @@ export class Publication{
   mensaje: string;
   fecha: Date;
   usuario?: User;
+
+  imagenId?: string;//to cloudinary delete
 }

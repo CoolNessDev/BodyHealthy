@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
         this.error=true;
         this.spinner.hide();
         console.log("Error Login: ",err.error);
-        this.errormessage = err.error.message;
+        this.errormessage = err.error.message?err.error.message:'Contraseña Incorrecta';
         }
     );
   }
