@@ -50,7 +50,6 @@ export class RoutineFormComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params.id;
-    console.log('RUTA: ', id);
     if (id) {
       this.getRoutine(id);
       this.inEdit = true;
@@ -67,9 +66,7 @@ export class RoutineFormComponent implements OnInit {
   private getRoutine = (id: number) => {
     this.routineService.getRoutine(id).subscribe(
       (data) => {
-        console.log('Routine: ', data);
         this.routine = data;
-        console.log(this.routine);
         this.loadData(data);
         this.getRoutineExercises(id);
       },
@@ -117,7 +114,6 @@ export class RoutineFormComponent implements OnInit {
   };
   private getRoutineExercises = (id: number) => {
     this.exercisesService.getExercisesByRoutine(id).subscribe((data) => {
-      console.log(data);
       this.exercisesDrop = data;
       this.setItems(this.exercisesDrop,false);
     });
@@ -153,7 +149,6 @@ export class RoutineFormComponent implements OnInit {
         .subscribe(
           (data) => {
             this.loaded = true;
-            console.log(data);
             this.exercises = data;
             this.setItems(this.exercises,true);
           },
@@ -240,12 +235,10 @@ export class RoutineFormComponent implements OnInit {
   save = () => {
     this.spinner.show();
     this.setValues();
-    console.log(this.routine);
     if (this.inEdit) {
       this.spinnerMessage="Actualizando rutina";
       const id = this.activatedRoute.snapshot.params.id;
       this.routineService.putRoutine(id,this.routine).subscribe(data=>{
-        console.log(data);
         this.spinner.hide();
         window.location.href="/rutinas/misrutinas"
       },err=>{
@@ -257,7 +250,6 @@ export class RoutineFormComponent implements OnInit {
       if (this.isAdmin) {
         this.routineService.postRoutineDefault(this.routine).subscribe(
           (data) => {
-            console.log('Data: ', data);
             this.spinner.hide();
             window.location.href="/rutinas/misrutinas"
           },
@@ -269,7 +261,6 @@ export class RoutineFormComponent implements OnInit {
       } else {
         this.routineService.postRoutine(this.routine).subscribe(
           (data) => {
-            console.log('Data: ', data);
             this.spinner.hide();
             window.location.href="/rutinas/misrutinas"
           },
@@ -280,6 +271,5 @@ export class RoutineFormComponent implements OnInit {
         );
       }
     }
-    console.log('Close');
   };
 }

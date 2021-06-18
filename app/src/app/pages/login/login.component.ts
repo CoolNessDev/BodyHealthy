@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
   }
   fetchUser=(email:string)=>{
     this.userService.getUser(email).subscribe(data=>{
-      console.log(data);
+      // console.log(data);
       this.userService.setUserId(data.idUsuario.toString());
       this.userService.setUserImg(data.imagen);
       this.userService.setNames(data.nombres);

@@ -65,7 +65,7 @@ export class ArticleComponent implements OnInit {
     this.commentary.publicacion = this.publication;
     this.commentaryService.postCommentary(this.commentary).subscribe(
       (data) => {
-        console.log(data);
+        // console.log(data);
         this.spinner.hide();
         this.commentaries.push(this.commentary)
         this.commentaryForm.get('message').setValue('')
@@ -108,7 +108,7 @@ export class ArticleComponent implements OnInit {
       .deletePublication(this.publication.idPublicacion)
       .subscribe(
         (data) => {
-          console.log(data);
+          // console.log(data);
           if (this.publication.imagenId != null) {
             this.cloudinaryService
               .deleteImage(this.publication.imagenId)

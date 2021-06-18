@@ -61,14 +61,11 @@ export class MainComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          console.log(data);
+          // console.log(data);
           this.publications = this.publications.concat(
             data.publicacionDtos.content
           );
           this.totalPages = Math.round(data.totalElements / this.pageSize);
-          console.log(data.totalElements);
-          console.log(this.totalPages);
-
           this.publications.map((i) => {
             if (i.imagen && getImageId(i.imagen) != null) {
               i.imagenId = getImageId(i.imagen); //to cloudinary delete
@@ -106,7 +103,7 @@ export class MainComponent implements OnInit {
   onUpdate() {
     this.publicationService.postPublication(this.publication).subscribe(
       (data) => {
-        console.log(data);
+        // console.log(data);
         this.spinner.hide();
         // window.location.reload();
         this.publications.unshift(this.publication);
@@ -141,7 +138,6 @@ export class MainComponent implements OnInit {
     } else {
       this.onUpdate();
     }
-    console.log(this.publication);
   };
   private get message() {
     return this.publicationForm.get('message');

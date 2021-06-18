@@ -45,7 +45,7 @@ export class MyroutinesComponent implements OnInit {
     const userId: number = parseInt(this.userServices.getUserId());
     this.routinesService.deleteRoutine(id, userId).subscribe(
       (data) => {
-        console.log(data);
+        // console.log(data);
         this.spinner.hide();
         window.location.reload();
       },

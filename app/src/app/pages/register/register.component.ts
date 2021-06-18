@@ -61,19 +61,18 @@ export class RegisterComponent implements OnInit {
       this.user.apellidos = this.surname.value;
       this.user.correo = this.username.value;
       let fecha =this.date.value;
-      console.log(fecha);
       this.user.fechaNacimiento = `${fecha.year}-${fecha.month}-${fecha.day}`;
       this.user.contra = this.password.value;
-      console.log(this.user.fechaNacimiento );
 
       this.authService.createUser(this.user).subscribe(
         (data) => {
-          console.log(data);
+          // console.log(data);
           this.spinner.hide();
           this.router.navigate(['/login']);
         },
         (err) => {
           console.log(err);
+          console.log('Este usuario no es valido');
           this.spinner.hide();
         }
       );

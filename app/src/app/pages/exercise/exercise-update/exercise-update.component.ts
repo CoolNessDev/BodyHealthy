@@ -94,7 +94,6 @@ export class ExerciseUpdateComponent implements OnInit {
       },
       err => {
         console.log(err);
-        alert(err.error.message);
         this.spinner.hide();
       }
     );
@@ -105,7 +104,7 @@ export class ExerciseUpdateComponent implements OnInit {
     if(this.newImg){
       this.cloudinaryService.uploadImage(this.imagen).subscribe(
         data => {
-          console.log("Imagen subida: ", data.message);
+          // console.log("Imagen subida: ", data.message);
           this.exercise.imagen=data.message;
           this.onUpdate()
 

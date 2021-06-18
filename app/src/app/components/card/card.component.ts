@@ -44,7 +44,7 @@ export class CardComponent implements OnInit {
     });
   }
   borrar(id: number) {
-    console.log('e1: ', id);
+    // console.log('e1: ', id);
     this.spinner.show();
     this.exercisesService.delete(id).subscribe(
       (data) => {

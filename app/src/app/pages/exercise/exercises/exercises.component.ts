@@ -72,7 +72,7 @@ export class ExercisesComponent implements OnInit {
         .subscribe(
           (data) => {
             this.loaded = true;
-            console.log(data);
+            // console.log(data);
             this.exercises = data;
           },
           (err) => {

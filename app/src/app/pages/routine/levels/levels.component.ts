@@ -47,7 +47,7 @@ export class LevelsComponent implements OnInit {
     this.spinner.show();
     this.routineService.deleteDefaultRoutine(id).subscribe(
       (data) => {
-        console.log(data);
+        // console.log(data);
         this.spinner.hide();
       },
       (err) => {

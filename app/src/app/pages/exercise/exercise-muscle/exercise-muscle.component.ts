@@ -19,7 +19,6 @@ export class ExerciseMuscleComponent implements OnInit {
 
   ngOnInit(): void {
     let id = this.activatedRoute.snapshot.params.id;
-    console.log("path: ",id);
     if(id!=undefined){
       this.onFetch(id);
     }

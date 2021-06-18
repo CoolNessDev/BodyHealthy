@@ -38,7 +38,7 @@ export class CommentaryComponent implements OnInit {
       .deleteCommentary(this.commentary.idComentario)
       .subscribe(
         (data) => {
-          console.log(data);
+          // console.log(data);
           this.spinner.hide();
           window.location.reload();
         },
