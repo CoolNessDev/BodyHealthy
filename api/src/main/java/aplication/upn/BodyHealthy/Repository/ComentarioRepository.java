@@ -12,8 +12,6 @@ import java.util.List;
 
 @Repository
 public interface ComentarioRepository extends JpaRepository<Comentario, Integer> {
-    @Query(value="{call getComentario(:in_idComentario)}", nativeQuery = true)
-    Comentario getComentario(@Param("in_idComentario") Integer in_idComentario);
     boolean existsByUsuario(Usuario user);
     List<Comentario> findByUsuario(Usuario user);
 

@@ -31,7 +31,7 @@ public class PublicacionService {
         return publicacionRepository.existsById(id);
     }
     public Publicacion getPublicacion(int id){
-        return publicacionRepository.getPublicacion(id);
+        return publicacionRepository.findById(id).get();
     }
     public Publicacion insert(Publicacion publicacion) {
         return publicacionRepository.save(publicacion);

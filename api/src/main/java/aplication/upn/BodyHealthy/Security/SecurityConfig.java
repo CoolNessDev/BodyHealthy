@@ -72,9 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .requiresSecure().and().cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/js/**").permitAll()
-                .antMatchers("/css/**").permitAll()
-                .antMatchers("/img/**").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/ejercicio/**").permitAll()
                 .antMatchers("/rutina/**").permitAll()
@@ -82,7 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/comentario/**").permitAll()
                 .antMatchers("/musculo/**").permitAll()
                 .antMatchers("/usuario/**").permitAll()
-                .antMatchers("/test/**").permitAll()
                 .antMatchers(
                         "/auth/**",
                         "/v2/api-docs/**",

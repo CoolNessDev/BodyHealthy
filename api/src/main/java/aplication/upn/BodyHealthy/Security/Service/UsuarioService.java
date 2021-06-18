@@ -20,19 +20,19 @@ public class UsuarioService {
     }
 
     public Usuario getUsuario(int id) {
-        return usuarioRepository.getUsuario(id);
+        return usuarioRepository.getOne(id);
     }
 
     public Usuario insert(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
-    public List<Usuario> getByRol(int idRol) {
+   /* public List<Usuario> getByRol(int idRol) {
         return usuarioRepository.getByRol(idRol);
     }
     public Usuario getByEmail(String email) {
         return usuarioRepository.getByEmail(email);
-    }
+    }*/
 
     public Usuario findByCorreo(String s) {
         return usuarioRepository.findByCorreo(s);

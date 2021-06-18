@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RolRepository extends JpaRepository<Rol, Integer> {
-    @Query(value="{call getRol(:in_idRol)}", nativeQuery = true)
-    Rol getRol(@Param("in_idRol") Integer in_idRol);
+
 }

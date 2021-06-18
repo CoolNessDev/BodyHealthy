@@ -18,7 +18,7 @@ public class ComentarioService {
         return comentarioRepository.findAll();
     }
     public Comentario getComentario(int id){
-        return comentarioRepository.getComentario(id);
+        return comentarioRepository.findById(id).get();
     }
 
     public boolean existsByPublicacion(Publicacion publicacion){

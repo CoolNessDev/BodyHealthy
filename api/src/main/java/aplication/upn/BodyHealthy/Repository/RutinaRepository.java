@@ -11,16 +11,7 @@ import java.util.List;
 
 @Repository
 public interface RutinaRepository extends JpaRepository<Rutina, Integer> {
-    @Query(value="{call getRutina(:in_idRutina)}", nativeQuery = true)
-    Rutina getRutina(@Param("in_idRutina") Integer in_idRutina);
 
-    @Query(value="{call getDefaultRutinas(:in_estado)}", nativeQuery = true)
-    List<Rutina> findAllDefault(@Param("in_estado") float in_estado);
-
-    @Query(value="{call GetDefaultRutinaByLevel(:in_nivel,:in_estado)}", nativeQuery = true)
-    List<Rutina> findDefaultByLevel(@Param("in_nivel") String in_nivel,@Param("in_estado") float in_estado);
-//    @Query(value = "{call sp_findBetween(:min, :max)}", nativeQuery = true)
-//    public List<Product> findAllBetweenStoredProcedure(@Param("min") BigDecimal min, @Param("max") BigDecimal max);
     boolean existsByNivel(String nivel);
     boolean existsByUsuario(Usuario user);
 
