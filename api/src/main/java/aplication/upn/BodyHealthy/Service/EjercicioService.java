@@ -32,7 +32,7 @@ public class EjercicioService {
         ejercicioRepository.save(producto);
     }
     public Ejercicio getEjercicio(int id){
-        return ejercicioRepository.getOne(id);
+        return ejercicioRepository.findById(id).get();
     }
     public Ejercicio insert(Ejercicio ejercicio) {
         return ejercicioRepository.save(ejercicio);
